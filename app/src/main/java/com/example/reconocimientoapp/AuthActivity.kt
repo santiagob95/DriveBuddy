@@ -25,6 +25,19 @@ class AuthActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_auth)
+
+
+        guestBtn.setOnClickListener{
+            val intent = Intent(this, MainActivity::class.java)
+            // start your next activity
+            startActivity(intent)
+        }
+
+        makeregisterBtn.setOnClickListener{
+            val intent = Intent(this, RegisterActivity::class.java)
+            // start your next activity
+            startActivity(intent)
+        }
         //test
 
         // Setup
@@ -46,18 +59,7 @@ class AuthActivity : AppCompatActivity() {
     private fun setup (){
         title ="Autenticacion"
 
-        //EMAIL Y PASSWORD
-        registrarBtn.setOnClickListener{
-            if ( idEmail.text.isNotEmpty() && idPassword.text.isNotEmpty()){
-                FirebaseAuth.getInstance().createUserWithEmailAndPassword(idEmail.text.toString(),idPassword.text.toString()).addOnCompleteListener{
-                    if(it.isSuccessful){
-                        showHome(it.result?.user?.email ?:"")
-                    }else{
-                        showAlert()
-                    }
-                }
-            }
-        }
+
         loginBtn.setOnClickListener{
             if ( idEmail.text.isNotEmpty() && idPassword.text.isNotEmpty()){
                 FirebaseAuth.getInstance().signInWithEmailAndPassword(idEmail.text.toString(),idPassword.text.toString()).addOnCompleteListener{
@@ -121,7 +123,7 @@ class AuthActivity : AppCompatActivity() {
         dialog.show()
     }
     private fun showHome (email:String){
-        val homeIntent = Intent(this,HomeActivity::class.java).apply {
+        val homeIntent = Intent(this,MainActivity::class.java).apply {
             putExtra("email",email)
         }
         startActivity(homeIntent)

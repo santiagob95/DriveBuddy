@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AuthActivity">
+    tools:context=".RegisterActivity">
+
 
     <LinearLayout
         android:id="@+id/authLayout"
@@ -41,41 +42,16 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-
             <Button
-                android:id="@+id/loginBtn"
+                android:id="@+id/registrarBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="LOGIN" />
+                android:text="Registrar" />
 
         </LinearLayout>
 
-        <Button
-            android:id="@+id/googleBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Iniciar Sesion con Google" />
 
-        <Button
-            android:id="@+id/facebookBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="INICIAR SESION CON FACEBOOK" />
-
-        <Button
-            android:id="@+id/guestBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Entrar como invitado" />
-
-        <Button
-            android:id="@+id/makeregisterBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="No tenes cuenta? Registrate aca" />
 
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
