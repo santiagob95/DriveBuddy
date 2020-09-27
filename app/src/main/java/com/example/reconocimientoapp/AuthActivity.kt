@@ -27,11 +27,7 @@ class AuthActivity : AppCompatActivity() {
         setContentView(R.layout.activity_auth)
 
 
-        guestBtn.setOnClickListener{
-            val intent = Intent(this, MainActivity::class.java)
-            // start your next activity
-            startActivity(intent)
-        }
+
 
         makeregisterBtn.setOnClickListener{
             val intent = Intent(this, RegisterActivity::class.java)

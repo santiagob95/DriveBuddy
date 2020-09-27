@@ -18,5 +18,12 @@ class Welcome_Screen : AppCompatActivity() {
             // start your next activity
             startActivity(intent)
         }
+
+        guestBtn.setOnClickListener{
+            val intent = Intent(this, MainActivity::class.java)
+            // start your next activity
+            startActivity(intent)
+        }
+
     }
 }
