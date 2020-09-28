@@ -13,17 +13,22 @@ class Welcome_Screen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_welcome__screen)
 
-        welcomeBtn.setOnClickListener{
+        welcomeBtn.setOnClickListener {
             val intent = Intent(this, AuthActivity::class.java)
+            startActivity(intent)
+        }
+
+        guestBtn.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+
+        registroBtn.setOnClickListener{
+            val intent = Intent(this, RegisterActivity::class.java)
             // start your next activity
             startActivity(intent)
         }
 
-        guestBtn.setOnClickListener{
-            val intent = Intent(this, MainActivity::class.java)
-            // start your next activity
-            startActivity(intent)
-        }
 
     }
 }

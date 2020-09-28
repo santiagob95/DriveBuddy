@@ -23,7 +23,7 @@
 
 
     <TextView
-        android:id="@+id/registrate"
+        android:id="@+id/registroBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -33,6 +33,7 @@
         android:fontFamily="@font/montserrat_bold"
         android:gravity="top"
         android:text="@string/registrate"
+        android:clickable="true"
         android:textAppearance="@style/registrate" />
 
     <TextView
@@ -85,7 +86,7 @@
         android:translationZ="90dp" />
 
     <Button
-        android:id="@+id/iniciarBtn"
+        android:id="@+id/welcomeBtn"
         android:layout_width="177dp"
         android:layout_height="58dp"
         android:layout_alignParentLeft="true"
@@ -111,7 +112,7 @@
         android:textAppearance="@style/ingresar_co" />
 
     <Button
-        android:id="@+id/iniciarBtn2"
+        android:id="@+id/guestBtn"
         android:layout_width="177dp"
         android:layout_height="58dp"
         android:layout_alignParentLeft="true"

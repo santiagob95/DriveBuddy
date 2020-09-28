@@ -34,9 +34,7 @@ class AuthActivity : AppCompatActivity() {
             // start your next activity
             startActivity(intent)
         }
-        //test
 
-        // Setup
         setup()
         session()
     }
