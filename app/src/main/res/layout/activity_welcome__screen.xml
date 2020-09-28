@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    tools:context=".Welcome_Screen">
+
+
+    <TextView
+        android:id="@+id/bienvenido"
+        android:layout_width="285dp"
+        android:layout_height="59dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="64dp"
+        android:layout_marginTop="162dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:gravity="top"
+        android:text="@string/bienvenido"
+        android:textAppearance="@style/bienvenido" />
+
+
+    <TextView
+        android:id="@+id/registroBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="229dp"
+        android:layout_marginTop="495dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:gravity="top"
+        android:text="@string/registrate"
+        android:clickable="true"
+        android:textAppearance="@style/registrate" />
+
+    <TextView
+        android:id="@+id/no_est_s_re"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="102dp"
+        android:layout_marginTop="495dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:gravity="top"
+        android:text="¿No estás registrado? "
+        android:textAppearance="@style/no_est_s_re" />
+
+    <View
+        android:id="@+id/top_border"
+        android:layout_width="match_parent"
+        android:layout_height="229dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/top_border" />
+
+
+    <TextView
+        android:id="@+id/estas_listo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="107dp"
+        android:layout_marginTop="227dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:gravity="top"
+        android:text="@string/estas_listo"
+        android:textAppearance="@style/estas_listo" />
+
+    <TextView
+        android:id="@+id/iniciar_ses"
+        android:layout_width="166dp"
+        android:layout_height="29dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="121dp"
+        android:layout_marginTop="311dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:gravity="top"
+        android:text="Iniciar sesión"
+        android:textAppearance="@style/iniciar_ses"
+        android:translationZ="90dp" />
+
+    <Button
+        android:id="@+id/welcomeBtn"
+        android:layout_width="177dp"
+        android:layout_height="58dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="113dp"
+        android:layout_marginTop="300dp"
+        android:background="@drawable/rounded_corner"
+        android:elevation="4dp"
+        android:textColor="#494949"
+        android:textSize="24sp" />
+
+
+    <TextView
+        android:id="@+id/ingresar_co"
+        android:layout_width="154dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="131dp"
+        android:layout_marginTop="380dp"
+        android:gravity="top"
+        android:text="Ingresar como invitado"
+        android:textAppearance="@style/ingresar_co" />
+
+    <Button
+        android:id="@+id/guestBtn"
+        android:layout_width="177dp"
+        android:layout_height="58dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="113dp"
+        android:layout_marginTop="362dp"
+        android:background="@drawable/rounded_corner_no_background"
+        android:elevation="4dp"
+        android:textColor="#494949"
+        android:textSize="24sp" />
+
+    <View
+        android:id="@+id/bot_border"
+        android:layout_width="match_parent"
+        android:layout_height="229dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="501dp"
+        android:background="@drawable/bot_border" />
+
+
+
+
+</RelativeLayout>
