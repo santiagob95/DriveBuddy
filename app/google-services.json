@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "249795174182",
+    "firebase_url": "https://seminario-bafef.firebaseio.com",
+    "project_id": "seminario-bafef",
+    "storage_bucket": "seminario-bafef.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:249795174182:android:284123eebc9a60d115abe7",
+        "android_client_info": {
+          "package_name": "com.example.reconocimientoapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "249795174182-6gurheqtp6nu3kfm68sqe2bsor3dj2mo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.reconocimientoapp",
+            "certificate_hash": "25d5c0cff72aab5c88dc2bff77bbd29a7e45aa04"
+          }
+        },
+        {
+          "client_id": "249795174182-outm27mp7migs7o8pq1hrdiisaj399l9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNqqPeIpQ_YPZjoimBaNMlgH4ex4L2Kv8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "249795174182-outm27mp7migs7o8pq1hrdiisaj399l9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
