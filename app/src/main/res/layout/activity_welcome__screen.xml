@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="#494949"
     tools:context=".Welcome_Screen">
 
 
@@ -28,12 +28,12 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="229dp"
-        android:layout_marginTop="495dp"
+        android:layout_marginLeft="236dp"
+        android:layout_marginTop="443dp"
+        android:clickable="true"
         android:fontFamily="@font/montserrat_bold"
         android:gravity="top"
         android:text="@string/registrate"
-        android:clickable="true"
         android:textAppearance="@style/registrate" />
 
     <TextView
@@ -42,8 +42,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="102dp"
-        android:layout_marginTop="495dp"
+        android:layout_marginLeft="112dp"
+        android:layout_marginTop="443dp"
         android:fontFamily="@font/montserrat_bold"
         android:gravity="top"
         android:text="¿No estás registrado? "
@@ -55,7 +55,8 @@
         android:layout_height="229dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:background="@drawable/top_border" />
+        android:background="@drawable/top_border"
+        android:clickable="false" />
 
 
     <TextView
@@ -132,8 +133,6 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="501dp"
         android:background="@drawable/bot_border" />
-
-
 
 
 </RelativeLayout>
