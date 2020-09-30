@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#494949"
-    android:id="@+id/fragmentContainer"
+    android:id="@+id/mainMenu"
     tools:context=".MainActivity">
 
 
@@ -24,14 +24,50 @@
         android:paddingRight="20dp"
         app:menu="@menu/bottom_nav" />
 
+    <FrameLayout
+        android:id="@+id/fragmentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/rectangle_5"
+        android:layout_below="@id/nav_top"/>
+
     <View
         android:id="@+id/rectangle_5"
         android:layout_width="match_parent"
         android:layout_height="86dp"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/rec_navbar"
+        android:background="@drawable/rec_navbar" />
 
-        />
+    <View
+        android:id="@+id/nav_top"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_alignParentTop="true"
+        android:background="#606060"
+         />
+
+    <View
+        android:id="@+id/exitBtn"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="363dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/ic_logout"
+        android:clickable="true" />
+
+    <TextView
+        android:id="@+id/drive_buddy"
+        android:layout_width="119dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="54dp"
+        android:layout_marginTop="15dp"
+        android:gravity="top"
+        android:text="Drive Buddy"
+        android:textAppearance="@style/drive_buddy" />
 
 
 </RelativeLayout>

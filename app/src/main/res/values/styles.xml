@@ -22,6 +22,15 @@
         <item name="android:textColor">#FFFFFF</item>
     </style>
 
+    <style name="drive_buddy">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">#EBEE4D</item>
+        <item name="android:shadowColor">#40000000</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">4</item>
+        <item name="android:shadowRadius">4</item>
+    </style>
+
     <style name="registrate">
         <item name="android:textSize">11sp</item>
         <item name="android:textColor">#EBEE4D</item>
