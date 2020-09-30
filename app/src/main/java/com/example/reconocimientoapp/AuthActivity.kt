@@ -40,13 +40,13 @@ class AuthActivity : AppCompatActivity() {
     }
     override fun onStart(){
         super.onStart()
-        authLayout.visibility = View.VISIBLE
+
     }
     private fun session(){
         val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)
         val email = prefs.getString("email",null)
         if(email!=null){
-            authLayout.visibility = View.INVISIBLE
+
             showHome(email)
         }
     }
@@ -99,7 +99,7 @@ class AuthActivity : AppCompatActivity() {
                 }
 
                 override fun onCancel() {
-                   
+
                 }
 
                 override fun onError(error: FacebookException?) {

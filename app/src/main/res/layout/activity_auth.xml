@@ -1,22 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AuthActivity">
-
-    <LinearLayout
-        android:id="@+id/authLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    tools:context=".AuthActivity"
+    android:background="#494949">
 
         <EditText
             android:id="@+id/idEmail"
@@ -36,42 +25,103 @@
             android:hint="Password"
             android:inputType="textPassword" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+
+    <Button
+        android:id="@+id/loginBtn"
+        android:layout_width="177dp"
+        android:layout_height="58dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="117dp"
+        android:layout_marginTop="386dp"
+        android:background="@drawable/rounded_corner"
+        android:elevation="4dp"
+        android:textColor="#494949"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/iniciar_ses"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="155dp"
+        android:layout_marginTop="394dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:gravity="top"
+        android:text="Ingresar"
+        android:textAppearance="@style/iniciar_ses"
+        android:translationZ="90dp" />
 
 
-            <Button
-                android:id="@+id/loginBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="LOGIN" />
-
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/googleBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Iniciar Sesion con Google" />
-
-        <Button
-            android:id="@+id/facebookBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="INICIAR SESION CON FACEBOOK" />
 
 
 
-        <Button
-            android:id="@+id/makeregisterBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="No tenes cuenta? Registrate aca" />
+    <TextView
+        android:id="@+id/no_est_s_re"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="109dp"
+        android:layout_marginTop="465dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:gravity="top"
+        android:text="¿No estás registrado? "
+        android:textAppearance="@style/no_est_s_re" />
 
-    </LinearLayout>
+    <TextView
+        android:id="@+id/makeregisterBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="235dp"
+        android:layout_marginTop="465dp"
+        android:clickable="true"
+        android:fontFamily="@font/montserrat_bold"
+        android:gravity="top"
+        android:text="@string/registrate"
+        android:textAppearance="@style/registrate" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:id="@+id/separacion_"
+        android:layout_width="276.49dp"
+        android:layout_height="13dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="67dp"
+        android:layout_marginTop="532dp"
+        android:background="@drawable/sep" />
+
+    <View
+        android:id="@+id/bot_border2"
+        android:layout_width="match_parent"
+        android:layout_height="109.88dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/bottom2" />
+
+    <View
+        android:id="@+id/facebookBtn"
+        android:layout_width="162dp"
+        android:layout_height="45.56dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="26dp"
+        android:layout_marginTop="578dp"
+        android:background="@drawable/facebook_login"
+        android:elevation="4dp" />
+
+    <View
+        android:id="@+id/googleBtn"
+        android:layout_width="162dp"
+        android:layout_height="45.56dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="232dp"
+        android:layout_marginTop="576dp"
+        android:background="@drawable/google_login"
+        android:elevation="4dp" />
+
+</RelativeLayout>

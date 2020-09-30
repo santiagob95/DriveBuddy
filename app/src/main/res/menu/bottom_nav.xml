@@ -7,19 +7,15 @@
         android:icon="@drawable/ic_home"
         />
 
-
     <item
         android:id="@+id/face"
         android:title=""
         android:icon="@drawable/ic_face"
+
         />
     <item
         android:id="@+id/cons"
         android:title=""
         android:icon="@drawable/ic_cons"/>
-
-
-
-
 
 </menu>
