@@ -3,7 +3,9 @@
     package="com.example.reconocimientoapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <meta-data
+        android:name="com.google.mlkit.vision.DEPENDENCIES"
+        android:value="face" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -12,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".RegisterActivity">
+        <activity android:name=".RegisterActivity"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
             android:name=".Welcome_Screen"
@@ -28,7 +31,8 @@
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
-        <activity android:name=".AuthActivity">
+        <activity android:name=".AuthActivity"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
         <meta-data

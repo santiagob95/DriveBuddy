@@ -14,12 +14,4 @@
         android:text="email"
         android:layout_gravity="top|right" />
 
-    <Button
-        android:id="@+id/logOutBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="CERRAR SESION"
-        android:layout_gravity="left|center_vertical" />
-
-
 </FrameLayout>
