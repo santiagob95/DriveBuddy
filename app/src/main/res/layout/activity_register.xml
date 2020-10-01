@@ -8,50 +8,92 @@
     tools:context=".RegisterActivity">
 
 
-    <LinearLayout
-        android:id="@+id/authLayout"
+    <EditText
+        android:id="@+id/idEmail"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="wrap_content"
+        android:autofillHints=""
+        android:ems="10"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="113dp"
+        tools:ignore="MissingConstraints" />
 
-        <EditText
-            android:id="@+id/idEmail"
+    <EditText
+        android:id="@+id/idPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autofillHints=""
+        android:ems="10"
+        android:hint="Password"
+        android:inputType="textPassword"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="282dp"
+        tools:ignore="MissingConstraints" />
+
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:autofillHints=""
-            android:ems="10"
-            android:hint="Email"
-            android:inputType="textEmailAddress" />
-
-        <EditText
-            android:id="@+id/idPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:autofillHints=""
-            android:ems="10"
-            android:hint="Password"
-            android:inputType="textPassword" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/registrarBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Registrar" />
-
-        </LinearLayout>
-
-
+            android:orientation="horizontal"
+            tools:ignore="MissingConstraints">
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tenescuenta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:fontFamily="@font/montserrat_bold"
+        android:gravity="top"
+        android:text="¿Ya tenés una cuenta? "
+        android:textAppearance="@style/no_est_s_re"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.391"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.784" />
+
+    <TextView
+        android:id="@+id/welcomeBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="120dp"
+        android:clickable="true"
+        android:fontFamily="@font/montserrat_bold"
+        android:gravity="top"
+        android:text="Ingresar"
+        android:textAppearance="@style/ingresar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.055"
+        app:layout_constraintStart_toEndOf="@+id/no_est_s_re"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.784" />
+
+    <Button
+        android:id="@+id/registrarBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Registrar"
+        tools:layout_editor_absoluteX="129dp"
+        tools:layout_editor_absoluteY="327dp"
+        tools:ignore="MissingConstraints" />
+
+    <View
+        android:id="@+id/bot_border2"
+        android:layout_width="match_parent"
+        android:layout_height="109.88dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/bottom2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/separacion_"
+        app:layout_constraintVertical_bias="1.0" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,11 +9,18 @@ import kotlinx.android.synthetic.main.activity_auth.*
 import kotlinx.android.synthetic.main.activity_auth.idEmail
 import kotlinx.android.synthetic.main.activity_auth.idPassword
 import kotlinx.android.synthetic.main.activity_register.*
+import kotlinx.android.synthetic.main.activity_register.welcomeBtn
+import kotlinx.android.synthetic.main.activity_welcome__screen.*
 
 class RegisterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
+
+        welcomeBtn.setOnClickListener {
+            val intent = Intent(this, AuthActivity::class.java)
+            startActivity(intent)
+        }
 
         setup()
     }

@@ -78,8 +78,8 @@
 
     <TextView
         android:id="@+id/no_est_s_re"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="124dp"
+        android:layout_height="18dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:fontFamily="@font/montserrat_bold"
@@ -88,10 +88,10 @@
         android:textAppearance="@style/no_est_s_re"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.365"
+        app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.685" />
+        app:layout_constraintVertical_bias="0.684" />
 
     <TextView
         android:id="@+id/makeregisterBtn"
@@ -106,10 +106,10 @@
         android:textAppearance="@style/registrate"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.055"
+        app:layout_constraintHorizontal_bias="0.051"
         app:layout_constraintStart_toEndOf="@+id/no_est_s_re"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.685" />
+        app:layout_constraintVertical_bias="0.684" />
 
     <View
         android:id="@+id/separacion_"
