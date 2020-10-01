@@ -1,30 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AuthActivity"
-    android:background="#494949">
+    android:background="#494949"
+    tools:context=".AuthActivity">
 
-        <EditText
-            android:id="@+id/idEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:autofillHints=""
-            android:ems="10"
-            android:hint="Email"
-            android:inputType="textEmailAddress" />
 
-        <EditText
-            android:id="@+id/idPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:autofillHints=""
-            android:ems="10"
-            android:hint="Password"
-            android:inputType="textPassword" />
+    <EditText
+        android:id="@+id/idEmail"
+        android:layout_width="269dp"
+        android:layout_height="38dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="86dp"
+        tools:layout_editor_absoluteY="278dp" />
 
+
+    <EditText
+        android:id="@+id/idPassword"
+        android:layout_width="269dp"
+        android:layout_height="35dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="86dp"
+        tools:layout_editor_absoluteY="328dp" />
+
+    <View
+        android:id="@+id/line_1"
+        android:layout_width="296dp"
+        android:layout_height="2dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/line"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="314dp" />
+
+    <View
+        android:id="@+id/line_"
+        android:layout_width="296dp"
+        android:layout_height="2dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/line"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.513"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="364dp" />
+
+    <View
+        android:id="@+id/logo_drive_"
+        android:layout_width="158dp"
+        android:layout_height="167.28dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/ic_logo_b"
+        android:elevation="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/loginBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.073" />
+
+    <TextView
+        android:id="@+id/drive_buddy"
+        android:layout_width="258dp"
+        android:layout_height="63dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:text="Drive Buddy"
+        android:textAppearance="@style/loginTitle"
+        app:layout_constraintBottom_toTopOf="@+id/loginBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logo_drive_"
+        app:layout_constraintVertical_bias="0.0" />
+
+
+    <View
+        android:id="@+id/ic_person"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/ic_person"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.147"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.402" />
+
+    <View
+        android:id="@+id/ic_lock"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/ic_lock"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.147"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ic_person"
+        app:layout_constraintVertical_bias="0.078" />
 
     <Button
         android:id="@+id/loginBtn"
@@ -32,12 +121,17 @@
         android:layout_height="58dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="117dp"
-        android:layout_marginTop="386dp"
         android:background="@drawable/rounded_corner"
         android:elevation="4dp"
+        android:orientation="vertical"
         android:textColor="#494949"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.604" />
 
     <TextView
         android:id="@+id/iniciar_ses"
@@ -45,16 +139,18 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="155dp"
-        android:layout_marginTop="394dp"
         android:fontFamily="@font/montserrat_bold"
         android:gravity="top"
+        android:orientation="vertical"
         android:text="Ingresar"
         android:textAppearance="@style/iniciar_ses"
-        android:translationZ="90dp" />
-
-
-
+        android:translationZ="90dp"
+        app:layout_constraintBottom_toBottomOf="@+id/bot_border2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.6" />
 
 
     <TextView
@@ -63,12 +159,16 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="109dp"
-        android:layout_marginTop="465dp"
         android:fontFamily="@font/montserrat_bold"
         android:gravity="top"
         android:text="¿No estás registrado? "
-        android:textAppearance="@style/no_est_s_re" />
+        android:textAppearance="@style/no_est_s_re"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.365"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.685" />
 
     <TextView
         android:id="@+id/makeregisterBtn"
@@ -76,14 +176,17 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="235dp"
-        android:layout_marginTop="465dp"
         android:clickable="true"
         android:fontFamily="@font/montserrat_bold"
         android:gravity="top"
         android:text="@string/registrate"
-        android:textAppearance="@style/registrate" />
-
+        android:textAppearance="@style/registrate"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.055"
+        app:layout_constraintStart_toEndOf="@+id/no_est_s_re"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.685" />
 
     <View
         android:id="@+id/separacion_"
@@ -91,27 +194,23 @@
         android:layout_height="13dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="67dp"
-        android:layout_marginTop="532dp"
-        android:background="@drawable/sep" />
+        android:background="@drawable/sep"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.759" />
 
     <View
         android:id="@+id/bot_border2"
         android:layout_width="match_parent"
         android:layout_height="109.88dp"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/bottom2" />
-
-    <View
-        android:id="@+id/facebookBtn"
-        android:layout_width="162dp"
-        android:layout_height="45.56dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="26dp"
-        android:layout_marginTop="578dp"
-        android:background="@drawable/facebook_login"
-        android:elevation="4dp" />
+        android:background="@drawable/bottom2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/separacion_"
+        app:layout_constraintVertical_bias="1.0"
+        tools:layout_editor_absoluteX="0dp" />
 
     <View
         android:id="@+id/googleBtn"
@@ -119,9 +218,71 @@
         android:layout_height="45.56dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="232dp"
-        android:layout_marginTop="576dp"
         android:background="@drawable/google_login"
-        android:elevation="4dp" />
+        android:elevation="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.911"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.861" />
 
-</RelativeLayout>
+    <TextView
+        android:id="@+id/facebook"
+        android:layout_width="94dp"
+        android:layout_height="32dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:orientation="vertical"
+        android:text="Facebook"
+        android:textAppearance="@style/facebook"
+        android:translationZ="90dp"
+        app:layout_constraintBottom_toBottomOf="@+id/facebookBtn"
+        app:layout_constraintEnd_toEndOf="@+id/facebookBtn"
+        app:layout_constraintHorizontal_bias="0.838"
+        app:layout_constraintStart_toStartOf="@+id/facebookBtn"
+        app:layout_constraintTop_toTopOf="@+id/facebookBtn"
+        app:layout_constraintVertical_bias="0.642" />
+
+    <TextView
+        android:id="@+id/google"
+        android:layout_width="67dp"
+        android:layout_height="28dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:orientation="vertical"
+        android:text="Google"
+        android:textAppearance="@style/facebook"
+        android:translationZ="90dp"
+        app:layout_constraintBottom_toBottomOf="@+id/googleBtn"
+        app:layout_constraintEnd_toEndOf="@+id/googleBtn"
+        app:layout_constraintHorizontal_bias="0.621"
+        app:layout_constraintStart_toStartOf="@+id/googleBtn"
+        app:layout_constraintTop_toTopOf="@+id/googleBtn" />
+
+    <View
+        android:id="@+id/facebookBtn"
+        android:layout_width="162dp"
+        android:layout_height="45.56dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/facebook_login"
+        android:elevation="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/googleBtn"
+        app:layout_constraintHorizontal_bias="0.517"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.861" />
+
+    <View
+        android:id="@+id/vector"
+        android:layout_width="35dp"
+        android:layout_height="32dp"
+        android:background="@drawable/ic_facebook"
+        android:orientation="vertical"
+        android:translationZ="90dp"
+        app:layout_constraintBottom_toBottomOf="@+id/facebookBtn"
+        app:layout_constraintEnd_toStartOf="@+id/facebook"
+        app:layout_constraintStart_toStartOf="@+id/facebookBtn"
+        app:layout_constraintTop_toTopOf="@+id/facebookBtn" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

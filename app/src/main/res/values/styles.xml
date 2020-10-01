@@ -54,6 +54,19 @@
         <item name="android:shadowRadius">4</item>
     </style>
 
+    <style name="loginTitle">
+        <item name="android:textSize">36sp</item>
+        <item name="android:letterSpacing">0.05</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+    <style name="facebook">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:shadowColor">#40000000</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">4</item>
+        <item name="android:shadowRadius">4</item>
+    </style>
     <style name="estas_listo">
         <item name="android:textSize">13sp</item>
         <item name="android:textColor">#FFFFFF</item>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -14,12 +14,16 @@
         android:layout_height="59dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="64dp"
-        android:layout_marginTop="162dp"
         android:fontFamily="@font/montserrat_bold"
         android:gravity="top"
+        android:orientation="vertical"
         android:text="@string/bienvenido"
-        android:textAppearance="@style/bienvenido" />
+        android:textAppearance="@style/bienvenido"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.278" />
 
 
     <TextView
@@ -28,13 +32,18 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="236dp"
-        android:layout_marginTop="443dp"
         android:clickable="true"
         android:fontFamily="@font/montserrat_bold"
         android:gravity="top"
+        android:orientation="vertical"
         android:text="@string/registrate"
-        android:textAppearance="@style/registrate" />
+        android:textAppearance="@style/registrate"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.039"
+        app:layout_constraintStart_toEndOf="@+id/no_est_s_re"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.69" />
 
     <TextView
         android:id="@+id/no_est_s_re"
@@ -42,12 +51,17 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="112dp"
-        android:layout_marginTop="443dp"
         android:fontFamily="@font/montserrat_bold"
         android:gravity="top"
+        android:orientation="vertical"
         android:text="¿No estás registrado? "
-        android:textAppearance="@style/no_est_s_re" />
+        android:textAppearance="@style/no_est_s_re"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.358"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/top_border"
+        app:layout_constraintVertical_bias="0.69" />
 
     <View
         android:id="@+id/top_border"
@@ -56,8 +70,14 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:background="@drawable/top_border"
-        android:clickable="false" />
-
+        android:clickable="false"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/estas_listo"
@@ -65,26 +85,33 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="107dp"
-        android:layout_marginTop="227dp"
+        android:layout_marginTop="12dp"
         android:fontFamily="@font/montserrat_bold"
         android:gravity="top"
+        android:orientation="vertical"
         android:text="@string/estas_listo"
-        android:textAppearance="@style/estas_listo" />
+        android:textAppearance="@style/estas_listo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.454"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bienvenido" />
 
     <TextView
         android:id="@+id/iniciar_ses"
-        android:layout_width="166dp"
-        android:layout_height="29dp"
+        android:layout_width="162dp"
+        android:layout_height="36dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="121dp"
-        android:layout_marginTop="311dp"
         android:fontFamily="@font/montserrat_bold"
         android:gravity="top"
+        android:orientation="vertical"
         android:text="Iniciar sesión"
         android:textAppearance="@style/iniciar_ses"
-        android:translationZ="90dp" />
+        android:translationZ="90dp"
+        app:layout_constraintBottom_toBottomOf="@+id/welcomeBtn"
+        app:layout_constraintEnd_toEndOf="@+id/welcomeBtn"
+        app:layout_constraintStart_toStartOf="@+id/welcomeBtn"
+        app:layout_constraintTop_toTopOf="@+id/welcomeBtn" />
 
     <Button
         android:id="@+id/welcomeBtn"
@@ -92,25 +119,16 @@
         android:layout_height="58dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="113dp"
-        android:layout_marginTop="300dp"
         android:background="@drawable/rounded_corner"
         android:elevation="4dp"
+        android:orientation="vertical"
         android:textColor="#494949"
-        android:textSize="24sp" />
-
-
-    <TextView
-        android:id="@+id/ingresar_co"
-        android:layout_width="154dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="131dp"
-        android:layout_marginTop="380dp"
-        android:gravity="top"
-        android:text="Ingresar como invitado"
-        android:textAppearance="@style/ingresar_co" />
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/top_border"
+        app:layout_constraintVertical_bias="0.24" />
 
     <Button
         android:id="@+id/guestBtn"
@@ -118,12 +136,34 @@
         android:layout_height="58dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="113dp"
-        android:layout_marginTop="362dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/rounded_corner_no_background"
         android:elevation="4dp"
+        android:orientation="vertical"
         android:textColor="#494949"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/bot_border"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/welcomeBtn"
+        app:layout_constraintVertical_bias="0.007" />
+
+    <TextView
+        android:id="@+id/ingresar_co"
+        android:layout_width="148dp"
+        android:layout_height="19dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:gravity="top"
+        android:orientation="vertical"
+        android:text="Ingresar como invitado"
+        android:textAppearance="@style/ingresar_co"
+        app:layout_constraintBottom_toBottomOf="@+id/guestBtn"
+        app:layout_constraintEnd_toEndOf="@+id/guestBtn"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="@+id/guestBtn"
+        app:layout_constraintTop_toTopOf="@+id/guestBtn"
+        app:layout_constraintVertical_bias="0.487" />
 
     <View
         android:id="@+id/bot_border"
@@ -131,8 +171,14 @@
         android:layout_height="229dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="501dp"
-        android:background="@drawable/bot_border" />
+        android:background="@drawable/bot_border"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
