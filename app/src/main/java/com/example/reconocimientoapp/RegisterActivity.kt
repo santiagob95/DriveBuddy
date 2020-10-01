@@ -9,7 +9,7 @@ import kotlinx.android.synthetic.main.activity_auth.*
 import kotlinx.android.synthetic.main.activity_auth.idEmail
 import kotlinx.android.synthetic.main.activity_auth.idPassword
 import kotlinx.android.synthetic.main.activity_register.*
-import kotlinx.android.synthetic.main.activity_register.welcomeBtn
+import kotlinx.android.synthetic.main.activity_register.backloginBtn
 import kotlinx.android.synthetic.main.activity_welcome__screen.*
 
 class RegisterActivity : AppCompatActivity() {
@@ -17,7 +17,7 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
-        welcomeBtn.setOnClickListener {
+        backloginBtn.setOnClickListener {
             val intent = Intent(this, AuthActivity::class.java)
             startActivity(intent)
         }
@@ -53,6 +53,8 @@ class RegisterActivity : AppCompatActivity() {
                 ).addOnCompleteListener {
                     if (it.isSuccessful) {
                         showHome(it.result?.user?.email ?: "")
+                        val intent = Intent(this, AuthActivity::class.java)
+                        startActivity(intent)
                     } else {
                         showAlert()
                     }

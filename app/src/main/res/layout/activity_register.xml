@@ -16,8 +16,12 @@
         android:ems="10"
         android:hint="Email"
         android:inputType="textEmailAddress"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="113dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.072"
         tools:ignore="MissingConstraints" />
 
     <EditText
@@ -28,16 +32,20 @@
         android:ems="10"
         android:hint="Password"
         android:inputType="textPassword"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="282dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.234"
         tools:ignore="MissingConstraints" />
 
     <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            tools:ignore="MissingConstraints">
-    </LinearLayout>
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        tools:ignore="MissingConstraints"></LinearLayout>
 
     <TextView
         android:id="@+id/tenescuenta"
@@ -57,7 +65,7 @@
         app:layout_constraintVertical_bias="0.784" />
 
     <TextView
-        android:id="@+id/welcomeBtn"
+        android:id="@+id/backloginBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -77,13 +85,40 @@
 
     <Button
         android:id="@+id/registrarBtn"
+        android:layout_width="177dp"
+        android:layout_height="58dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/rounded_corner"
+        android:elevation="4dp"
+        android:orientation="vertical"
+        android:textColor="#494949"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.604"  />
+
+    <TextView
+        android:id="@+id/registertxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Registrar"
-        tools:layout_editor_absoluteX="129dp"
-        tools:layout_editor_absoluteY="327dp"
-        tools:ignore="MissingConstraints" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:fontFamily="@font/montserrat_bold"
+        android:gravity="top"
+        android:orientation="vertical"
+        android:text="Registrarse"
+        android:textAppearance="@style/iniciar_ses"
+        android:translationZ="90dp"
+        app:layout_constraintBottom_toBottomOf="@+id/registrarBtn"
+        app:layout_constraintEnd_toEndOf="@+id/registrarBtn"
+        app:layout_constraintHorizontal_bias="0.54"
+        app:layout_constraintStart_toStartOf="@+id/registrarBtn"
+        app:layout_constraintTop_toTopOf="@+id/registrarBtn"
+        app:layout_constraintVertical_bias="0.473" />
 
     <View
         android:id="@+id/bot_border2"
