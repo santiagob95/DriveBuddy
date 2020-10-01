@@ -40,10 +40,10 @@
         android:textAppearance="@style/registrate"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.039"
+        app:layout_constraintHorizontal_bias="0.025"
         app:layout_constraintStart_toEndOf="@+id/no_est_s_re"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.69" />
+        app:layout_constraintTop_toBottomOf="@+id/guestBtn"
+        app:layout_constraintVertical_bias="0.123" />
 
     <TextView
         android:id="@+id/no_est_s_re"
@@ -58,10 +58,10 @@
         android:textAppearance="@style/no_est_s_re"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.358"
+        app:layout_constraintHorizontal_bias="0.396"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/top_border"
-        app:layout_constraintVertical_bias="0.69" />
+        app:layout_constraintTop_toBottomOf="@+id/guestBtn"
+        app:layout_constraintVertical_bias="0.123" />
 
     <View
         android:id="@+id/top_border"

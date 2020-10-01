@@ -8,55 +8,6 @@
     tools:context=".AuthActivity">
 
 
-    <EditText
-        android:id="@+id/idEmail"
-        android:layout_width="269dp"
-        android:layout_height="38dp"
-        android:autofillHints=""
-        android:ems="10"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteX="86dp"
-        tools:layout_editor_absoluteY="278dp" />
-
-
-    <EditText
-        android:id="@+id/idPassword"
-        android:layout_width="269dp"
-        android:layout_height="35dp"
-        android:autofillHints=""
-        android:ems="10"
-        android:hint="Password"
-        android:inputType="textPassword"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteX="86dp"
-        tools:layout_editor_absoluteY="328dp" />
-
-    <View
-        android:id="@+id/line_1"
-        android:layout_width="296dp"
-        android:layout_height="2dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:background="@drawable/line"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="314dp" />
-
-    <View
-        android:id="@+id/line_"
-        android:layout_width="296dp"
-        android:layout_height="2dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:background="@drawable/line"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.513"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="364dp" />
-
     <View
         android:id="@+id/logo_drive_"
         android:layout_width="158dp"
@@ -86,34 +37,6 @@
         app:layout_constraintTop_toBottomOf="@+id/logo_drive_"
         app:layout_constraintVertical_bias="0.0" />
 
-
-    <View
-        android:id="@+id/ic_person"
-        android:layout_width="18dp"
-        android:layout_height="18dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:background="@drawable/ic_person"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.147"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.402" />
-
-    <View
-        android:id="@+id/ic_lock"
-        android:layout_width="18dp"
-        android:layout_height="18dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:background="@drawable/ic_lock"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.147"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ic_person"
-        app:layout_constraintVertical_bias="0.078" />
 
     <Button
         android:id="@+id/loginBtn"
@@ -274,7 +197,7 @@
         app:layout_constraintVertical_bias="0.861" />
 
     <View
-        android:id="@+id/vector"
+        android:id="@+id/facebook_logo"
         android:layout_width="35dp"
         android:layout_height="32dp"
         android:background="@drawable/ic_facebook"
@@ -284,5 +207,57 @@
         app:layout_constraintEnd_toStartOf="@+id/facebook"
         app:layout_constraintStart_toStartOf="@+id/facebookBtn"
         app:layout_constraintTop_toTopOf="@+id/facebookBtn" />
+
+    <View
+        android:id="@+id/google_logo"
+        android:layout_width="29dp"
+        android:layout_height="27dp"
+        android:background="@drawable/google_logo"
+        android:orientation="vertical"
+        android:translationZ="90dp"
+        app:layout_constraintBottom_toBottomOf="@+id/googleBtn"
+        app:layout_constraintEnd_toStartOf="@+id/google"
+        app:layout_constraintStart_toStartOf="@+id/googleBtn"
+        app:layout_constraintTop_toTopOf="@+id/googleBtn" />
+
+    <EditText
+        android:id="@+id/idPassword"
+        android:layout_width="301dp"
+        android:layout_height="52dp"
+        android:layout_marginBottom="32dp"
+        android:drawableStart="@drawable/ic_lock"
+        android:drawablePadding="12dp"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:textColor="@color/whiteColor"
+        android:theme="@style/logintxt"
+        app:layout_constraintBottom_toTopOf="@+id/loginBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.478"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/drive_buddy"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <EditText
+        android:id="@+id/idEmail"
+        android:layout_width="301dp"
+        android:layout_height="52dp"
+        android:drawableStart="@drawable/ic_person"
+        android:drawablePadding="12dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:paddingStart="10.5dp"
+        android:paddingEnd="12dp"
+        android:textColor="@color/whiteColor"
+        android:textColorHint="@color/whiteColor"
+        android:theme="@style/logintxt"
+        app:layout_constraintBottom_toTopOf="@+id/idPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/drive_buddy"
+        app:layout_constraintVertical_bias="0.518" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
