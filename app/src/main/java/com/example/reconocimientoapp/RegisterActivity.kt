@@ -3,6 +3,7 @@ package com.example.reconocimientoapp
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_auth.*
@@ -52,6 +53,7 @@ class RegisterActivity : AppCompatActivity() {
                     idPassword.text.toString()
                 ).addOnCompleteListener {
                     if (it.isSuccessful) {
+                        Toast.makeText(this , "¡Registro exitoso!", Toast.LENGTH_SHORT).show()
                         showHome(it.result?.user?.email ?: "")
                         val intent = Intent(this, AuthActivity::class.java)
                         startActivity(intent)

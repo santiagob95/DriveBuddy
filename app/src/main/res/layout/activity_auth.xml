@@ -23,6 +23,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.073" />
 
+
     <TextView
         android:id="@+id/drive_buddy"
         android:layout_width="258dp"
@@ -36,7 +37,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logo_drive_"
         app:layout_constraintVertical_bias="0.0" />
-
 
     <Button
         android:id="@+id/loginBtn"
@@ -54,7 +54,7 @@
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.604" />
+        app:layout_constraintVertical_bias="0.618" />
 
     <TextView
         android:id="@+id/iniciar_ses"
@@ -73,7 +73,7 @@
         app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.6" />
+        app:layout_constraintVertical_bias="0.613" />
 
 
     <TextView
@@ -228,14 +228,16 @@
         android:drawableStart="@drawable/ic_lock"
         android:drawablePadding="12dp"
         android:ems="10"
+        android:hint="Contraseña"
         android:inputType="textPassword"
         android:paddingStart="12dp"
         android:paddingEnd="12dp"
         android:textColor="@color/whiteColor"
+        android:textColorHint="@color/whiteColor"
+        android:textSize="15dp"
         android:theme="@style/logintxt"
         app:layout_constraintBottom_toTopOf="@+id/loginBtn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.478"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/drive_buddy"
         app:layout_constraintVertical_bias="1.0" />
@@ -245,6 +247,8 @@
         android:layout_width="301dp"
         android:layout_height="52dp"
         android:drawableStart="@drawable/ic_person"
+        android:hint="Email o nombre de usuario"
+        android:textSize="15dp"
         android:drawablePadding="12dp"
         android:ems="10"
         android:inputType="textPersonName"
