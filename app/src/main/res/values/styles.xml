@@ -22,6 +22,11 @@
         <item name="android:textColor">#FFFFFF</item>
     </style>
 
+    <style name="tenescuenta">
+        <item name="android:textSize">11sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
     <style name="drive_buddy">
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">#EBEE4D</item>
@@ -32,6 +37,11 @@
     </style>
 
     <style name="registrate">
+        <item name="android:textSize">11sp</item>
+        <item name="android:textColor">#EBEE4D</item>
+    </style>
+
+    <style name="ingresar">
         <item name="android:textSize">11sp</item>
         <item name="android:textColor">#EBEE4D</item>
     </style>
