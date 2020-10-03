@@ -16,6 +16,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthCredential
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.android.synthetic.main.activity_auth.*
 
@@ -36,20 +37,20 @@ class AuthActivity : AppCompatActivity() {
         }
 
         setup()
-        session()
+        //session()
     }
     override fun onStart(){
         super.onStart()
 
     }
-    private fun session(){
+    /*private fun session(){
         val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)
         val email = prefs.getString("email",null)
         if(email!=null){
 
             showHome(email)
         }
-    }
+    }*/
     private fun setup (){
         title ="Autenticacion"
 
@@ -90,6 +91,7 @@ class AuthActivity : AppCompatActivity() {
                         val credential = FacebookAuthProvider.getCredential(token.token)
                         FirebaseAuth.getInstance().signInWithCredential(credential).addOnCompleteListener {
                             if(it.isSuccessful){
+                                onCorrectLogin(it.result?.user?.email ?:"")
                                 showHome(it.result?.user?.email ?:"")
                             }else{
                                 showAlert()
@@ -107,6 +109,11 @@ class AuthActivity : AppCompatActivity() {
                 }
             })
         }
+    }
+    private fun onCorrectLogin(email:String){
+        val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
+        prefs.putString("email",email)
+        prefs.apply()
     }
     private fun showAlert(){
         val builder = AlertDialog.Builder(this)

@@ -50,11 +50,13 @@ class MainActivity : AppCompatActivity() {
         prefs.apply()
     }
 
+
     private fun replaceFragment (fragment: Fragment){
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.fragmentContainer, fragment)
         fragmentTransaction.commit()
     }
+
 
 
 }
