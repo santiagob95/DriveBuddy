@@ -12,6 +12,12 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="SplashTheme" parent="AppTheme.NoActionBar">
+        <item name="windowActionBar">true</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowBackground">@drawable/splashscreen</item>
+    </style>
+
     <style name="bienvenido">
         <item name="android:textSize">48sp</item>
         <item name="android:textColor">#FFFFFF</item>
