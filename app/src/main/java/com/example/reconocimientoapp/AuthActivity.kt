@@ -127,18 +127,11 @@ class AuthActivity : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
-                    //Log.d(TAG, "signInWithCredential:success")
                     showHome()
                 } else {
-                    // If sign in fails, display a message to the user.
-                    //Log.w(TAG, "signInWithCredential:failure", task.exception)
-                    // ...
-                    //Snackbar.make(view, "Authentication Failed.", Snackbar.LENGTH_SHORT).show()
-                    //updateUI(null)
                     showAlert()
                 }
 
-                // ...
             }
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -150,13 +143,6 @@ class AuthActivity : AppCompatActivity() {
             try {
                 val account = task.getResult(ApiException::class.java)!!
                     firebaseAuthWithGoogle(account.idToken!!)
-                    /*FirebaseAuth.getInstance().signInWithCredential(credential).addOnCompleteListener {
-                        if(it.isSuccessful){
-                            showHome(account.email ?:"")
-                        }else{
-                            showAlert()
-                        }
-                    }*/
             }catch (e:ApiException){
                 showAlert()
             }
