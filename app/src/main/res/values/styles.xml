@@ -12,12 +12,23 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="SplashTheme" parent="AppTheme.NoActionBar">
+        <item name="windowActionBar">true</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowBackground">@drawable/splashscreen</item>
+    </style>
+
     <style name="bienvenido">
         <item name="android:textSize">48sp</item>
         <item name="android:textColor">#FFFFFF</item>
     </style>
 
     <style name="no_est_s_re">
+        <item name="android:textSize">11sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="tenescuenta">
         <item name="android:textSize">11sp</item>
         <item name="android:textColor">#FFFFFF</item>
     </style>
@@ -32,6 +43,11 @@
     </style>
 
     <style name="registrate">
+        <item name="android:textSize">11sp</item>
+        <item name="android:textColor">#EBEE4D</item>
+    </style>
+
+    <style name="ingresar">
         <item name="android:textSize">11sp</item>
         <item name="android:textColor">#EBEE4D</item>
     </style>
