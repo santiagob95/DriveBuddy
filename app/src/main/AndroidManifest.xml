@@ -8,9 +8,7 @@
         android:value="face" />
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
@@ -19,7 +17,9 @@
         </activity>
         <activity
             android:name=".Welcome_Screen"
-            android:label="@string/title_activity_welcome__screen"
+            android:label="Drive Buddy"
+            android:roundIcon="@mipmap/ic_launcher_round"
+            android:icon="@mipmap/ic_launcher"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,7 +29,6 @@
         <activity
             android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
-
         </activity>
         <activity android:name=".AuthActivity"
             android:theme="@style/AppTheme.NoActionBar">

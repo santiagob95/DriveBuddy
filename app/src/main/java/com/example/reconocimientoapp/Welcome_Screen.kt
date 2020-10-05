@@ -32,7 +32,5 @@ class Welcome_Screen : AppCompatActivity() {
             // start your next activity
             startActivity(intent)
         }
-
-
     }
 }
