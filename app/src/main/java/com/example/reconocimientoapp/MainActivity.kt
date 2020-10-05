@@ -8,10 +8,13 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import com.facebook.login.LoginManager
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_home.*
 
 class MainActivity : AppCompatActivity() {
 
+    private var auth: FirebaseAuth = Firebase.auth
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when(item.itemId){
             R.id.home -> {
@@ -41,12 +44,11 @@ class MainActivity : AppCompatActivity() {
         replaceFragment(HomeFragment())
 
         //setup
-        val bundle = intent.extras
-        val email = bundle?.getString("email")
+
 
         //Guardado de datos (mantener sesion iniciada)
         val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
-        prefs.putString("email",email)
+        prefs.putString("email",auth.currentUser!!.email)
         prefs.apply()
     }
 
