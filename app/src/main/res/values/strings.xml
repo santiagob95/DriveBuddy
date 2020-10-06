@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ReconocimientoApp</string>
+    <string name="app_name">Drive Buddy</string>
     <string name="prefs_file">com.example.reconocimientoapp.PREFERENCE_FILE_KEY</string>
     <string name="facebook_app_id">1586766231508725</string>
     <string name="fb_login_protocol_scheme">fb1586766231508725</string>

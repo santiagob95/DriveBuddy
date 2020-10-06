@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -28,8 +29,20 @@ class Welcome_Screen : AppCompatActivity() {
         }
 
         guestBtn.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+            auth.signInAnonymously()
+                .addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
+                        // Sign in success, update UI with the signed-in user's information
+                        val intent = Intent(this, MainActivity::class.java)
+                        startActivity(intent)
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        showAlert()
+                    }
+
+                    // ...
+                }
+
         }
 
         registroBtn.setOnClickListener{
@@ -38,7 +51,14 @@ class Welcome_Screen : AppCompatActivity() {
             startActivity(intent)
         }
     }
-
+    private fun showAlert(){
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Error")
+        builder.setMessage("Hubo un error autenticando al usuario")
+        builder.setPositiveButton("aceptar",null)
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
+    }
     override fun onStart() {
         super.onStart()
         if(auth.currentUser!=null){
