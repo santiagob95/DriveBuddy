@@ -4,13 +4,21 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
+import androidx.appcompat.app.AlertDialog
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_auth.*
 import kotlinx.android.synthetic.main.activity_welcome__screen.*
+import kotlinx.coroutines.internal.ThreadSafeHeap
 
 class Welcome_Screen : AppCompatActivity() {
 
+    private var auth: FirebaseAuth = Firebase.auth
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        Thread.sleep(1000) //sacar esto despues, es para que se vea la pantalla de carga
+        setTheme(R.style.AppTheme_NoActionBar)
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_welcome__screen)
@@ -21,8 +29,20 @@ class Welcome_Screen : AppCompatActivity() {
         }
 
         guestBtn.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+            auth.signInAnonymously()
+                .addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
+                        // Sign in success, update UI with the signed-in user's information
+                        val intent = Intent(this, MainActivity::class.java)
+                        startActivity(intent)
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        showAlert()
+                    }
+
+                    // ...
+                }
+
         }
 
         registroBtn.setOnClickListener{
@@ -30,22 +50,20 @@ class Welcome_Screen : AppCompatActivity() {
             // start your next activity
             startActivity(intent)
         }
-        session()
-
-
     }
-    private fun session() {
-        val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)
-        val email = prefs.getString("email", null)
-        if (email != null) {
-            bienvenido.visibility = View.INVISIBLE
-            showHome(email)
-        }
+    private fun showAlert(){
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Error")
+        builder.setMessage("Hubo un error autenticando al usuario")
+        builder.setPositiveButton("aceptar",null)
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
     }
-    private fun showHome (email:String){
-        val intent = Intent(this, MainActivity::class.java).apply {
-            putExtra("email",email)
+    override fun onStart() {
+        super.onStart()
+        if(auth.currentUser!=null){
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
         }
-        startActivity(intent)
     }
 }
