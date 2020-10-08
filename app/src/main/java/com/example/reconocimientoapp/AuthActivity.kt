@@ -1,6 +1,7 @@
 package com.example.reconocimientoapp
 
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -23,6 +24,7 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_auth.*
+
 
 class AuthActivity : AppCompatActivity() {
     private val GOOGLE_SIGN_IN = 100
@@ -88,8 +90,10 @@ class AuthActivity : AppCompatActivity() {
                         val credential = FacebookAuthProvider.getCredential(token.token)
                         FirebaseAuth.getInstance().signInWithCredential(credential).addOnCompleteListener {
                             if(it.isSuccessful){
+                                Log.d("FacebookSignIn", "signInWithCredential:success")
                                 showHome()
                             }else{
+                                Log.w("FacebookSignIn", "signInWithCredential:failure", it.exception)
                                 showAlert()
                             }
                         }
@@ -102,9 +106,19 @@ class AuthActivity : AppCompatActivity() {
 
                 override fun onError(error: FacebookException?) {
                     showAlert()
+                    Log.w("FacebookSignIn", "signInWithCredential:failure", error)
                 }
             })
         }
+    }
+    private fun showAlert(err:String ){
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Error")
+        builder.setMessage("Hubo un error autenticando al usuario.\n Codigo de error: \n $err")
+        builder.setPositiveButton("aceptar", null)
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
+
     }
     private fun showAlert(){
         val builder = AlertDialog.Builder(this)
@@ -127,9 +141,12 @@ class AuthActivity : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
+                    Log.d("GoogleSignIn", "signInWithCredential:success")
                     showHome()
+
                 } else {
-                    showAlert()
+                    Log.w("GoogleSignIn", "signInWithCredential:failure", task.exception)
+                    showAlert(task.result.toString())
                 }
 
             }
@@ -142,9 +159,13 @@ class AuthActivity : AppCompatActivity() {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
                 val account = task.getResult(ApiException::class.java)!!
+
+
+                Log.d("GoogleSignIn", "firebaseAuthWithGoogle:" + account.id)
                     firebaseAuthWithGoogle(account.idToken!!)
             }catch (e:ApiException){
                 showAlert()
+                Log.w("GoogleSignIn", "Google sign in failed", e)
             }
 
         }
