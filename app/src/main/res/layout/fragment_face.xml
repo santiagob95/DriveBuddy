@@ -12,17 +12,16 @@
         <androidx.camera.view.PreviewView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/camera"
-            android:layout_above="@id/vista"
-            app:camera_facing="front" />
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:id="@+id/vista"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_toEndOf="@id/camera"
-        android:layout_alignParentBottom="true"/>
+            android:id="@+id/previewView"
+            android:layout_above="@+id/buton"
+            ></androidx.camera.view.PreviewView>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="take foto"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/buton"
+            ></Button>
 
 
 
