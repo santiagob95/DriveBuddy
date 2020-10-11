@@ -74,9 +74,5 @@ dependencies {
     // don't require this additional model):
     implementation 'com.google.firebase:firebase-ml-vision-face-model:20.0.1'
     api 'com.otaliastudios:cameraview:2.6.4'
-
-
-
-
     implementation 'com.google.firebase:firebase-auth-ktx:19.4.0'
 }

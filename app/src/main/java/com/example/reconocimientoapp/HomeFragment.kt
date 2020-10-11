@@ -1,6 +1,8 @@
 package com.example.reconocimientoapp
 
 import android.os.Bundle
+import android.os.SystemClock
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -32,6 +34,19 @@ class HomeFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
+    }
+
+
+    override fun onStart() {
+        super.onStart()
+        clock.start()
+        boton.setOnClickListener {
+            clock.stop()
+            var s = (SystemClock.elapsedRealtime()-clock.base)/1000
+            Log.e("seconds",s.toString())
+        }
+
     }
 
 
@@ -39,6 +54,7 @@ class HomeFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 

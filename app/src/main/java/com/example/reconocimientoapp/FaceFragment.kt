@@ -4,14 +4,17 @@ package com.example.reconocimientoapp
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.graphics.*
+import android.icu.text.UnicodeSetSpanner
 import android.media.Image
 import android.os.Bundle
+import android.os.SystemClock
 import android.util.Log
 import android.util.Size
 import android.view.LayoutInflater
 import android.view.Surface
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Chronometer
 import androidx.camera.core.*
 import androidx.camera.core.Camera
 import androidx.camera.core.impl.CaptureProcessor
@@ -21,10 +24,13 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.firebase.ml.vision.FirebaseVision
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
+import com.google.firebase.ml.vision.face.FirebaseVisionFaceContour
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetectorOptions
 import kotlinx.android.synthetic.main.fragment_face.*
 import java.io.ByteArrayOutputStream
 import java.nio.ByteBuffer
+import java.time.temporal.ChronoField
+import java.time.temporal.ChronoUnit
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -73,11 +79,13 @@ class FaceFragment : Fragment() {
     }
 
 
+    
 
 
+
+    @SuppressLint("WrongConstant")
     private fun startCamera(){
         val cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())
-
         cameraProviderFuture.addListener(Runnable {
             // Used to bind the lifecycle of cameras to the lifecycle owner
             val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
@@ -96,11 +104,14 @@ class FaceFragment : Fragment() {
                         setOnLumaListener(object : CustomImageAnalyzer.LumaListener {
                             override fun setOnLumaListener(imagen: FirebaseVisionImage) {
                                 requireActivity().runOnUiThread {
+
                                     detector.detectInImage(imagen)
                                         .addOnSuccessListener { faces ->
 
                                             if(faces.size!=0){
+
                                                 cara.text ="Reconocido correcto"
+
                                                 ojod.text="ojo derecho"+"%.2f".format(faces[0].rightEyeOpenProbability)
                                                 ojoi.text="ojo izquierdo"+"%.2f".format(faces[0].leftEyeOpenProbability)
                                                 sonrisa.text="sonrisa"+"%.2f".format(faces[0].smilingProbability)
