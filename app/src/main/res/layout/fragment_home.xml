@@ -78,14 +78,11 @@
             android:layout_height="wrap_content">
 
 
-            <com.aachartmodel.aainfographics.AAInfographicsLib.AAChartCreator.AAChartView
+            <ImageView
                 android:id="@+id/AAChartView"
                 android:layout_width="375dp"
                 android:layout_height="185dp"
-                app:seriesData="0=0"
-                app:seriesType="line"
-                app:seriesColor="#EBEE4D"
-                android:background="@drawable/consejos_rounded"
+                android:background="@drawable/graf"
                 android:title="Horas Manejadas Semanal"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
@@ -94,7 +91,7 @@
                 android:layout_marginStart="18dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="17dp"
-                tools:ignore="MissingClass" />
+                />
 
 
         </RelativeLayout>
