@@ -2,20 +2,28 @@ package com.example.reconocimientoapp
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import com.facebook.login.LoginManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_home.*
+import java.time.LocalDateTime
 
 class MainActivity : AppCompatActivity() {
 
     private var auth: FirebaseAuth = Firebase.auth
+
+    // Access a Cloud Firestore instance from your Activity
+    private val db = FirebaseFirestore.getInstance()
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when(item.itemId){
             R.id.home -> {
@@ -58,7 +66,28 @@ class MainActivity : AppCompatActivity() {
         prefs.apply()*/
     }
 
+     @RequiresApi(Build.VERSION_CODES.O)//esto es para la fecha de lastLogin
+     override fun onStart(){
+         super.onStart()
+         // Access a Cloud Firestore instance from your Activity
+        val user = hashMapOf(
+            "id" to auth.currentUser!!.tenantId.toString(),
+            "nomYApe" to auth.currentUser!!.displayName.toString() ,
+            "email" to auth.currentUser!!.email.toString(),
+            "foto" to auth.currentUser!!.photoUrl.toString(),
+            "lastLogin" to LocalDateTime.now().toString()
 
+        )
+        db.document("users/"+auth.currentUser!!.uid)
+            .set(user)
+            .addOnSuccessListener {
+                Log.d("Firestore DB", "Document added with ID: ${auth.currentUser!!.email.toString()}")
+            }
+            .addOnFailureListener { e ->
+                Log.w("Firestore DB", "Error adding document", e)
+            }
+
+    }
     private fun replaceFragment (fragment: Fragment){
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.fragmentContainer, fragment)
