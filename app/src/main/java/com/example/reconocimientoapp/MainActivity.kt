@@ -70,23 +70,40 @@ class MainActivity : AppCompatActivity() {
      override fun onStart(){
          super.onStart()
          // Access a Cloud Firestore instance from your Activity
-        val user = hashMapOf(
-            "id" to auth.currentUser!!.tenantId.toString(),
-            "nomYApe" to auth.currentUser!!.displayName.toString() ,
-            "email" to auth.currentUser!!.email.toString(),
-            "foto" to auth.currentUser!!.photoUrl.toString(),
-            "lastLogin" to LocalDateTime.now().toString()
-
-        )
-        db.document("users/"+auth.currentUser!!.uid)
-            .set(user)
-            .addOnSuccessListener {
-                Log.d("Firestore DB", "Document added with ID: ${auth.currentUser!!.email.toString()}")
-            }
-            .addOnFailureListener { e ->
-                Log.w("Firestore DB", "Error adding document", e)
-            }
-
+            val guestUser = hashMapOf(
+                "id" to auth.currentUser!!.uid,
+                "lastLogin" to LocalDateTime.now().toString()
+            )
+            val user = hashMapOf(
+                 "id" to auth.currentUser!!.uid,
+                 "nomYApe" to auth.currentUser!!.displayName.toString(),
+                 "email" to auth.currentUser!!.email.toString(),
+                 "foto" to auth.currentUser!!.photoUrl.toString(),
+                 "lastLogin" to LocalDateTime.now().toString()
+             )
+         if(auth.currentUser!!.isAnonymous){
+             db.document("users/"+auth.currentUser!!.uid)
+                 .set(guestUser)
+                 .addOnSuccessListener {
+                     Log.d("Firestore DB", "Document added with ID: ${auth.currentUser!!.email.toString()}")
+                 }
+                 .addOnFailureListener { e ->
+                     Log.w("Firestore DB", "Error adding document", e)
+                 }
+         }
+         else {
+             db.document("users/" + auth.currentUser!!.uid)
+                 .set(user)
+                 .addOnSuccessListener {
+                     Log.d(
+                         "Firestore DB",
+                         "Document added with ID: ${auth.currentUser!!.email.toString()}"
+                     )
+                 }
+                 .addOnFailureListener { e ->
+                     Log.w("Firestore DB", "Error adding document", e)
+                 }
+         }
     }
     private fun replaceFragment (fragment: Fragment){
         val fragmentTransaction = supportFragmentManager.beginTransaction()
