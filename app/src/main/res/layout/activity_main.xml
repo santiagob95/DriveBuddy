@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#494949"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:keepScreenOn="true">
 
 
     <View
@@ -59,8 +60,8 @@
 
     <TextView
         android:id="@+id/drive_buddy"
-        android:layout_width="70dp"
-        android:layout_height="51dp"
+        android:layout_width="78dp"
+        android:layout_height="61dp"
         android:fontFamily="@font/montserrat_bold"
         android:orientation="vertical"
         android:text="Drive Buddy"
@@ -114,3 +115,4 @@
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
