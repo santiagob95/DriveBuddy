@@ -12,8 +12,8 @@
 
     <View
         android:id="@+id/nav_top"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_width="410dp"
+        android:layout_height="78dp"
         android:background="#606060"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -68,10 +68,10 @@
         android:textAppearance="@style/drive_buddy"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/exitBtn"
-        app:layout_constraintHorizontal_bias="0.22"
+        app:layout_constraintHorizontal_bias="0.301"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.00999999" />
 
     <View
         android:id="@+id/exitBtn"
@@ -89,8 +89,8 @@
 
     <FrameLayout
         android:id="@+id/fragmentContainer"
-        android:layout_width="412dp"
-        android:layout_height="608dp"
+        android:layout_width="408dp"
+        android:layout_height="586dp"
         android:translationZ="10dp"
         app:layout_constraintBottom_toTopOf="@+id/bottom_navbar"
         app:layout_constraintEnd_toEndOf="parent"
@@ -108,10 +108,10 @@
         android:background="@drawable/ic_logo"
         app:layout_constraintBottom_toBottomOf="@+id/nav_top"
         app:layout_constraintEnd_toStartOf="@+id/drive_buddy"
-        app:layout_constraintHorizontal_bias="0.269"
+        app:layout_constraintHorizontal_bias="0.444"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.428" />
+        app:layout_constraintVertical_bias="0.52" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

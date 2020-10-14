@@ -20,8 +20,8 @@
 
         <activity android:name=".RegisterActivity"
             android:theme="@style/AppTheme.NoActionBar">
-            <!--            android:screenOrientation="portrait"-->
-            <!--            tools:ignore="LockedOrientationActivity">-->
+<!--            android:screenOrientation="portrait"-->
+<!--            tools:ignore="LockedOrientationActivity">-->
 
         </activity>
         <activity
@@ -61,13 +61,13 @@
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name" />
-        <!--            android:screenOrientation="portrait"-->
-        <!--            tools:ignore="LockedOrientationActivity"/>-->
+<!--            android:screenOrientation="portrait"-->
+<!--            tools:ignore="LockedOrientationActivity"/>-->
         <activity
             android:name="com.facebook.CustomTabActivity"
             android:exported="true">
-            <!--            android:screenOrientation="portrait"-->
-            <!--            tools:ignore="LockedOrientationActivity">-->
+<!--            android:screenOrientation="portrait"-->
+<!--            tools:ignore="LockedOrientationActivity">-->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
