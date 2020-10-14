@@ -44,12 +44,7 @@ class HomeFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        clock.start()
-        boton.setOnClickListener {
-            clock.stop()
-            var s = (SystemClock.elapsedRealtime()-clock.base)/1000
-            Log.e("seconds",s.toString())
-        }
+
 
     }
 
