@@ -16,10 +16,13 @@
   -->
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/camera_container"
     android:background="@android:color/black"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_marginTop="35dp"
+    android:orientation="horizontal">
 
     <androidx.camera.view.PreviewView
         android:id="@+id/previewView"
@@ -29,37 +32,74 @@
 
     <TextView
         android:textAlignment="center"
-        android:textSize="25sp"
-        android:text="sa"
+        android:textSize="25dp"
+        android:text="Rostro reconocido"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/cara" />
+        android:id="@+id/caracorrecto"
+        tools:ignore="MissingConstraints"
+        android:visibility="gone"
+        />
+    <TextView
+        android:textAlignment="center"
+        android:textSize="25dp"
+        android:text="Rostro no reconocido"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/caraincorrecto"
+        tools:ignore="MissingConstraints"
+        android:visibility="visible"/>
     <TextView
 
         android:textAlignment="center"
         android:paddingTop="50dp"
-        android:textSize="25sp"
-        android:text=""
+        android:textSize="25dp"
+        android:text="Ojos abiertos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/ojod" />
+        android:id="@+id/ojosabiertos"
+        tools:ignore="MissingConstraints"
+        android:visibility="gone"/>
     <TextView
 
+        android:textAlignment="center"
+        android:paddingTop="50dp"
+        android:textSize="25dp"
+        android:text="Ojos cerrados"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ojoscerrados"
+        tools:ignore="MissingConstraints"
+        android:visibility="gone"/>
+
+    <TextView
         android:textAlignment="center"
         android:paddingTop="100dp"
-        android:textSize="25sp"
-        android:text=""
+        android:textSize="25dp"
+        android:text="Bostezando"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/ojoi" />
+        android:id="@+id/sonrisabien"
+        tools:ignore="MissingConstraints"
+        android:visibility="gone"/>
     <TextView
-
         android:textAlignment="center"
-        android:paddingTop="150dp"
-        android:textSize="25sp"
-        android:text=""
+        android:paddingTop="100dp"
+        android:textSize="25dp"
+        android:text="No está bostezando"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/sonrisa" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:id="@+id/sonrisamal"
+        tools:ignore="MissingConstraints"
+        android:visibility="gone"/>
+<!--    <TextView-->
 
+<!--        android:textAlignment="center"-->
+<!--        android:paddingTop="150dp"-->
+<!--        android:textSize="25dp"-->
+<!--        android:text=""-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:id="@+id/sonrisa"-->
+<!--        tools:ignore="MissingConstraints" />-->
+</androidx.constraintlayout.widget.ConstraintLayout>
