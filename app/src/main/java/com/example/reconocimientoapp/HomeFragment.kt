@@ -43,7 +43,13 @@ class HomeFragment : Fragment() {
         userRef.get()
             .addOnSuccessListener {docSnapshot ->
                     val userDoc = docSnapshot.data
-                    val welcomeText = "Hola, " + userDoc!!.getValue("nomYApe") +"\nmail: " + userDoc.getValue("email") +"\nid: " + userDoc.getValue("id")
+                     var welcomeText = "Hola, "
+                if (auth.currentUser!!.isAnonymous){
+                        welcomeText = welcomeText + "Guest"+"\nmail: no vinculado" +"\nid: " + userDoc!!.getValue("id")
+                    }
+                else
+                    welcomeText = welcomeText + userDoc!!.getValue("nomYApe") +"\nmail: " + userDoc.getValue("email") +"\nid: " + userDoc.getValue("id")
+
                     emailText.text = welcomeText
 
 

@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
 
     private var auth: FirebaseAuth = Firebase.auth
 
+
     // Access a Cloud Firestore instance from your Activity
     private val db = FirebaseFirestore.getInstance()
 
@@ -45,6 +46,8 @@ class MainActivity : AppCompatActivity() {
             }
         }
         false
+
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,19 +56,12 @@ class MainActivity : AppCompatActivity() {
 
         bottom_navbar.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         replaceFragment(HomeFragment())
-
         //setup
         exitBtn.setOnClickListener {
             auth.signOut()
             val welcomeIntent = Intent(this,Welcome_Screen::class.java)
             startActivity(welcomeIntent)
         }
-
-
-        //Guardado de datos (mantener sesion iniciada)
-        /*val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
-        prefs.putString("email",auth.currentUser!!.email)
-        prefs.apply()*/
     }
 
      private fun isUserInFirestore(): Boolean {
