@@ -67,9 +67,10 @@
         android:textAppearance="@style/drive_buddy"
         app:layout_constraintBottom_toBottomOf="@+id/nav_top"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.037"
+        app:layout_constraintHorizontal_bias="0.041"
         app:layout_constraintStart_toEndOf="@+id/line_23"
-        app:layout_constraintTop_toTopOf="@+id/nav_top" />
+        app:layout_constraintTop_toTopOf="@+id/nav_top"
+        app:layout_constraintVertical_bias="0.434" />
 
     <View
         android:id="@+id/exitBtn"
