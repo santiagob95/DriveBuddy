@@ -79,8 +79,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="600dp"
-            android:layout_marginBottom="100dp">
+            android:layout_height="600dp">
 
 
             <TextView
@@ -114,92 +113,105 @@
                 app:layout_constraintTop_toBottomOf="@+id/title1" />
 
 
-
-
-
-
             <View
-                android:id="@+id/view0"
+                android:id="@+id/view3"
                 android:layout_width="140dp"
                 android:layout_height="183dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="6dp"
                 android:background="@drawable/consejos_rounded"
                 android:translationZ="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.122"
+                app:layout_constraintHorizontal_bias="0.827"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.038"
+                app:layout_constraintTop_toBottomOf="@+id/view1"
+                app:layout_constraintVertical_bias="0.0"
                 tools:ignore="DuplicateIds,MissingConstraints" />
 
             <View
                 android:id="@+id/view1"
                 android:layout_width="139dp"
                 android:layout_height="183dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="6dp"
                 android:background="@drawable/consejos_rounded"
                 android:translationZ="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.106"
-                app:layout_constraintStart_toEndOf="@+id/view0"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.038"
-                tools:ignore="DuplicateIds,MissingConstraints" />
-
-            <View
-                android:id="@+id/view2"
-                android:layout_width="140dp"
-                android:layout_height="183dp"
-                android:background="@drawable/consejos_rounded"
-                android:translationZ="10dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.122"
+                app:layout_constraintHorizontal_bias="0.826"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view0"
-                app:layout_constraintVertical_bias="0.036"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.033"
                 tools:ignore="DuplicateIds,MissingConstraints" />
 
             <View
-                android:id="@+id/view3"
+                android:id="@+id/view5"
                 android:layout_width="140dp"
                 android:layout_height="183dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="6dp"
                 android:background="@drawable/consejos_rounded"
                 android:translationZ="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.108"
-                app:layout_constraintStart_toEndOf="@+id/view2"
-                app:layout_constraintTop_toBottomOf="@+id/view1"
-                app:layout_constraintVertical_bias="0.036"
+                app:layout_constraintHorizontal_bias="0.827"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view3"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <View
+                android:id="@+id/view0"
+                android:layout_width="140dp"
+                android:layout_height="183dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:background="@drawable/consejos_rounded"
+                android:translationZ="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.177"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.031"
                 tools:ignore="DuplicateIds,MissingConstraints" />
 
             <View
                 android:id="@+id/view4"
                 android:layout_width="140dp"
                 android:layout_height="183dp"
+                android:layout_marginStart="6dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
                 android:background="@drawable/consejos_rounded"
                 android:translationZ="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.122"
+                app:layout_constraintHorizontal_bias="0.177"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/view2"
                 app:layout_constraintVertical_bias="0.0" />
 
             <View
-                android:id="@+id/view5"
+                android:id="@+id/view2"
                 android:layout_width="140dp"
                 android:layout_height="183dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
                 android:background="@drawable/consejos_rounded"
                 android:translationZ="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.108"
-                app:layout_constraintStart_toEndOf="@+id/view4"
-                app:layout_constraintTop_toBottomOf="@+id/view3"
-                app:layout_constraintVertical_bias="0.259" />
+                app:layout_constraintHorizontal_bias="0.177"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view0"
+                app:layout_constraintVertical_bias="0.004"
+                tools:ignore="DuplicateIds,MissingConstraints" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
