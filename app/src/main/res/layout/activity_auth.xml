@@ -26,14 +26,14 @@
 
     <TextView
         android:id="@+id/drive_buddy"
-        android:layout_width="258dp"
-        android:layout_height="63dp"
+        android:layout_width="293dp"
+        android:layout_height="60dp"
         android:fontFamily="@font/montserrat_bold"
         android:text="Drive Buddy"
         android:textAppearance="@style/loginTitle"
         app:layout_constraintBottom_toTopOf="@+id/loginBtn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.677"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logo_drive_"
         app:layout_constraintVertical_bias="0.0" />
@@ -56,10 +56,11 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.618" />
 
+
     <TextView
         android:id="@+id/iniciar_ses"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="126dp"
+        android:layout_height="36dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:fontFamily="@font/montserrat_bold"
@@ -70,15 +71,14 @@
         android:translationZ="90dp"
         app:layout_constraintBottom_toBottomOf="@+id/bot_border2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintHorizontal_bias="0.508"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.613" />
-
+        app:layout_constraintVertical_bias="0.612" />
 
     <TextView
         android:id="@+id/no_est_s_re"
-        android:layout_width="124dp"
+        android:layout_width="139dp"
         android:layout_height="18dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
@@ -95,8 +95,8 @@
 
     <TextView
         android:id="@+id/makeregisterBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="74dp"
+        android:layout_height="18dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:clickable="true"
@@ -152,8 +152,8 @@
 
     <TextView
         android:id="@+id/facebook"
-        android:layout_width="94dp"
-        android:layout_height="32dp"
+        android:layout_width="104dp"
+        android:layout_height="31dp"
         android:fontFamily="@font/montserrat_bold"
         android:orientation="vertical"
         android:text="Facebook"
@@ -161,15 +161,15 @@
         android:translationZ="90dp"
         app:layout_constraintBottom_toBottomOf="@+id/facebookBtn"
         app:layout_constraintEnd_toEndOf="@+id/facebookBtn"
-        app:layout_constraintHorizontal_bias="0.838"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/facebookBtn"
         app:layout_constraintTop_toTopOf="@+id/facebookBtn"
-        app:layout_constraintVertical_bias="0.642" />
+        app:layout_constraintVertical_bias="0.6" />
 
     <TextView
         android:id="@+id/google"
-        android:layout_width="67dp"
-        android:layout_height="28dp"
+        android:layout_width="88dp"
+        android:layout_height="27dp"
         android:fontFamily="@font/montserrat_bold"
         android:orientation="vertical"
         android:text="Google"
@@ -177,9 +177,10 @@
         android:translationZ="90dp"
         app:layout_constraintBottom_toBottomOf="@+id/googleBtn"
         app:layout_constraintEnd_toEndOf="@+id/googleBtn"
-        app:layout_constraintHorizontal_bias="0.621"
+        app:layout_constraintHorizontal_bias="0.77"
         app:layout_constraintStart_toStartOf="@+id/googleBtn"
-        app:layout_constraintTop_toTopOf="@+id/googleBtn" />
+        app:layout_constraintTop_toTopOf="@+id/googleBtn"
+        app:layout_constraintVertical_bias="0.473" />
 
     <View
         android:id="@+id/facebookBtn"
