@@ -5,24 +5,32 @@ import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.graphics.*
 import android.media.Image
+import android.media.RingtoneManager
+import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.os.SystemClock
 import android.util.Log
 import android.util.Size
 import android.view.LayoutInflater
 import android.view.Surface
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.camera.core.*
 import androidx.camera.core.Camera
-import androidx.camera.core.impl.CaptureProcessor
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.facebook.FacebookSdk.getApplicationContext
 import com.google.firebase.ml.vision.FirebaseVision
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetectorOptions
 import kotlinx.android.synthetic.main.fragment_face.*
+import kotlinx.android.synthetic.main.fragment_face.view.*
 import java.io.ByteArrayOutputStream
 import java.nio.ByteBuffer
 import java.util.concurrent.ExecutorService
@@ -39,6 +47,7 @@ class FaceFragment : Fragment() {
     private var camera:Camera?= null
     private val mCamera: Camera? = null
     val realTimeOpts = FirebaseVisionFaceDetectorOptions.Builder()
+
         .setClassificationMode(FirebaseVisionFaceDetectorOptions.ALL_CLASSIFICATIONS)
         .build()
 
@@ -61,25 +70,62 @@ class FaceFragment : Fragment() {
     }
 
 
-
+private var root: View? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        startCamera()
-        cameraExecutor=Executors.newSingleThreadExecutor()
-        return inflater.inflate(R.layout.fragment_face, container, false)
+
+        if(allPermissionsGranted()) {
+            startCamera()
+            cameraExecutor = Executors.newSingleThreadExecutor()
+        }else{
+            ActivityCompat.requestPermissions(
+                requireActivity(), REQUIRED_CODE_PERMISSIONS, REQUIRED_PERMISSIONS)
+
+        }
+
+        root = inflater.inflate(R.layout.fragment_face, container, false)
+
+        return root
+    }
+
+    var inicio = false
+
+    override fun onStart() {
+        super.onStart()
+        iniciarViaje.setOnClickListener {
+            if(inicio==false) {
+                root!!.iniciarViaje.text="En viaje..."
+                root!!.duracionViaje.setBase(SystemClock.elapsedRealtime())
+                root!!.duracionViaje.start()
+                inicio = true
+
+            }
+            else {
+                root!!.iniciarViaje.text="Viaje finalizado"
+                root!!.duracionViaje.stop()
+
+
+            }
+        }
     }
 
 
 
 
+    var inicioContador=false
+
+
+
     private fun startCamera(){
+
         val cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())
 
         cameraProviderFuture.addListener(Runnable {
             // Used to bind the lifecycle of cameras to the lifecycle owner
+
             val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
 
             // Preview
@@ -88,31 +134,139 @@ class FaceFragment : Fragment() {
 
             val imageCapture = ImageCapture.Builder().build()
             imageAnalyzer = ImageAnalysis.Builder()
-                .setTargetResolution(Size(140,140))
+                .setTargetResolution(Size(100,100))
                 .build()
-
                 .also {
                     it.setAnalyzer(cameraExecutor, CustomImageAnalyzer().apply {
                         setOnLumaListener(object : CustomImageAnalyzer.LumaListener {
                             override fun setOnLumaListener(imagen: FirebaseVisionImage) {
                                 requireActivity().runOnUiThread {
-                                    detector.detectInImage(imagen)
-                                        .addOnSuccessListener { faces ->
+                                    if(inicioContador==true && ((SystemClock.elapsedRealtime() - contador.getBase())/1000) >=2 && inicio==true){
+                                        val notification: Uri =
+                                            RingtoneManager.getDefaultUri(
+                                                RingtoneManager.TYPE_NOTIFICATION
+                                            )
+                                        val r = RingtoneManager.getRingtone(
+                                            getApplicationContext(),
+                                            notification
+                                        )
+                                        r.play()
+                                        inicioContador=false
+                                        root!!.contador.setBase(SystemClock.elapsedRealtime())
+                                    }
+                                    if (inicio == true) {
+                                        detector.detectInImage(imagen)
+                                            .addOnSuccessListener { faces ->
+                                                if (faces.size != 0) {
 
-                                            if(faces.size!=0){
-                                                cara.text ="Reconocido correcto"
-                                                ojod.text="ojo derecho"+"%.2f".format(faces[0].rightEyeOpenProbability)
-                                                ojoi.text="ojo izquierdo"+"%.2f".format(faces[0].leftEyeOpenProbability)
-                                                sonrisa.text="sonrisa"+"%.2f".format(faces[0].smilingProbability)
-                                            }else{
-                                                cara.text ="Reconocido incorrecto"
-                                                ojod.text="NaN"
-                                                ojoi.text="NaN"
-                                                sonrisa.text="NaN"
+
+                                                    if (faces[0].leftEyeOpenProbability < 0.3 && faces[0].rightEyeOpenProbability < 0.3) {
+                                                        if (inicioContador == false) {
+                                                            inicioContador = true
+                                                            root!!.contador.setBase(SystemClock.elapsedRealtime())
+                                                            root!!.contador.start()
+                                                        }
+                                                    } else {
+                                                        inicioContador = false
+                                                        root!!.contador.stop()
+                                                    }
+
+                                                }
                                             }
-                                        }
+                                    }else{
+                                        inicioContador = false
+                                        root!!.contador.stop()
+                                    }
+                                                /*if (faces.size != 0) {
+                                                        root!!.caracorrecto.visibility = View.VISIBLE
+                                                        root!!.caraincorrecto.visibility = View.GONE
+                                                    if (faces[0].rightEyeOpenProbability < 0.1000 || faces[0].leftEyeOpenProbability < 0.1000) {
+                                                        root!!.ojoscerrados.visibility = View.VISIBLE
+                                                        root!!.ojosabiertos.visibility = View.GONE
+                                                        val notification: Uri =
+                                                            RingtoneManager.getDefaultUri(
+                                                                RingtoneManager.TYPE_NOTIFICATION
+                                                            )
+                                                        val r = RingtoneManager.getRingtone(
+                                                            getApplicationContext(),
+                                                            notification
+                                                        )
+                                                        r.play()
+                                                    }else{
+                                                        root!!.ojoscerrados.visibility = View.GONE
+                                                        root!!.ojosabiertos.visibility = View.VISIBLE
+                                                    }
+                                                    if (faces[0].smilingProbability > 0.3777) {
+                                                        root!!.sonrisabien.visibility = View.VISIBLE
+                                                        root!!.sonrisamal.visibility = View.GONE
+                                                        val notification: Uri =
+                                                            RingtoneManager.getDefaultUri(
+                                                                RingtoneManager.TYPE_NOTIFICATION
+                                                            )
+                                                        val r = RingtoneManager.getRingtone(
+                                                            getApplicationContext(),
+                                                            notification
+                                                        )
+                                                        r.play()
+                                                    }else{
+                                                        root!!.sonrisabien.visibility = View.GONE
+                                                        root!!.sonrisamal.visibility = View.VISIBLE
+                                                    }
+    //                                                cara.text = "Reconocido correcto"
+    //                                                if (faces[0].smilingProbability > 0.6777) {
+    //                                                    sonrisa.text =
+    //                                                        "sonrisa" + "%.3f".format(faces[0].smilingProbability)
+    //                                                    val notification: Uri =
+    //                                                        RingtoneManager.getDefaultUri(
+    //                                                            RingtoneManager.TYPE_NOTIFICATION
+    //                                                        )
+    //                                                    val r = RingtoneManager.getRingtone(
+    //                                                        getApplicationContext(),
+    //                                                        notification
+    //                                                    )
+    //                                                    r.play()
+    //                                                } else {
+    //                                                    sonrisa.text = "NaN"
+    //                                                }
+    //                                                if (faces[0].rightEyeOpenProbability < 0.1000 || faces[0].leftEyeOpenProbability < 0.1000) {
+    //                                                    val notification: Uri =
+    //                                                        RingtoneManager.getDefaultUri(
+    //                                                            RingtoneManager.TYPE_NOTIFICATION
+    //                                                        )
+    //                                                    val r = RingtoneManager.getRingtone(
+    //                                                        getApplicationContext(),
+    //                                                        notification
+    //                                                    )
+    //                                                    r.play()
+    //                                                } else {
+    //                                                    ojod.text =
+    //                                                        "ojo derecho" + "%.3f".format(faces[0].rightEyeOpenProbability)
+    //                                                    ojoi.text =
+    //                                                        "ojo izquierdo" + "%.3f".format(faces[0].leftEyeOpenProbability)
+    //                                                }
+    //                                                ojod.text =
+    //                                                    "ojo derecho" + "%.3f".format(faces[0].rightEyeOpenProbability)
+    //                                                ojoi.text =
+    //                                                    "ojo izquierdo" + "%.3f".format(faces[0].leftEyeOpenProbability)
+    //                                                sonrisa.text =
+    //                                                    "sonrisa" + "%.3f".format(faces[0].smilingProbability)
+    //                                            } else {
+    //                                                cara.text = "Reconocido incorrecto"
+    //                                                ojod.text = "NaN"
+    //                                                ojoi.text = "NaN"
+    //                                                sonrisa.text = "NaN"
+                                                }else{
+                                                        root!!.caraincorrecto.visibility = View.VISIBLE
+                                                        root!!.caracorrecto.visibility = View.GONE
+                                                    root!!.ojosabiertos.visibility = View.GONE
+                                                    root!!.ojoscerrados.visibility = View.GONE
+                                                    root!!.sonrisamal.visibility= View.GONE
+                                                    root!!.sonrisabien.visibility=View.GONE
+                                                }*/
 
-                                }
+
+
+                               }
                             }
 
 
@@ -164,7 +318,7 @@ class FaceFragment : Fragment() {
         override fun analyze(imageProxy: ImageProxy) {
             val mediaImage = imageProxy?.image
             if (mediaImage != null) {
-                val image = FirebaseVisionImage.fromMediaImage(mediaImage,0)
+                val image = FirebaseVisionImage.fromMediaImage(mediaImage,Surface.ROTATION_270)
                 mListener.setOnLumaListener(image)
                 imageProxy.close()
             }
@@ -212,20 +366,23 @@ class FaceFragment : Fragment() {
     }
 
     override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        if(requestCode == REQUIRED_PERMISSIONS){
-            if(allPermissionsGranted()){
+        requestCode: Int, permissions: Array<String>, grantResults:
+        IntArray) {
+        if (requestCode == REQUIRED_PERMISSIONS) {
+            if (allPermissionsGranted()) {
                 startCamera()
-            }else{
-                Log.e("e", "No se puede abrir")
+            } else {
+                Toast.makeText(requireContext(),
+                    "Permissions not granted by the user.",
+                    Toast.LENGTH_SHORT).show()
 
             }
         }
     }
-
+    override fun onDestroy() {
+        super.onDestroy()
+        cameraExecutor.shutdown()
+    }
 
     companion object {
         private const val TAG="Camerax"
@@ -240,3 +397,4 @@ class FaceFragment : Fragment() {
             }
     }
 }
+
