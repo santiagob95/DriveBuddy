@@ -65,7 +65,17 @@ class MainActivity : AppCompatActivity() {
         prefs.putString("email",auth.currentUser!!.email)
         prefs.apply()*/
     }
-
+    private fun isUserInFirestore(): Boolean {
+        var existe = false
+        val usersRef = db.collection("users").document(auth.currentUser!!.uid)
+        usersRef.get()
+            .addOnCompleteListener {
+                if(it.result.exists()){
+                    existe = true
+                }
+            }
+        return existe
+    }
      @RequiresApi(Build.VERSION_CODES.O)//esto es para la fecha de lastLogin
      override fun onStart(){
          super.onStart()

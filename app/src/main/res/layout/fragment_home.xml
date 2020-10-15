@@ -405,6 +405,15 @@
                     app:layout_constraintStart_toEndOf="@+id/imageView5"
                     app:layout_constraintTop_toTopOf="@+id/view3"
                     app:layout_constraintVertical_bias="0.74" />
+            <TextView
+                android:id="@+id/emailText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|end"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:text="@string/email"
+                tools:ignore="MissingConstraints" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

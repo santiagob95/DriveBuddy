@@ -39,7 +39,7 @@ private const val ARG_PARAM2 = "param2"
 class FaceFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
-    private var preview:Preview?= null
+    private var preview: Preview?= null
     private var camera:Camera?= null
     private val mCamera: Camera? = null
     val realTimeOpts = FirebaseVisionFaceDetectorOptions.Builder()
