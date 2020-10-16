@@ -33,8 +33,10 @@ class RegisterActivity : AppCompatActivity() {
         setup()
     }
 
-    private fun showHome() {
-        val homeIntent = Intent(this, MainActivity::class.java)
+    private fun showHome(nomYApe:String) {
+        val homeIntent = Intent(this, MainActivity::class.java).apply{
+            putExtra("nomYApe",nomYApe)
+        }
         startActivity(homeIntent)
     }
 
@@ -68,7 +70,7 @@ class RegisterActivity : AppCompatActivity() {
                         ).addOnCompleteListener {
                             if (it.isSuccessful) {
                                 Toast.makeText(this, "¡Registro exitoso!", Toast.LENGTH_SHORT).show()
-                                showHome()
+                                showHome(idNyA.text.toString())
                             } else {
                                 showAlert()
                             }
