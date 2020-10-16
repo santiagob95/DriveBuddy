@@ -10,7 +10,7 @@
 
     <TextView
         android:id="@+id/crearCuenta"
-        android:layout_width="262dp"
+        android:layout_width="297dp"
         android:layout_height="55dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
@@ -22,14 +22,14 @@
         android:textAppearance="@style/bienvenido"
         android:textSize="40sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.64"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/estas_listo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="186dp"
+        android:layout_height="18dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginBottom="604dp"
@@ -41,7 +41,7 @@
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@+id/bot_border2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.613"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/crearCuenta"
         app:layout_constraintVertical_bias="0.0" />
@@ -84,17 +84,17 @@
         android:theme="@style/logintxt"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/idUser" />
+        app:layout_constraintTop_toBottomOf="@+id/idNyA" />
 
     <EditText
-        android:id="@+id/idUser"
+        android:id="@+id/idNyA"
         android:layout_width="301dp"
         android:layout_height="52dp"
         android:layout_marginTop="20dp"
         android:drawableStart="@drawable/ic_person"
         android:drawablePadding="12dp"
         android:ems="10"
-        android:hint="Nombre de usuario"
+        android:hint="Nombre y apellido"
         android:inputType="textEmailAddress"
         android:paddingStart="10.5dp"
         android:paddingEnd="12dp"
@@ -147,8 +147,8 @@
 
     <TextView
         android:id="@+id/tenescuenta"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="138dp"
+        android:layout_height="18dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:fontFamily="@font/montserrat_bold"
@@ -164,11 +164,11 @@
 
     <TextView
         android:id="@+id/backloginBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="67dp"
+        android:layout_height="18dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginEnd="116dp"
+        android:layout_marginEnd="100dp"
         android:clickable="true"
         android:fontFamily="@font/montserrat_bold"
         android:gravity="top"
@@ -183,8 +183,8 @@
 
     <TextView
         android:id="@+id/registertxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="157dp"
+        android:layout_height="36dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:fontFamily="@font/montserrat_bold"
@@ -195,10 +195,9 @@
         android:translationZ="90dp"
         app:layout_constraintBottom_toBottomOf="@+id/registrarBtn"
         app:layout_constraintEnd_toEndOf="@+id/registrarBtn"
-        app:layout_constraintHorizontal_bias="0.54"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/registrarBtn"
-        app:layout_constraintTop_toTopOf="@+id/registrarBtn"
-        app:layout_constraintVertical_bias="0.473" />
+        app:layout_constraintTop_toTopOf="@+id/registrarBtn" />
 
     <View
         android:id="@+id/bot_border2"
