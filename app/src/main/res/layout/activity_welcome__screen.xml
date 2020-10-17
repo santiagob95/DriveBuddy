@@ -21,6 +21,7 @@
         android:textAppearance="@style/bienvenido"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.631"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.278" />
@@ -91,7 +92,6 @@
         android:text="@string/estas_listo"
         android:textAppearance="@style/estas_listo"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.454"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bienvenido" />
 
@@ -152,8 +152,8 @@
 
     <TextView
         android:id="@+id/ingresar_co"
-        android:layout_width="174dp"
-        android:layout_height="20dp"
+        android:layout_width="163dp"
+        android:layout_height="19dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:gravity="top"
@@ -162,10 +162,10 @@
         android:textAppearance="@style/ingresar_co"
         app:layout_constraintBottom_toBottomOf="@+id/guestBtn"
         app:layout_constraintEnd_toEndOf="@+id/guestBtn"
-        app:layout_constraintHorizontal_bias="0.944"
+        app:layout_constraintHorizontal_bias="0.965"
         app:layout_constraintStart_toStartOf="@+id/guestBtn"
         app:layout_constraintTop_toTopOf="@+id/guestBtn"
-        app:layout_constraintVertical_bias="0.485" />
+        app:layout_constraintVertical_bias="0.444" />
 
     <View
         android:id="@+id/bot_border"
