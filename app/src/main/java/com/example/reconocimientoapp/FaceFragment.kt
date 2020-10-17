@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
+import android.speech.tts.TextToSpeech
 import android.util.Log
 import android.util.Size
 import android.view.LayoutInflater
@@ -18,6 +19,7 @@ import android.view.Surface
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.camera.core.*
 import androidx.camera.core.Camera
 import androidx.camera.lifecycle.ProcessCameraProvider
@@ -33,6 +35,7 @@ import kotlinx.android.synthetic.main.fragment_face.*
 import kotlinx.android.synthetic.main.fragment_face.view.*
 import java.io.ByteArrayOutputStream
 import java.nio.ByteBuffer
+import java.util.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -57,7 +60,7 @@ class FaceFragment : Fragment() {
 
     private var imageAnalyzer:ImageAnalysis?=null
     private lateinit var cameraExecutor: ExecutorService
-
+    private lateinit var mTTS: TextToSpeech
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -92,7 +95,7 @@ private var root: View? = null
     }
 
     var inicio = false
-
+    var pestañeos = arrayListOf<String>()
     override fun onStart() {
         super.onStart()
         iniciarViaje.setOnClickListener {
@@ -106,13 +109,55 @@ private var root: View? = null
             else {
                 root!!.iniciarViaje.text="Viaje finalizado"
                 root!!.duracionViaje.stop()
-
+                showAlert(pestañeos.size.toString())
 
             }
         }
     }
 
+    private fun showAlert(pestañeos:String ){
+        var totalSegundos = ((SystemClock.elapsedRealtime()-duracionViaje.base)/1000).toInt()
+        var minutos=0
+        var horas=0
+        if(totalSegundos>=60){
+            minutos= totalSegundos/60
+            totalSegundos=totalSegundos-(minutos*60)
+            if(minutos>=60){
+                horas=minutos/60
+                minutos=minutos-(horas*60)
+            }
+        }
+        var h : String
+        var s : String
+        var m: String
+        if(horas<10){
+            h="0"+horas.toString()
+        }else{
+            h=horas.toString()
+        }
+        if(minutos<10){
+            m="0"+minutos.toString()
+        }else{
+            m=minutos.toString()
+        }
+        if(totalSegundos<10){
+            s="0"+totalSegundos.toString()
+        }else{
+            s=totalSegundos.toString()
+        }
 
+        var duracion = h+":"+m+":"+s
+        var fatigas = (pestañeos.toInt()/3).toString()
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Estadisticas del viaje")
+
+        builder.setMessage("Duracion del viaje: $duracion\nCantidad de pestañeos largos: $pestañeos\n Cantidad de fatigas detectadas: $fatigas")
+
+        builder.setPositiveButton("aceptar", null)
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
+
+    }
 
 
     var inicioContador=false
@@ -151,6 +196,13 @@ private var root: View? = null
                                             notification
                                         )
                                         r.play()
+                                        pestañeos.add(((((SystemClock.elapsedRealtime() - duracionViaje.getBase())/1000)/60).toString()))
+                                        /*mTTS = TextToSpeech(requireActivity(),TextToSpeech.OnInitListener { status->
+                                            t.text=status.toString()
+                                        })
+                                        //mTTS.language= Locale.ROOT
+
+                                        mTTS!!.speak("Are you sleeping", TextToSpeech.QUEUE_FLUSH, null,"")*/
                                         inicioContador=false
                                         root!!.contador.setBase(SystemClock.elapsedRealtime())
                                     }
@@ -318,7 +370,7 @@ private var root: View? = null
         override fun analyze(imageProxy: ImageProxy) {
             val mediaImage = imageProxy?.image
             if (mediaImage != null) {
-                val image = FirebaseVisionImage.fromMediaImage(mediaImage,Surface.ROTATION_270)
+                val image = FirebaseVisionImage.fromMediaImage(mediaImage,0)
                 mListener.setOnLumaListener(image)
                 imageProxy.close()
             }
