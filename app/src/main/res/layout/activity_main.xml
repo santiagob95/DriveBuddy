@@ -6,8 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#494949"
+    android:keepScreenOn="true"
     tools:context=".MainActivity"
-    android:keepScreenOn="true">
+    >
 
 
     <View
@@ -29,8 +30,8 @@
         android:layout_height="86dp"
         android:background="@drawable/rec_navbar"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:translationZ="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
@@ -44,9 +45,9 @@
         android:background="#606060"
         android:orientation="vertical"
         android:paddingLeft="20dp"
-        android:translationZ="90dp"
         android:paddingRight="20dp"
         android:paddingBottom="10dp"
+        android:translationZ="90dp"
         app:itemHorizontalTranslationEnabled="true"
         app:itemIconSize="50dp"
         app:itemIconTint="@drawable/drawer_item_color"
@@ -89,15 +90,15 @@
 
     <FrameLayout
         android:id="@+id/fragmentContainer"
-        android:layout_width="408dp"
-        android:layout_height="586dp"
+        android:layout_width="409dp"
+        android:layout_height="588dp"
         android:translationZ="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_navbar"
+        app:layout_constraintBottom_toTopOf="@+id/rectangle_5"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.384"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nav_top"
-        app:layout_constraintVertical_bias="0.447" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <View
         android:id="@+id/logo_drive_"
