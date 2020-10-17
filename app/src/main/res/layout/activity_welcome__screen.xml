@@ -81,17 +81,18 @@
 
     <TextView
         android:id="@+id/estas_listo"
-        android:layout_width="219dp"
-        android:layout_height="28dp"
+        android:layout_width="250dp"
+        android:layout_height="24dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/montserrat_bold"
         android:gravity="top"
         android:orientation="vertical"
         android:text="@string/estas_listo"
         android:textAppearance="@style/estas_listo"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.614"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bienvenido" />
 
