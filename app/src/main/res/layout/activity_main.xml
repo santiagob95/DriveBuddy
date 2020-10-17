@@ -7,7 +7,8 @@
     android:layout_height="match_parent"
     android:background="#494949"
     android:keepScreenOn="true"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    >
 
 
     <View

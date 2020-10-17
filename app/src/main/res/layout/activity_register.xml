@@ -130,8 +130,8 @@
 
     <Button
         android:id="@+id/registrarBtn"
-        android:layout_width="177dp"
-        android:layout_height="58dp"
+        android:layout_width="192dp"
+        android:layout_height="60dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:background="@drawable/rounded_corner"
@@ -195,9 +195,10 @@
         android:translationZ="90dp"
         app:layout_constraintBottom_toBottomOf="@+id/registrarBtn"
         app:layout_constraintEnd_toEndOf="@+id/registrarBtn"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.485"
         app:layout_constraintStart_toStartOf="@+id/registrarBtn"
-        app:layout_constraintTop_toTopOf="@+id/registrarBtn" />
+        app:layout_constraintTop_toTopOf="@+id/registrarBtn"
+        app:layout_constraintVertical_bias="0.458" />
 
     <View
         android:id="@+id/bot_border2"
