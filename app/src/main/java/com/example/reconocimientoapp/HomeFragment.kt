@@ -24,58 +24,57 @@ private val db = FirebaseFirestore.getInstance()
  * create an instance of this fragment.
  */
 class HomeFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
 
     override fun onStart() {
         super.onStart()
         val userRef = db.collection("users").document(auth.currentUser!!.uid)
 
-        userRef.get()
-            .addOnSuccessListener {docSnapshot ->
-                val userDoc = docSnapshot.data
-                var title ="Bienvenido de vuelta, "
 
-                if (auth.currentUser!!.isAnonymous){
-                    title = "Para acceder a las estadisticas registrate!"
+
+        userRef.get()
+            .addOnSuccessListener { docSnapshot ->
+                val userDoc = docSnapshot.data
+                var title = "Bienvenido de vuelta, "
+
+                if (auth.currentUser!!.isAnonymous) {
+                    mainTitle.text = "¡Registrate para ver tus estadisticas!"
+                    mainTitle.textAlignment = View.TEXT_ALIGNMENT_CENTER
+                    textView6.visibility = View.GONE
+                    registerback.visibility = View.VISIBLE
+                } else {
+                    mainTitle.text = title + userDoc!!.getValue("nomYApe")
+                    chargeData()
                 }
-                else
-                    mainTitle.text =  title + userDoc!!.getValue("nomYApe")
             }
 
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    fun chargeData() {
+        val params = arrayOf("233 hs","4","32", "12", "66 km/h","12%")
+        val titles = arrayOf("Tiempo de viaje total","Fatigas detectadas" ,"Pestaneo largo", "Bostezos", "Velocidad media","Porcentaje de viaje fatigado")
+
+        title0.text = titles[0]
+        title1.text = titles[1]
+        title2.text = titles[2]
+        title3.text = titles[3]
+        title4.text = titles[4]
+        title5.text = titles[5]
+        param0.text = params[0]
+        param1.text = params[1]
+        param2.text = params[2]
+        param3.text = params[3]
+        param4.text = params[4]
+        param5.text = params[5]
+    }
+
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HomeFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic fun newInstance(param1: String, param2: String) =
-            HomeFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
 }

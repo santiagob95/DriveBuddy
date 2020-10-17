@@ -11,28 +11,44 @@
 
     <TextView
         android:id="@+id/mainTitle"
-        android:layout_width="369dp"
-        android:layout_height="26dp"
+        android:layout_width="0dp"
+        android:layout_height="35dp"
         android:fontFamily="@font/montserrat_bold"
         android:text="Welcome_text"
         android:textAlignment="textStart"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/textView6"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintEnd_toStartOf="@+id/guideline5"
+        app:layout_constraintHorizontal_bias="0.485"
         app:layout_constraintStart_toStartOf="@+id/guideline4"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.876" />
+
+    <View
+        android:id="@+id/registerback"
+        android:layout_width="152dp"
+        android:layout_height="24dp"
+        android:background="@drawable/consejos_rounded"
+        android:isScrollContainer="false"
+        android:translationZ="10dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/estad_title"
+        app:layout_constraintEnd_toEndOf="@+id/mainTitle"
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="@+id/mainTitle"
+        app:layout_constraintTop_toBottomOf="@+id/mainTitle"
+        app:layout_constraintVertical_bias="0.481" />
 
     <TextView
         android:id="@+id/textView6"
-        android:layout_width="370dp"
+        android:layout_width="0dp"
         android:layout_height="31dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:fontFamily="@font/montserrat_bold"
+        android:paddingLeft="20dp"
         android:text="@string/viajes"
         android:textAlignment="textStart"
         android:textColor="#FFFFFF"
@@ -42,16 +58,15 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline4"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.93" />
 
     <TextView
         android:id="@+id/estad_title"
-        android:layout_width="225dp"
-        android:layout_height="27dp"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
         android:fontFamily="@font/montserrat_bold"
-        android:paddingLeft="15dp"
         android:text="Estadisticas generales"
-        android:textAlignment="textStart"
+        android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline2"
@@ -60,36 +75,6 @@
         app:layout_constraintStart_toStartOf="@+id/guideline4"
         app:layout_constraintTop_toTopOf="@+id/guideline3"
         app:layout_constraintVertical_bias="0.281" />
-
-    <TextView
-        android:id="@+id/title1"
-        android:layout_width="117dp"
-        android:layout_height="18dp"
-        android:fontFamily="@font/montserrat_bold"
-        android:text="Tiempo manejado "
-        android:textColor="#FFFFFF"
-        android:textSize="12sp"
-        android:translationZ="20dp"
-        app:layout_constraintBottom_toBottomOf="@+id/view0"
-        app:layout_constraintEnd_toEndOf="@+id/view0"
-        app:layout_constraintHorizontal_bias="0.492"
-        app:layout_constraintStart_toStartOf="@+id/view0"
-        app:layout_constraintTop_toTopOf="@+id/view0"
-        app:layout_constraintVertical_bias="0.157" />
-
-    <TextView
-        android:id="@+id/param1"
-        android:layout_width="113dp"
-        android:layout_height="57dp"
-        android:fontFamily="@font/montserrat_bold"
-        android:text="423 hs"
-        android:textColor="#EBEE4D"
-        android:textSize="35sp"
-        android:translationZ="20dp"
-        app:layout_constraintBottom_toBottomOf="@+id/view0"
-        app:layout_constraintEnd_toEndOf="@+id/view0"
-        app:layout_constraintStart_toStartOf="@+id/view0"
-        app:layout_constraintTop_toBottomOf="@+id/title1" />
 
 
     <androidx.constraintlayout.widget.Guideline
@@ -169,6 +154,40 @@
         app:layout_constraintVertical_bias="0.0"
         tools:ignore="DuplicateIds,MissingConstraints" />
 
+    <TextView
+        android:id="@+id/title0"
+        android:layout_width="154dp"
+        android:layout_height="40dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:text="Title_opc"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp"
+        android:translationZ="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/view0"
+        app:layout_constraintEnd_toEndOf="@+id/view0"
+        app:layout_constraintHorizontal_bias="0.584"
+        app:layout_constraintStart_toStartOf="@+id/view0"
+        app:layout_constraintTop_toTopOf="@+id/view0"
+        app:layout_constraintVertical_bias="0.173" />
+
+    <TextView
+        android:id="@+id/param0"
+        android:layout_width="156dp"
+        android:layout_height="55dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:text="Param"
+        android:textAlignment="center"
+        android:textColor="#EBEE4D"
+        android:textSize="30sp"
+        android:translationZ="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/view0"
+        app:layout_constraintEnd_toEndOf="@+id/view0"
+        app:layout_constraintHorizontal_bias="0.554"
+        app:layout_constraintStart_toStartOf="@+id/view0"
+        app:layout_constraintTop_toBottomOf="@+id/title0"
+        app:layout_constraintVertical_bias="0.361" />
+
     <View
         android:id="@+id/view1"
         android:layout_width="0dp"
@@ -178,10 +197,44 @@
         android:translationZ="10dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline7"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
-        app:layout_constraintHorizontal_bias="0.777"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline4"
         app:layout_constraintTop_toTopOf="@+id/guideline2"
         app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/title1"
+        android:layout_width="152dp"
+        android:layout_height="39dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:text="Title_opc"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp"
+        android:translationZ="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline7"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintHorizontal_bias="0.557"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toTopOf="@+id/guideline2"
+        app:layout_constraintVertical_bias="0.166" />
+
+    <TextView
+        android:id="@+id/param1"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:text="Param"
+        android:textAlignment="center"
+        android:textColor="#EBEE4D"
+        android:textSize="30sp"
+        android:translationZ="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline7"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintHorizontal_bias="0.58"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toBottomOf="@+id/title1"
+        app:layout_constraintVertical_bias="0.355" />
 
     <View
         android:id="@+id/view2"
@@ -196,6 +249,39 @@
         app:layout_constraintTop_toTopOf="@+id/guideline9"
         app:layout_constraintVertical_bias="0.0" />
 
+
+    <TextView
+        android:id="@+id/title2"
+        android:layout_width="152dp"
+        android:layout_height="39dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:text="Title_opc"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp"
+        android:translationZ="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline6"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintHorizontal_bias="0.517"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toTopOf="@+id/guideline9"
+        app:layout_constraintVertical_bias="0.191" />
+
+    <TextView
+        android:id="@+id/param2"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:text="Param"
+        android:textAlignment="center"
+        android:textColor="#EBEE4D"
+        android:textSize="30sp"
+        android:translationZ="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/view2"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toBottomOf="@+id/title2" />
+
     <View
         android:id="@+id/view3"
         android:layout_width="0dp"
@@ -206,6 +292,38 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline5"
         app:layout_constraintStart_toStartOf="@+id/guideline8"
         app:layout_constraintTop_toTopOf="@+id/guideline9" />
+
+    <TextView
+        android:id="@+id/title3"
+        android:layout_width="152dp"
+        android:layout_height="39dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:text="Title_opc"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp"
+        android:translationZ="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/view3"
+        app:layout_constraintEnd_toStartOf="@+id/guideline5"
+        app:layout_constraintHorizontal_bias="0.533"
+        app:layout_constraintStart_toStartOf="@+id/guideline8"
+        app:layout_constraintTop_toTopOf="@+id/guideline9"
+        app:layout_constraintVertical_bias="0.191" />
+
+    <TextView
+        android:id="@+id/param3"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:text="Param"
+        android:textAlignment="center"
+        android:textColor="#EBEE4D"
+        android:textSize="30sp"
+        android:translationZ="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/view3"
+        app:layout_constraintEnd_toStartOf="@+id/guideline5"
+        app:layout_constraintStart_toStartOf="@+id/guideline8"
+        app:layout_constraintTop_toBottomOf="@+id/title3" />
 
     <View
         android:id="@+id/view4"
@@ -218,6 +336,40 @@
         app:layout_constraintStart_toStartOf="@+id/guideline4"
         app:layout_constraintTop_toTopOf="@+id/guideline11" />
 
+    <TextView
+        android:id="@+id/title4"
+        android:layout_width="152dp"
+        android:layout_height="39dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:text="Title_opc"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp"
+        android:translationZ="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/view4"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintHorizontal_bias="0.448"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toTopOf="@+id/view4"
+        app:layout_constraintVertical_bias="0.121" />
+
+    <TextView
+        android:id="@+id/param4"
+        android:layout_width="152dp"
+        android:layout_height="48dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:text="Param"
+        android:textAlignment="center"
+        android:textColor="#EBEE4D"
+        android:textSize="30sp"
+        android:translationZ="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline10"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintHorizontal_bias="0.517"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toBottomOf="@+id/title4"
+        app:layout_constraintVertical_bias="0.452" />
+
     <View
         android:id="@+id/view5"
         android:layout_width="0dp"
@@ -229,6 +381,38 @@
         app:layout_constraintHorizontal_bias="0.476"
         app:layout_constraintStart_toStartOf="@+id/guideline8"
         app:layout_constraintTop_toTopOf="@+id/guideline11" />
+
+    <TextView
+        android:id="@+id/title5"
+        android:layout_width="152dp"
+        android:layout_height="39dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:text="Title_opc"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp"
+        android:translationZ="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/view5"
+        app:layout_constraintEnd_toStartOf="@+id/guideline5"
+        app:layout_constraintHorizontal_bias="0.466"
+        app:layout_constraintStart_toStartOf="@+id/guideline8"
+        app:layout_constraintTop_toTopOf="@+id/guideline11"
+        app:layout_constraintVertical_bias="0.121" />
+
+    <TextView
+        android:id="@+id/param5"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:text="Param"
+        android:textAlignment="center"
+        android:textColor="#EBEE4D"
+        android:textSize="30sp"
+        android:translationZ="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline10"
+        app:layout_constraintEnd_toStartOf="@+id/guideline5"
+        app:layout_constraintStart_toStartOf="@+id/guideline8"
+        app:layout_constraintTop_toBottomOf="@+id/title5" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline6"
@@ -250,7 +434,6 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.7" />
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
