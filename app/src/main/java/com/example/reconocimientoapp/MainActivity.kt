@@ -64,63 +64,63 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun isUserInFirestore(): Boolean {
-        var existe = false
-        val usersRef = db.collection("users").document(auth.currentUser!!.uid)
-        usersRef.get()
-            .addOnCompleteListener {
-                if(it.result.exists()){
-                    existe = true
-                }
-            }
-        return existe
-    }
-    @RequiresApi(Build.VERSION_CODES.O)//esto es para la fecha de lastLogin
-    override fun onStart(){
-        super.onStart()
+     private fun isUserInFirestore(): Boolean {
+         val usersRef = db.collection("users/").whereEqualTo("id",auth.currentUser!!.uid )
+         val exists = usersRef.get().isSuccessful
 
-        //No existe un documento para ese usuario (caso que se acabe de registrar)
-        if(!isUserInFirestore()){
-            val guestUser = hashMapOf(
-                "id" to auth.currentUser!!.uid,
-                "lastLogin" to LocalDateTime.now().toString()
-            )
-            val user = hashMapOf(
-                "id" to auth.currentUser!!.uid,
-                "nomYApe" to auth.currentUser!!.displayName.toString(),
-                "email" to auth.currentUser!!.email.toString(),
-                "foto" to auth.currentUser!!.photoUrl.toString(),
-                "lastLogin" to LocalDateTime.now().toString()
-            )
-            if(auth.currentUser!!.isAnonymous){
-                db.document("users/"+auth.currentUser!!.uid)
-                    .set(guestUser)
-                    .addOnSuccessListener {
-                        Log.d("Firestore DB", "Document added with ID: ${auth.currentUser!!.email.toString()}")
-                    }
-                    .addOnFailureListener { e ->
-                        Log.w("Firestore DB", "Error adding document", e)
-                    }
-            }
-            else {
-                db.document("users/" + auth.currentUser!!.uid)
-                    .set(user)
-                    .addOnSuccessListener {
-                        Log.d(
-                            "Firestore DB",
-                            "Document added with ID: ${auth.currentUser!!.email.toString()}"
-                        )
-                    }
-                    .addOnFailureListener { e ->
-                        Log.w("Firestore DB", "Error adding document", e)
-                    }
-            }
-        }
+         Log.v("docInDB", "el user ${auth.currentUser!!.uid} existe? $exists")
+         return false
+     }
+     @RequiresApi(Build.VERSION_CODES.O)//esto es para la fecha de lastLogin
+     override fun onStart(){
+         super.onStart()
+         val bundle = intent.extras
+         val nomYApe = bundle?.getString("nomYApe")
+         Log.d("Nombre y apellido", "el nombre y apellido es: $nomYApe")
+         //No existe un documento para ese usuario (caso que se acabe de registrar)
+         if(!isUserInFirestore()){
+             val guestUser = hashMapOf(
+                 "id" to auth.currentUser!!.uid,
+                 "lastLogin" to LocalDateTime.now().toString()
+             )
+             val user = hashMapOf(
+                 "id" to auth.currentUser!!.uid,
+                 "nomYApe" to if (!auth.currentUser!!.displayName.isNullOrBlank() ) auth.currentUser!!.displayName.toString() else nomYApe,
+                 "email" to auth.currentUser!!.email.toString(),
+                 "foto" to auth.currentUser!!.photoUrl.toString(),
+                 "lastLogin" to LocalDateTime.now().toString()
+             )
+             if(auth.currentUser!!.isAnonymous){
+                 db.document("users/"+auth.currentUser!!.uid)
+                     .set(guestUser)
+                     .addOnSuccessListener {
+                         Log.d("Firestore DB", "Document added with ID: ${auth.currentUser!!.email.toString()}")
+                     }
+                     .addOnFailureListener { e ->
+                         Log.w("Firestore DB", "Error adding document", e)
+                     }
+             }
+             else {
+                 db.document("users/" + auth.currentUser!!.uid)
+                     .set(user)
+                     .addOnSuccessListener {
+                         Log.d(
+                             "Firestore DB",
+                             "Document added with ID: ${auth.currentUser!!.email.toString()}"
+                         )
+                     }
+                     .addOnFailureListener { e ->
+                         Log.w("Firestore DB", "Error adding document", e)
+                     }
+             }
+         }
     }
     private fun replaceFragment (fragment: Fragment){
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.fragmentContainer, fragment)
         fragmentTransaction.commit()
     }
+
+
 
 }
