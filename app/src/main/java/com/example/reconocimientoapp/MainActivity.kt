@@ -66,20 +66,18 @@ class MainActivity : AppCompatActivity() {
     }
 
      private fun isUserInFirestore(): Boolean {
-         var existe = false
-         val usersRef = db.collection("users").document(auth.currentUser!!.uid)
-         usersRef.get()
-             .addOnCompleteListener {
-                 if(it.result.exists()){
-                     existe = true
-                 }
-             }
-         return existe
+         val usersRef = db.collection("users/").whereEqualTo("id",auth.currentUser!!.uid )
+         val exists = usersRef.get().isSuccessful
+
+         Log.v("docInDB", "el user ${auth.currentUser!!.uid} existe? $exists")
+         return false
      }
      @RequiresApi(Build.VERSION_CODES.O)//esto es para la fecha de lastLogin
      override fun onStart(){
          super.onStart()
-
+         val bundle = intent.extras
+         val nomYApe = bundle?.getString("nomYApe")
+         Log.d("Nombre y apellido", "el nombre y apellido es: $nomYApe")
          //No existe un documento para ese usuario (caso que se acabe de registrar)
          if(!isUserInFirestore()){
              val guestUser = hashMapOf(
@@ -88,7 +86,7 @@ class MainActivity : AppCompatActivity() {
              )
              val user = hashMapOf(
                  "id" to auth.currentUser!!.uid,
-                 "nomYApe" to auth.currentUser!!.displayName.toString(),
+                 "nomYApe" to if (!auth.currentUser!!.displayName.isNullOrBlank() ) auth.currentUser!!.displayName.toString() else nomYApe,
                  "email" to auth.currentUser!!.email.toString(),
                  "foto" to auth.currentUser!!.photoUrl.toString(),
                  "lastLogin" to LocalDateTime.now().toString()
