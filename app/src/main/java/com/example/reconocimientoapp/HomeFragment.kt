@@ -1,5 +1,6 @@
 package com.example.reconocimientoapp
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -10,6 +11,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.activity_register.*
+import kotlinx.android.synthetic.main.activity_welcome__screen.*
 import kotlinx.android.synthetic.main.fragment_home.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -32,21 +35,28 @@ class HomeFragment : Fragment() {
 
 
 
-        userRef.get()
-            .addOnSuccessListener { docSnapshot ->
+        userRef.get().addOnSuccessListener { docSnapshot ->
                 val userDoc = docSnapshot.data
                 var title = "Bienvenido de vuelta, "
 
                 if (auth.currentUser!!.isAnonymous) {
                     mainTitle.text = "¡Registrate para ver tus estadisticas!"
-                    mainTitle.textAlignment = View.TEXT_ALIGNMENT_CENTER
-                    textView6.visibility = View.GONE
+                    textView6.visibility = View.INVISIBLE
                     registerback.visibility = View.VISIBLE
+                    txtregis.visibility = View.VISIBLE
                 } else {
                     mainTitle.text = title + userDoc!!.getValue("nomYApe")
+                    mainTitle.textAlignment = View.TEXT_ALIGNMENT_TEXT_START
                     chargeData()
                 }
             }
+
+        registerback.setOnClickListener{
+            activity?.let{
+                val intent = Intent (it, RegisterActivity::class.java)
+                it.startActivity(intent)
+            }
+        }
 
     }
 
