@@ -33,8 +33,6 @@ class HomeFragment : Fragment() {
         super.onStart()
         val userRef = db.collection("users").document(auth.currentUser!!.uid)
 
-
-
         userRef.get().addOnSuccessListener { docSnapshot ->
                 val userDoc = docSnapshot.data
                 var title = "Bienvenido de vuelta, "
@@ -61,21 +59,25 @@ class HomeFragment : Fragment() {
     }
 
     fun chargeData() {
-        val params = arrayOf("233 hs","4","32", "12", "66 km/h","12%")
-        val titles = arrayOf("Tiempo de viaje total","Fatigas detectadas" ,"Pestaneo largo", "Bostezos", "Velocidad media","Porcentaje de viaje fatigado")
+        val viajesRef = db.collection("viajes").document(auth.currentUser!!.uid)
+        viajesRef.get().addOnSuccessListener { docSnapshot ->
+            val viajesDoc = docSnapshot.data
 
-        title0.text = titles[0]
-        title1.text = titles[1]
-        title2.text = titles[2]
-        title3.text = titles[3]
-        title4.text = titles[4]
-        title5.text = titles[5]
-        param0.text = params[0]
-        param1.text = params[1]
-        param2.text = params[2]
-        param3.text = params[3]
-        param4.text = params[4]
-        param5.text = params[5]
+            val titles = arrayOf("Tiempo de viaje total","Fatigas detectadas" ,"Pestaneo largo", "Bostezos", "Velocidad media","Kilometros recorridos")
+
+            title0.text = titles[0]
+            title1.text = titles[1]
+            title2.text = titles[2]
+            title3.text = titles[3]
+            title4.text = titles[4]
+            title5.text = titles[5]
+            param0.text = viajesDoc!!.getValue("tiempoTotal").toString() + " hs"
+            param1.text = viajesDoc!!.getValue("Fatiga").toString()
+            param2.text = viajesDoc!!.getValue("PestaneoLargo").toString()
+            param3.text = viajesDoc!!.getValue("Bostezo").toString()
+            param4.text = viajesDoc!!.getValue("velocidadMedia").toString() + " km/h"
+            param5.text = viajesDoc!!.getValue("kmRecorrido").toString() +" km"
+        }
     }
 
 
