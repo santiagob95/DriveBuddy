@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,13 +9,16 @@
     android:background="#494949"
     tools:context=".ConsFragment">
 
+
     <TextView
         android:id="@+id/viaj_seguro"
         android:layout_width="329dp"
         android:layout_height="49dp"
+        android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="24dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="16dp"
         android:fontFamily="@font/montserrat_bold"
         android:gravity="top"
         android:text="Viajá seguro con algunos                   para no manejar cansado"
@@ -27,8 +32,9 @@
         android:id="@+id/viaj_seguro2"
         android:layout_width="94dp"
         android:layout_height="33dp"
+        android:layout_alignTop="@+id/viaj_seguro"
+        android:layout_alignBottom="@+id/viaj_seguro"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
         android:fontFamily="@font/montserrat_bold"
         android:gravity="top"
         android:text="consejos"
@@ -36,92 +42,39 @@
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/viaj_seguro"
         app:layout_constraintEnd_toEndOf="@+id/viaj_seguro"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.987"
         app:layout_constraintStart_toStartOf="@+id/viaj_seguro"
         app:layout_constraintTop_toTopOf="@+id/viaj_seguro"
         app:layout_constraintVertical_bias="0.0" />
 
     <RelativeLayout
-        android:id="@+id/relativeLayout"
-        android:layout_width="410dp"
-        android:layout_height="626dp"
+        android:layout_width="match_parent"
+        android:layout_height="618dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viaj_seguro"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintTop_toBottomOf="@+id/viaj_seguro">
 
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_alignStart="@+id/rectangle_8"
-            android:layout_alignTop="@+id/rectangle_8"
-            android:layout_alignEnd="@+id/rectangle_8"
-            android:layout_alignBottom="@+id/rectangle_8"
-            android:layout_marginStart="305dp"
-            android:layout_marginTop="28dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="31dp"
-            android:clickable="true"
-            android:src="@drawable/ic_volume"
-            android:translationZ="12dp" />
 
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="281dp"
-            android:layout_height="33dp"
-            android:layout_alignStart="@+id/rectangle_8"
-            android:layout_alignTop="@+id/rectangle_8"
-            android:layout_alignEnd="@+id/rectangle_8"
-            android:layout_alignBottom="@+id/rectangle_8"
-            android:layout_marginStart="11dp"
-            android:layout_marginTop="9dp"
-            android:layout_marginEnd="59dp"
-            android:layout_marginBottom="52dp"
-            android:fontFamily="@font/montserrat_bold"
-            android:text="¡Hace esto antes de manejar!"
-            android:textColor="#EBEE4D"
-            android:textSize="18sp"
-            android:translationZ="12dp" />
-
-        <View
-            android:id="@+id/rectangle_8"
-            android:layout_width="wrap_content"
-            android:layout_height="91dp"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="7dp"
-            android:layout_marginLeft="7dp"
-            android:layout_marginTop="9dp"
-            android:layout_marginEnd="7dp"
-            android:layout_marginBottom="527dp"
-            android:background="@drawable/consejos_rounded"
-            android:translationZ="10dp" />
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="281dp"
-            android:layout_height="41dp"
-            android:layout_alignStart="@+id/rectangle_8"
-            android:layout_alignTop="@+id/rectangle_8"
-            android:layout_alignEnd="@+id/rectangle_8"
-            android:layout_alignBottom="@+id/rectangle_8"
-            android:layout_marginStart="11dp"
-            android:layout_marginTop="46dp"
-            android:layout_marginEnd="59dp"
-            android:layout_marginBottom="7dp"
-            android:fontFamily="@font/montserrat_bold"
-            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-            android:textColor="#FFFFFF"
-            android:textSize="10sp"
-            android:translationZ="12dp" />
-
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="4dp"
+            tools:itemCount="10"
+            tools:listitem="@layout/item_layout" />
     </RelativeLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
