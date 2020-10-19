@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -14,6 +15,7 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.activity_welcome__screen.*
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_home.view.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -33,23 +35,21 @@ class HomeFragment : Fragment() {
         super.onStart()
         val userRef = db.collection("users").document(auth.currentUser!!.uid)
 
-
-
         userRef.get().addOnSuccessListener { docSnapshot ->
-                val userDoc = docSnapshot.data
-                var title = "Bienvenido de vuelta, "
+            val userDoc = docSnapshot.data
+            var title = "Bienvenido de vuelta, "
 
-                if (auth.currentUser!!.isAnonymous) {
-                    mainTitle.text = "¡Registrate para ver tus estadisticas!"
-                    textView6.visibility = View.INVISIBLE
-                    registerback.visibility = View.VISIBLE
-                    txtregis.visibility = View.VISIBLE
-                } else {
-                    mainTitle.text = title + userDoc!!.getValue("nomYApe")
-                    mainTitle.textAlignment = View.TEXT_ALIGNMENT_TEXT_START
-                    chargeData()
-                }
+            if (auth.currentUser!!.isAnonymous) {
+                root!!.mainTitle.text = "¡Registrate para ver tus estadisticas!"
+                root!!.textView6.visibility = View.INVISIBLE
+                root!!.registerback.visibility = View.VISIBLE
+                root!!.txtregis.visibility = View.VISIBLE
+            } else {
+                root!!.mainTitle.text = title + userDoc!!.getValue("nomYApe")
+                root!!.mainTitle.textAlignment = View.TEXT_ALIGNMENT_TEXT_START
+                chargeData()
             }
+        }
 
         registerback.setOnClickListener{
             activity?.let{
@@ -61,30 +61,38 @@ class HomeFragment : Fragment() {
     }
 
     fun chargeData() {
-        val params = arrayOf("233 hs","4","32", "12", "66 km/h","12%")
-        val titles = arrayOf("Tiempo de viaje total","Fatigas detectadas" ,"Pestaneo largo", "Bostezos", "Velocidad media","Porcentaje de viaje fatigado")
+        val viajesRef = db.collection("viajes").document(auth.currentUser!!.uid)
+        viajesRef.get().addOnSuccessListener { docSnapshot ->
+            val viajesDoc = docSnapshot.data
 
-        title0.text = titles[0]
-        title1.text = titles[1]
-        title2.text = titles[2]
-        title3.text = titles[3]
-        title4.text = titles[4]
-        title5.text = titles[5]
-        param0.text = params[0]
-        param1.text = params[1]
-        param2.text = params[2]
-        param3.text = params[3]
-        param4.text = params[4]
-        param5.text = params[5]
+            val titles = arrayOf("Tiempo de viaje total","Fatigas detectadas" ,"Pestaneo largo", "Bostezos", "Velocidad media","Kilometros recorridos")
+
+            root!!.title0.text = titles[0]
+            root!!.title1.text = titles[1]
+            root!!.title2.text = titles[2]
+            root!!.title3.text = titles[3]
+            root!!.title4.text = titles[4]
+            root!!.title5.text = titles[5]
+            try {
+                root!!.param0.text = viajesDoc!!.getValue("tiempoTotal").toString() + " hs"
+                root!!.param1.text = viajesDoc!!.getValue("Fatiga").toString()
+                root!!.param2.text = viajesDoc!!.getValue("PestaneoLargo").toString()
+                root!!.param3.text = viajesDoc!!.getValue("Bostezo").toString()
+                root!!.param4.text = viajesDoc!!.getValue("velocidadMedia").toString() + " km/h"
+                root!!.param5.text = viajesDoc!!.getValue("kmRecorrido").toString() + " km"
+            }catch (e:Exception) {
+                Toast.makeText(getActivity(),e.message + " + No se encontro en la base de datos",Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
-
+    private var root: View? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        root= inflater.inflate(R.layout.fragment_home, container, false)
+        return root
     }
-
 }
