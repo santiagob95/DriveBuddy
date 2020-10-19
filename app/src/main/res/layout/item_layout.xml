@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cv_cardView"
+    android:layout_margin="4dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?selectableItemBackground"
+    app:cardCornerRadius="20dp">
+
+    <RelativeLayout
+        android:id="@+id/rl_wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#606060">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="80dp"
+            android:layout_height="43dp"
+            android:layout_alignStart="@+id/rectangle_8"
+            android:layout_alignTop="@+id/rectangle_8"
+            android:layout_alignEnd="@+id/rectangle_8"
+            android:layout_alignBottom="@+id/rectangle_8"
+            android:layout_marginStart="320dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="9dp"
+            android:layout_marginBottom="23dp"
+            android:clickable="true"
+            android:src="@drawable/ic_volume"
+            android:translationZ="12dp"
+            app:layout_constraintBottom_toBottomOf="@+id/rectangle_8"
+            app:layout_constraintEnd_toEndOf="@+id/rectangle_8"
+            app:layout_constraintHorizontal_bias="0.951"
+            app:layout_constraintStart_toStartOf="@+id/rectangle_8"
+            app:layout_constraintTop_toTopOf="@+id/rectangle_8"
+            app:layout_constraintVertical_bias="0.52" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="294dp"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/rectangle_8"
+            android:layout_alignTop="@+id/rectangle_8"
+            android:layout_alignEnd="@+id/rectangle_8"
+            android:layout_alignBottom="@+id/rectangle_8"
+            android:layout_marginStart="19dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="70dp"
+            android:layout_marginBottom="54dp"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="¡Hace esto antes de manejar!"
+            android:textColor="#EBEE4D"
+            android:textSize="18sp"
+            android:translationZ="12dp"
+            app:layout_constraintBottom_toBottomOf="@+id/rectangle_8"
+            app:layout_constraintEnd_toEndOf="@+id/rectangle_8"
+            app:layout_constraintHorizontal_bias="0.188"
+            app:layout_constraintStart_toStartOf="@+id/rectangle_8"
+            app:layout_constraintTop_toTopOf="@+id/rectangle_8"
+            app:layout_constraintVertical_bias="0.132" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="295dp"
+            android:layout_height="42dp"
+            android:layout_alignStart="@+id/rectangle_8"
+            android:layout_alignTop="@+id/rectangle_8"
+            android:layout_alignEnd="@+id/rectangle_8"
+            android:layout_alignBottom="@+id/rectangle_8"
+            android:layout_marginStart="19dp"
+            android:layout_marginTop="34dp"
+            android:layout_marginEnd="70dp"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+            android:textColor="#FFFFFF"
+            android:textSize="10sp"
+            android:translationZ="12dp"
+            app:layout_constraintBottom_toBottomOf="@+id/rectangle_8"
+            app:layout_constraintEnd_toEndOf="@+id/rectangle_8"
+            app:layout_constraintHorizontal_bias="0.188"
+            app:layout_constraintStart_toStartOf="@+id/rectangle_8"
+            app:layout_constraintTop_toTopOf="@+id/rectangle_8"
+            app:layout_constraintVertical_bias="0.733" />
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>
