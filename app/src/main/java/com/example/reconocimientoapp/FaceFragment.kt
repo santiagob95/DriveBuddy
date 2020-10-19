@@ -107,6 +107,7 @@ private var root: View? = null
             else {
                 root!!.iniciarViaje.text="Viaje finalizado"
                 root!!.duracionViaje.stop()
+                inicio=false
                 showAlert(pestañeos.size.toString())
 
             }
@@ -158,8 +159,9 @@ private var root: View? = null
 
         builder.setMessage("Duracion del viaje: $duracion\nCantidad de pestañeos largos: $pestañeos\n Cantidad de fatigas detectadas: $fatigas")
 
-        builder.setPositiveButton("aceptar", null)
+        builder.setPositiveButton("Aceptar", null)
         val dialog: AlertDialog = builder.create()
+
         dialog.show()
 
     }
@@ -218,7 +220,7 @@ private var root: View? = null
                                                 if (faces.size != 0) {
 
 
-                                                    if (faces[0].leftEyeOpenProbability < 0.3 && faces[0].rightEyeOpenProbability < 0.3) {
+                                                    if ((faces[0].leftEyeOpenProbability < 0.3 || faces[0].rightEyeOpenProbability < 0.3) || faces[0].smilingProbability>0.66) {
                                                         if (inicioContador == false) {
                                                             inicioContador = true
                                                             root!!.contador.setBase(SystemClock.elapsedRealtime())
