@@ -2,15 +2,14 @@ package com.example.reconocimientoapp
 
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Context.VIBRATOR_SERVICE
 import android.content.pm.PackageManager
 import android.graphics.*
 import android.media.Image
 import android.media.RingtoneManager
 import android.net.Uri
-import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.os.SystemClock
+import android.os.*
 import android.speech.tts.TextToSpeech
 import android.util.Log
 import android.util.Size
@@ -23,9 +22,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.camera.core.*
 import androidx.camera.core.Camera
 import androidx.camera.lifecycle.ProcessCameraProvider
-import androidx.camera.view.PreviewView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import com.facebook.FacebookSdk.getApplicationContext
 import com.google.firebase.ml.vision.FirebaseVision
@@ -35,7 +34,6 @@ import kotlinx.android.synthetic.main.fragment_face.*
 import kotlinx.android.synthetic.main.fragment_face.view.*
 import java.io.ByteArrayOutputStream
 import java.nio.ByteBuffer
-import java.util.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -46,7 +44,7 @@ private const val ARG_PARAM2 = "param2"
 class FaceFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
-    private var preview:Preview?= null
+    private var preview: Preview?= null
     private var camera:Camera?= null
     private val mCamera: Camera? = null
     val realTimeOpts = FirebaseVisionFaceDetectorOptions.Builder()
@@ -85,7 +83,8 @@ private var root: View? = null
             cameraExecutor = Executors.newSingleThreadExecutor()
         }else{
             ActivityCompat.requestPermissions(
-                requireActivity(), REQUIRED_CODE_PERMISSIONS, REQUIRED_PERMISSIONS)
+                requireActivity(), REQUIRED_CODE_PERMISSIONS, REQUIRED_PERMISSIONS
+            )
 
         }
 
@@ -100,22 +99,29 @@ private var root: View? = null
         super.onStart()
         iniciarViaje.setOnClickListener {
             if(inicio==false) {
-                root!!.iniciarViaje.text="En viaje..."
+                root!!.iniciarViaje.setBackgroundResource(R.drawable.finalv)
                 root!!.duracionViaje.setBase(SystemClock.elapsedRealtime())
                 root!!.duracionViaje.start()
                 inicio = true
 
             }
             else {
-                root!!.iniciarViaje.text="Viaje finalizado"
+                root!!.iniciarViaje.setBackgroundResource(R.drawable.inicio)
                 root!!.duracionViaje.stop()
                 showAlert(pestañeos.size.toString())
 
             }
         }
     }
-
-    private fun showAlert(pestañeos:String ){
+    fun Fragment.vibratePhone() {
+        val vibrator = context?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        if (Build.VERSION.SDK_INT >= 26) {
+            vibrator.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE))
+        } else {
+            vibrator.vibrate(500)
+        }
+    }
+    private fun showAlert(pestañeos: String){
         var totalSegundos = ((SystemClock.elapsedRealtime()-duracionViaje.base)/1000).toInt()
         var minutos=0
         var horas=0
@@ -179,14 +185,14 @@ private var root: View? = null
 
             val imageCapture = ImageCapture.Builder().build()
             imageAnalyzer = ImageAnalysis.Builder()
-                .setTargetResolution(Size(100,100))
+                .setTargetResolution(Size(100, 100))
                 .build()
                 .also {
                     it.setAnalyzer(cameraExecutor, CustomImageAnalyzer().apply {
                         setOnLumaListener(object : CustomImageAnalyzer.LumaListener {
                             override fun setOnLumaListener(imagen: FirebaseVisionImage) {
                                 requireActivity().runOnUiThread {
-                                    if(inicioContador==true && ((SystemClock.elapsedRealtime() - contador.getBase())/1000) >=2 && inicio==true){
+                                    if (inicioContador == true && ((SystemClock.elapsedRealtime() - contador.getBase()) / 1000) >= 2 && inicio == true) {
                                         val notification: Uri =
                                             RingtoneManager.getDefaultUri(
                                                 RingtoneManager.TYPE_NOTIFICATION
@@ -196,14 +202,15 @@ private var root: View? = null
                                             notification
                                         )
                                         r.play()
-                                        pestañeos.add(((((SystemClock.elapsedRealtime() - duracionViaje.getBase())/1000)/60).toString()))
+                                        vibratePhone()
+                                        pestañeos.add(((((SystemClock.elapsedRealtime() - duracionViaje.getBase()) / 1000) / 60).toString()))
                                         /*mTTS = TextToSpeech(requireActivity(),TextToSpeech.OnInitListener { status->
                                             t.text=status.toString()
                                         })
                                         //mTTS.language= Locale.ROOT
 
                                         mTTS!!.speak("Are you sleeping", TextToSpeech.QUEUE_FLUSH, null,"")*/
-                                        inicioContador=false
+                                        inicioContador = false
                                         root!!.contador.setBase(SystemClock.elapsedRealtime())
                                     }
                                     if (inicio == true) {
@@ -225,11 +232,11 @@ private var root: View? = null
 
                                                 }
                                             }
-                                    }else{
+                                    } else {
                                         inicioContador = false
                                         root!!.contador.stop()
                                     }
-                                                /*if (faces.size != 0) {
+                                    /*if (faces.size != 0) {
                                                         root!!.caracorrecto.visibility = View.VISIBLE
                                                         root!!.caraincorrecto.visibility = View.GONE
                                                     if (faces[0].rightEyeOpenProbability < 0.1000 || faces[0].leftEyeOpenProbability < 0.1000) {
@@ -317,8 +324,7 @@ private var root: View? = null
                                                 }*/
 
 
-
-                               }
+                                }
                             }
 
 
@@ -370,7 +376,7 @@ private var root: View? = null
         override fun analyze(imageProxy: ImageProxy) {
             val mediaImage = imageProxy?.image
             if (mediaImage != null) {
-                val image = FirebaseVisionImage.fromMediaImage(mediaImage,Surface.ROTATION_270)
+                val image = FirebaseVisionImage.fromMediaImage(mediaImage, Surface.ROTATION_270)
                 mListener.setOnLumaListener(image)
                 imageProxy.close()
             }
@@ -419,14 +425,17 @@ private var root: View? = null
 
     override fun onRequestPermissionsResult(
         requestCode: Int, permissions: Array<String>, grantResults:
-        IntArray) {
+        IntArray
+    ) {
         if (requestCode == REQUIRED_PERMISSIONS) {
             if (allPermissionsGranted()) {
                 startCamera()
             } else {
-                Toast.makeText(requireContext(),
+                Toast.makeText(
+                    requireContext(),
                     "Permissions not granted by the user.",
-                    Toast.LENGTH_SHORT).show()
+                    Toast.LENGTH_SHORT
+                ).show()
 
             }
         }
