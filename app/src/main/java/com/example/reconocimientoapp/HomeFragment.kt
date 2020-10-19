@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -71,12 +72,16 @@ class HomeFragment : Fragment() {
             title3.text = titles[3]
             title4.text = titles[4]
             title5.text = titles[5]
-            param0.text = viajesDoc!!.getValue("tiempoTotal").toString() + " hs"
-            param1.text = viajesDoc!!.getValue("Fatiga").toString()
-            param2.text = viajesDoc!!.getValue("PestaneoLargo").toString()
-            param3.text = viajesDoc!!.getValue("Bostezo").toString()
-            param4.text = viajesDoc!!.getValue("velocidadMedia").toString() + " km/h"
-            param5.text = viajesDoc!!.getValue("kmRecorrido").toString() +" km"
+            try {
+                param0.text = viajesDoc!!.getValue("tiempoTotal").toString() + " hs"
+                param1.text = viajesDoc!!.getValue("Fatiga").toString()
+                param2.text = viajesDoc!!.getValue("PestaneoLargo").toString()
+                param3.text = viajesDoc!!.getValue("Bostezo").toString()
+                param4.text = viajesDoc!!.getValue("velocidadMedia").toString() + " km/h"
+                param5.text = viajesDoc!!.getValue("kmRecorrido").toString() + " km"
+            }catch (e:Exception) {
+                Toast.makeText(getActivity(),e.message + " + No se encontro en la base de datos",Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
