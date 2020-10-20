@@ -243,7 +243,7 @@ private var root: View? = null
                                         detector.detectInImage(imagen)
                                             .addOnSuccessListener { faces ->
                                                 if (faces.size != 0) {
-
+                                                    reconocer.text="Reconocimiento correcto"
 
                                                     if ((faces[0].leftEyeOpenProbability < 0.3 && faces[0].rightEyeOpenProbability < 0.3)) {
                                                         if (inicioContador == false) {
@@ -266,6 +266,8 @@ private var root: View? = null
                                                         root!!.contadorBostezo.stop()
                                                     }
 
+                                                }else{
+                                                    reconocer.text="Reconocimiento incorrecto"
                                                 }
                                             }
                                     } else {
@@ -414,7 +416,7 @@ private var root: View? = null
         override fun analyze(imageProxy: ImageProxy) {
             val mediaImage = imageProxy?.image
             if (mediaImage != null) {
-                val image = FirebaseVisionImage.fromMediaImage(mediaImage,0)
+                val image = FirebaseVisionImage.fromMediaImage(mediaImage,Surface.ROTATION_270)
                 mListener.setOnLumaListener(image)
                 imageProxy.close()
             }
