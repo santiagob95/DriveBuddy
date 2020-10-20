@@ -3,7 +3,6 @@ package com.example.reconocimientoapp
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Context.VIBRATOR_SERVICE
 import android.content.pm.PackageManager
 import android.graphics.*
 import android.media.Image
@@ -24,7 +23,6 @@ import androidx.camera.core.Camera
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import com.facebook.FacebookSdk.getApplicationContext
 import com.google.firebase.ml.vision.FirebaseVision
@@ -243,7 +241,7 @@ private var root: View? = null
                                         detector.detectInImage(imagen)
                                             .addOnSuccessListener { faces ->
                                                 if (faces.size != 0) {
-                                                    reconocer.text="Reconocimiento correcto"
+                                                    reconocer.text = "Reconocimiento correcto"
 
                                                     if ((faces[0].leftEyeOpenProbability < 0.3 && faces[0].rightEyeOpenProbability < 0.3)) {
                                                         if (inicioContador == false) {
@@ -255,10 +253,12 @@ private var root: View? = null
                                                         inicioContador = false
                                                         root!!.contador.stop()
                                                     }
-                                                    if ((faces[0].smilingProbability>0.66)) {
+                                                    if ((faces[0].smilingProbability > 0.66)) {
                                                         if (inicioContadorBostezos == false) {
                                                             inicioContadorBostezos = true
-                                                            root!!.contadorBostezo.setBase(SystemClock.elapsedRealtime())
+                                                            root!!.contadorBostezo.setBase(
+                                                                SystemClock.elapsedRealtime()
+                                                            )
                                                             root!!.contadorBostezo.start()
                                                         }
                                                     } else {
@@ -266,13 +266,13 @@ private var root: View? = null
                                                         root!!.contadorBostezo.stop()
                                                     }
 
-                                                }else{
-                                                    reconocer.text="Reconocimiento incorrecto"
+                                                } else {
+                                                    reconocer.text = "Reconocimiento incorrecto"
                                                 }
                                             }
                                     } else {
                                         inicioContador = false
-                                        inicioContadorBostezos=false
+                                        inicioContadorBostezos = false
                                         root!!.contadorBostezo.stop()
                                         root!!.contador.stop()
                                     }
@@ -416,7 +416,7 @@ private var root: View? = null
         override fun analyze(imageProxy: ImageProxy) {
             val mediaImage = imageProxy?.image
             if (mediaImage != null) {
-                val image = FirebaseVisionImage.fromMediaImage(mediaImage,Surface.ROTATION_270)
+                val image = FirebaseVisionImage.fromMediaImage(mediaImage, Surface.ROTATION_270)
                 mListener.setOnLumaListener(image)
                 imageProxy.close()
             }
@@ -483,6 +483,7 @@ private var root: View? = null
     override fun onDestroy() {
         super.onDestroy()
         cameraExecutor.shutdown()
+        resources.getString(R.string.app_name)
     }
 
     companion object {
