@@ -73,6 +73,11 @@
         android:layout_height="wrap_content"
         android:id="@+id/contador"
         android:visibility="gone"/>
+    <Chronometer
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/contadorBostezo"
+        android:visibility="gone"/>
 
 
 

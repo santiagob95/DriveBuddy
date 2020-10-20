@@ -94,7 +94,8 @@ private var root: View? = null
     }
 
     var inicio = false
-    var pestañeos = arrayListOf<String>()
+    var pestañeos = arrayListOf<Int>()
+    var bostezos= arrayListOf<Int>()
     override fun onStart() {
         super.onStart()
         iniciarViaje.setOnClickListener {
@@ -158,7 +159,7 @@ private var root: View? = null
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("Estadisticas del viaje")
 
-        builder.setMessage("Duracion del viaje: $duracion\nCantidad de pestañeos largos: $pestañeos\n Cantidad de fatigas detectadas: $fatigas")
+        builder.setMessage("Duracion del viaje: $duracion\nCantidad de pestañeos largos: $pestañeos\n Cantidad de fatigas detectadas: $fatigas\nCantidad de bostezos:${bostezos.size}")
 
         builder.setPositiveButton("Aceptar", null)
         val dialog: AlertDialog = builder.create()
@@ -169,7 +170,7 @@ private var root: View? = null
 
 
     var inicioContador=false
-
+    var inicioContadorBostezos=false
 
 
     private fun startCamera(){
@@ -205,7 +206,8 @@ private var root: View? = null
                                         )
                                         r.play()
                                         vibratePhone()
-                                        pestañeos.add(((((SystemClock.elapsedRealtime() - duracionViaje.getBase()) / 1000) / 60).toString()))
+                                        pestañeos.add(((((SystemClock.elapsedRealtime() - duracionViaje.getBase()) / 1000) / 60).toInt()))
+
                                         /*mTTS = TextToSpeech(requireActivity(),TextToSpeech.OnInitListener { status->
                                             t.text=status.toString()
                                         })
@@ -215,13 +217,35 @@ private var root: View? = null
                                         inicioContador = false
                                         root!!.contador.setBase(SystemClock.elapsedRealtime())
                                     }
+                                    if (inicioContadorBostezos == true && ((SystemClock.elapsedRealtime() - contadorBostezo.getBase()) / 1000) >= 2 && inicio == true) {
+                                        val notification: Uri =
+                                            RingtoneManager.getDefaultUri(
+                                                RingtoneManager.TYPE_NOTIFICATION
+                                            )
+                                        val r = RingtoneManager.getRingtone(
+                                            getApplicationContext(),
+                                            notification
+                                        )
+                                        r.play()
+                                        vibratePhone()
+                                        bostezos.add(((((SystemClock.elapsedRealtime() - duracionViaje.getBase()) / 1000) / 60).toInt()))
+
+                                        /*mTTS = TextToSpeech(requireActivity(),TextToSpeech.OnInitListener { status->
+                                            t.text=status.toString()
+                                        })
+                                        //mTTS.language= Locale.ROOT
+
+                                        mTTS!!.speak("Are you sleeping", TextToSpeech.QUEUE_FLUSH, null,"")*/
+                                        inicioContador = false
+                                        root!!.contadorBostezo.setBase(SystemClock.elapsedRealtime())
+                                    }
                                     if (inicio == true) {
                                         detector.detectInImage(imagen)
                                             .addOnSuccessListener { faces ->
                                                 if (faces.size != 0) {
 
 
-                                                    if ((faces[0].leftEyeOpenProbability < 0.3 || faces[0].rightEyeOpenProbability < 0.3) || faces[0].smilingProbability>0.66) {
+                                                    if ((faces[0].leftEyeOpenProbability < 0.3 && faces[0].rightEyeOpenProbability < 0.3)) {
                                                         if (inicioContador == false) {
                                                             inicioContador = true
                                                             root!!.contador.setBase(SystemClock.elapsedRealtime())
@@ -231,11 +255,23 @@ private var root: View? = null
                                                         inicioContador = false
                                                         root!!.contador.stop()
                                                     }
+                                                    if ((faces[0].smilingProbability>0.66)) {
+                                                        if (inicioContadorBostezos == false) {
+                                                            inicioContadorBostezos = true
+                                                            root!!.contadorBostezo.setBase(SystemClock.elapsedRealtime())
+                                                            root!!.contadorBostezo.start()
+                                                        }
+                                                    } else {
+                                                        inicioContadorBostezos = false
+                                                        root!!.contadorBostezo.stop()
+                                                    }
 
                                                 }
                                             }
                                     } else {
                                         inicioContador = false
+                                        inicioContadorBostezos=false
+                                        root!!.contadorBostezo.stop()
                                         root!!.contador.stop()
                                     }
                                     /*if (faces.size != 0) {
@@ -378,7 +414,7 @@ private var root: View? = null
         override fun analyze(imageProxy: ImageProxy) {
             val mediaImage = imageProxy?.image
             if (mediaImage != null) {
-                val image = FirebaseVisionImage.fromMediaImage(mediaImage, Surface.ROTATION_270)
+                val image = FirebaseVisionImage.fromMediaImage(mediaImage,0)
                 mListener.setOnLumaListener(image)
                 imageProxy.close()
             }
