@@ -483,6 +483,7 @@ private var root: View? = null
     override fun onDestroy() {
         super.onDestroy()
         cameraExecutor.shutdown()
+        resources.getString(R.string.app_name)
     }
 
     companion object {
