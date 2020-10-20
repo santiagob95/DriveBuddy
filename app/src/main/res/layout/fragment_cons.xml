@@ -10,65 +10,61 @@
     tools:context=".ConsFragment">
 
 
-    <TextView
-        android:id="@+id/viaj_seguro"
-        android:layout_width="329dp"
-        android:layout_height="49dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="16dp"
-        android:fontFamily="@font/montserrat_bold"
-        android:gravity="top"
-        android:text="Viajá seguro con algunos                   para no manejar cansado"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/viaj_seguro2"
-        android:layout_width="94dp"
-        android:layout_height="33dp"
-        android:layout_alignTop="@+id/viaj_seguro"
-        android:layout_alignBottom="@+id/viaj_seguro"
-        android:layout_alignParentLeft="true"
-        android:fontFamily="@font/montserrat_bold"
-        android:gravity="top"
-        android:text="consejos"
-        android:textColor="@color/colorAccent"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/viaj_seguro"
-        app:layout_constraintEnd_toEndOf="@+id/viaj_seguro"
-        app:layout_constraintHorizontal_bias="0.987"
-        app:layout_constraintStart_toStartOf="@+id/viaj_seguro"
-        app:layout_constraintTop_toTopOf="@+id/viaj_seguro"
-        app:layout_constraintVertical_bias="0.0" />
-
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="618dp"
+        android:layout_height="match_parent"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viaj_seguro">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
+        <TextView
+            android:id="@+id/viaj_seguro"
+            android:layout_width="257dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="37dp"
+            android:layout_marginLeft="37dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="116dp"
+            android:fontFamily="@font/montserrat_bold"
+            android:gravity="top"
+            android:text="Viajá seguro con algunos                   para no manejar cansado"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/viaj_seguro2"
+            android:layout_width="94dp"
+            android:layout_height="33dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="273dp"
+            android:fontFamily="@font/montserrat_bold"
+            android:gravity="top"
+            android:text="consejos"
+            android:textColor="@color/colorAccent"
+            android:textSize="18sp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="642dp"
+            android:layout_below="@+id/viaj_seguro"
             android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="4dp"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="4dp"
+            android:layout_marginEnd="0dp"
             android:layout_marginBottom="4dp"
             tools:itemCount="10"
             tools:listitem="@layout/item_layout" />
