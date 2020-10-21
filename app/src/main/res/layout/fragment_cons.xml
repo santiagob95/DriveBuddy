@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,72 +9,24 @@
     tools:context=".ConsFragment">
 
 
-    <RelativeLayout
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
-
-        <TextView
-            android:id="@+id/viaj_seguro"
-            android:layout_width="234dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="47dp"
-            android:layout_marginLeft="47dp"
-            android:layout_marginTop="6dp"
-            android:layout_marginEnd="116dp"
-            android:fontFamily="@font/montserrat_bold"
-            android:gravity="top"
-            android:text="Viajá seguro con algunos                   para no manejar cansado"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/viaj_seguro2"
-            android:layout_width="79dp"
-            android:layout_height="wrap_content"
-
-            android:layout_alignStart="@+id/viaj_seguro"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="237dp"
-            android:layout_marginLeft="279dp"
-            android:layout_marginTop="6dp"
-            android:layout_marginEnd="47dp"
-            android:layout_toEndOf="@+id/viaj_seguro"
-            android:fontFamily="@font/montserrat_bold"
-            android:gravity="top"
-            android:text="consejos"
-            android:textColor="@color/colorAccent"
-            android:textSize="18sp" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/viaj_seguro"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="0dp"
-            android:layout_marginBottom="4dp"
-            tools:itemCount="10"
-            tools:listitem="@layout/item_layout" />
-    </RelativeLayout>
-
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        tools:itemCount="10"
+        tools:listitem="@layout/item_layout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
