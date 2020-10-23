@@ -189,7 +189,7 @@
         app:layout_constraintVertical_bias="0.173" />
 
     <TextView
-        android:id="@+id/param0"
+        android:id="@+id/tiempoViajeTotal"
         android:layout_width="156dp"
         android:layout_height="55dp"
         android:fontFamily="@font/montserrat_bold"
@@ -237,7 +237,7 @@
         app:layout_constraintVertical_bias="0.166" />
 
     <TextView
-        android:id="@+id/param1"
+        android:id="@+id/fatigaTotal"
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:fontFamily="@font/montserrat_bold"
@@ -285,7 +285,7 @@
         app:layout_constraintVertical_bias="0.191" />
 
     <TextView
-        android:id="@+id/param2"
+        android:id="@+id/pestLargoTotal"
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:fontFamily="@font/montserrat_bold"
@@ -328,7 +328,7 @@
         app:layout_constraintVertical_bias="0.191" />
 
     <TextView
-        android:id="@+id/param3"
+        android:id="@+id/bostezosTotal"
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:fontFamily="@font/montserrat_bold"
@@ -371,7 +371,7 @@
         app:layout_constraintVertical_bias="0.121" />
 
     <TextView
-        android:id="@+id/param4"
+        android:id="@+id/velMedia"
         android:layout_width="152dp"
         android:layout_height="48dp"
         android:fontFamily="@font/montserrat_bold"
@@ -417,7 +417,7 @@
         app:layout_constraintVertical_bias="0.121" />
 
     <TextView
-        android:id="@+id/param5"
+        android:id="@+id/kmTotales"
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:fontFamily="@font/montserrat_bold"

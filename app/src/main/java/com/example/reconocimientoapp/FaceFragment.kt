@@ -3,7 +3,6 @@ package com.example.reconocimientoapp
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Context.VIBRATOR_SERVICE
 import android.content.pm.PackageManager
 import android.graphics.*
 import android.media.Image
@@ -24,9 +23,12 @@ import androidx.camera.core.Camera
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import com.facebook.FacebookSdk.getApplicationContext
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.ml.vision.FirebaseVision
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetectorOptions
@@ -40,7 +42,8 @@ import java.util.concurrent.Executors
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
-
+private var auth: FirebaseAuth = Firebase.auth
+private val db = FirebaseFirestore.getInstance()
 class FaceFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
@@ -162,6 +165,20 @@ private var root: View? = null
         builder.setPositiveButton("aceptar", null)
         val dialog: AlertDialog = builder.create()
         dialog.show()
+
+        val stats = hashMapOf(
+            "Fatiga" to fatigas,
+            "Bostezo" to 0,
+            "PestLargo" to pestañeos,
+            "kmRecorrido" to 0,
+            "tiempoTotal" to duracion,
+            "velocidadMedia" to 0,
+            "id" to auth.currentUser!!.uid
+        )
+        db.collection("viajes").document()
+            .set(stats)
+            .addOnSuccessListener { Log.v("setViaje","Viaje guardado correctamente") }
+            .addOnFailureListener { e -> Log.w("setViaje", "Error subiendo el viaje",e) }
 
     }
 

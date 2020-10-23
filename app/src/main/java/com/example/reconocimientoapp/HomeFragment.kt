@@ -12,8 +12,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.activity_register.*
-import kotlinx.android.synthetic.main.activity_welcome__screen.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
 
@@ -34,6 +32,7 @@ class HomeFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         val userRef = db.collection("users").document(auth.currentUser!!.uid)
+        val docRef = db.collection("/viajes").whereEqualTo("id", auth.currentUser!!.uid)
 
         userRef.get().addOnSuccessListener { docSnapshot ->
             val userDoc = docSnapshot.data
@@ -50,7 +49,42 @@ class HomeFragment : Fragment() {
                 //test
                 chargeData()
             }
+
         }
+        docRef.get()
+            .addOnFailureListener { exception ->
+                fatigaTotal.text = "0"
+                Log.v("Get Document", "Error getting documents: ", exception)
+            }
+            .addOnSuccessListener { documents ->
+                var total = object {
+                    var fatiga=0
+                    var bostezo=0
+                    var pestLargo =0
+                    var kmtotales =0
+                    var tiempoViajeTotal =0
+                    var velMedia =0
+
+                }
+                var contDoc = 0;
+                for(document in documents){
+                   if( document.exists() ) {
+                       total.fatiga += document.data!!.getValue("Fatiga").toString().toInt()
+                       total.bostezo += document.data!!.getValue("Bostezo").toString().toInt()
+                       total.pestLargo += document.data!!.getValue("PestaneoLargo").toString().toInt()
+                       total.kmtotales +=document.data!!.getValue("kmRecorrido").toString().toInt()
+                       total.tiempoViajeTotal += document.data!!.getValue("tiempoTotal").toString().toInt()
+                       total.velMedia += document.data!!.getValue("velocidadMedia").toString().toInt()
+                       contDoc++
+                   }
+                }
+                fatigaTotal.text = if(contDoc == 0) "0" else total.fatiga.toString()
+                tiempoViajeTotal.text =if(contDoc == 0) "0" else total.tiempoViajeTotal.toString() + " hs"
+                pestLargoTotal.text = if(contDoc == 0) "0" else total.pestLargo.toString()
+                bostezosTotal.text = if(contDoc == 0) "0" else total.bostezo.toString()
+                velMedia.text = if(contDoc == 0) "0" else (total.velMedia/contDoc).toString() +" km/h"
+                kmTotales.text = if(contDoc == 0) "0" else total.kmtotales.toString() +" km"
+            }
 
         registerback.setOnClickListener{
             activity?.let{
@@ -75,12 +109,12 @@ class HomeFragment : Fragment() {
             root!!.title4.text = titles[4]
             root!!.title5.text = titles[5]
             try {
-                root!!.param0.text = viajesDoc!!.getValue("tiempoTotal").toString() + " hs"
-                root!!.param1.text = viajesDoc!!.getValue("Fatiga").toString()
-                root!!.param2.text = viajesDoc!!.getValue("PestaneoLargo").toString()
-                root!!.param3.text = viajesDoc!!.getValue("Bostezo").toString()
-                root!!.param4.text = viajesDoc!!.getValue("velocidadMedia").toString() + " km/h"
-                root!!.param5.text = viajesDoc!!.getValue("kmRecorrido").toString() + " km"
+                root!!.tiempoViajeTotal.text = viajesDoc!!.getValue("tiempoTotal").toString() + " hs"
+                root!!.fatigaTotal.text = viajesDoc!!.getValue("Fatiga").toString()
+                root!!.pestLargoTotal.text = viajesDoc!!.getValue("PestaneoLargo").toString()
+                root!!.bostezosTotal.text = viajesDoc!!.getValue("Bostezo").toString()
+                root!!.velMedia.text = viajesDoc!!.getValue("velocidadMedia").toString() + " km/h"
+                root!!.kmTotales.text = viajesDoc!!.getValue("kmRecorrido").toString() + " km"
             }catch (e:Exception) {
                 Toast.makeText(getActivity(),e.message + " + No se encontro en la base de datos",Toast.LENGTH_SHORT).show();
             }
