@@ -32,7 +32,7 @@ class HomeFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         val userRef = db.collection("users").document(auth.currentUser!!.uid)
-        val docRef = db.collection("/viajes").whereEqualTo("id", auth.currentUser!!.uid)
+        val docRef =  db.collection("/viajes").whereEqualTo("id", auth.currentUser!!.uid)
 
         userRef.get().addOnSuccessListener { docSnapshot ->
             val userDoc = docSnapshot.data
@@ -47,16 +47,17 @@ class HomeFragment : Fragment() {
                 root!!.mainTitle.text = title + userDoc!!.getValue("nomYApe")
                 root!!.mainTitle.textAlignment = View.TEXT_ALIGNMENT_TEXT_START
                 //test
-                chargeData()
+                //chargeData()
             }
 
         }
         docRef.get()
             .addOnFailureListener { exception ->
                 fatigaTotal.text = "0"
-                Log.v("Get Document", "Error getting documents: ", exception)
+                Log.v("GetDoc", "Error getting documents: ", exception)
             }
             .addOnSuccessListener { documents ->
+                Log.v("GetDoc", "Doc created CORRECTLY")
                 var total = object {
                     var fatiga=0
                     var bostezo=0
@@ -76,6 +77,7 @@ class HomeFragment : Fragment() {
                        total.tiempoViajeTotal += document.data!!.getValue("tiempoTotal").toString().toInt()
                        total.velMedia += document.data!!.getValue("velocidadMedia").toString().toInt()
                        contDoc++
+
                    }
                 }
                 fatigaTotal.text = if(contDoc == 0) "0" else total.fatiga.toString()
@@ -94,33 +96,6 @@ class HomeFragment : Fragment() {
         }
 
     }
-
-    fun chargeData() {
-        val viajesRef = db.collection("viajes").document(auth.currentUser!!.uid)
-        viajesRef.get().addOnSuccessListener { docSnapshot ->
-            val viajesDoc = docSnapshot.data
-
-            val titles = arrayOf("Tiempo de viaje total","Fatigas detectadas" ,"Pestaneo largo", "Bostezos", "Velocidad media","Kilometros recorridos")
-
-            root!!.title0.text = titles[0]
-            root!!.title1.text = titles[1]
-            root!!.title2.text = titles[2]
-            root!!.title3.text = titles[3]
-            root!!.title4.text = titles[4]
-            root!!.title5.text = titles[5]
-            try {
-                root!!.tiempoViajeTotal.text = viajesDoc!!.getValue("tiempoTotal").toString() + " hs"
-                root!!.fatigaTotal.text = viajesDoc!!.getValue("Fatiga").toString()
-                root!!.pestLargoTotal.text = viajesDoc!!.getValue("PestaneoLargo").toString()
-                root!!.bostezosTotal.text = viajesDoc!!.getValue("Bostezo").toString()
-                root!!.velMedia.text = viajesDoc!!.getValue("velocidadMedia").toString() + " km/h"
-                root!!.kmTotales.text = viajesDoc!!.getValue("kmRecorrido").toString() + " km"
-            }catch (e:Exception) {
-                Toast.makeText(getActivity(),e.message + " + No se encontro en la base de datos",Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
     private var root: View? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

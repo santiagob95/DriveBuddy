@@ -17,6 +17,7 @@ import android.view.Surface
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.camera.core.*
 import androidx.camera.core.Camera
@@ -36,6 +37,7 @@ import kotlinx.android.synthetic.main.fragment_face.*
 import kotlinx.android.synthetic.main.fragment_face.view.*
 import java.io.ByteArrayOutputStream
 import java.nio.ByteBuffer
+import java.time.LocalDateTime
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -111,7 +113,7 @@ private var root: View? = null
             else {
                 root!!.iniciarViaje.setBackgroundResource(R.drawable.inicio)
                 root!!.duracionViaje.stop()
-                showAlert(pestañeos.size.toString())
+                showAlert(pestañeos.size)
 
             }
         }
@@ -124,7 +126,8 @@ private var root: View? = null
             vibrator.vibrate(500)
         }
     }
-    private fun showAlert(pestañeos: String){
+    @RequiresApi(Build.VERSION_CODES.O)//esto es para la fecha
+    private fun showAlert(pestañeos: Number){
         var totalSegundos = ((SystemClock.elapsedRealtime()-duracionViaje.base)/1000).toInt()
         var minutos=0
         var horas=0
@@ -156,25 +159,26 @@ private var root: View? = null
         }
 
         var duracion = h+":"+m+":"+s
-        var fatigas = (pestañeos.toInt()/3).toString()
+        var fatigas = (pestañeos.toInt()/3)
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("Estadisticas del viaje")
 
         builder.setMessage("Duracion del viaje: $duracion\nCantidad de pestañeos largos: $pestañeos\n Cantidad de fatigas detectadas: $fatigas")
-
+        val stats = hashMapOf(
+            "Fatiga" to fatigas,
+            "Bostezo" to 1,
+            "PestaneoLargo" to pestañeos,
+            "kmRecorrido" to 1,
+            "tiempoTotal" to h.toInt()*60 + m.toInt() +6,
+            "velocidadMedia" to 1,
+            "id" to auth.currentUser!!.uid,
+            "fecha" to LocalDateTime.now().toString()
+        )
         builder.setPositiveButton("aceptar", null)
         val dialog: AlertDialog = builder.create()
         dialog.show()
 
-        val stats = hashMapOf(
-            "Fatiga" to fatigas,
-            "Bostezo" to 0,
-            "PestLargo" to pestañeos,
-            "kmRecorrido" to 0,
-            "tiempoTotal" to duracion,
-            "velocidadMedia" to 0,
-            "id" to auth.currentUser!!.uid
-        )
+
         db.collection("viajes").document()
             .set(stats)
             .addOnSuccessListener { Log.v("setViaje","Viaje guardado correctamente") }
