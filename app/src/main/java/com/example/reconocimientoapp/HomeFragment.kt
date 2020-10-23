@@ -38,6 +38,14 @@ class HomeFragment : Fragment() {
         userRef.get().addOnSuccessListener { docSnapshot ->
             val userDoc = docSnapshot.data
             var title = "Bienvenido de vuelta, "
+            val titles = arrayOf("Tiempo de viaje total","Fatigas detectadas" ,"Pestaneo largo", "Bostezos", "Velocidad media","Kilometros recorridos")
+
+            root!!.title0.text = titles[0]
+            root!!.title1.text = titles[1]
+            root!!.title2.text = titles[2]
+            root!!.title3.text = titles[3]
+            root!!.title4.text = titles[4]
+            root!!.title5.text = titles[5]
 
             if (auth.currentUser!!.isAnonymous) {
                 root!!.mainTitle.text = "¡Registrate para ver tus estadisticas!"
@@ -64,25 +72,12 @@ class HomeFragment : Fragment() {
         val viajesRef = db.collection("viajes").document(auth.currentUser!!.uid)
         viajesRef.get().addOnSuccessListener { docSnapshot ->
             val viajesDoc = docSnapshot.data
-
-            val titles = arrayOf("Tiempo de viaje total","Fatigas detectadas" ,"Pestaneo largo", "Bostezos", "Velocidad media","Kilometros recorridos")
-
-            root!!.title0.text = titles[0]
-            root!!.title1.text = titles[1]
-            root!!.title2.text = titles[2]
-            root!!.title3.text = titles[3]
-            root!!.title4.text = titles[4]
-            root!!.title5.text = titles[5]
-            try {
-                root!!.param0.text = viajesDoc!!.getValue("tiempoTotal").toString() + " hs"
-                root!!.param1.text = viajesDoc!!.getValue("Fatiga").toString()
-                root!!.param2.text = viajesDoc!!.getValue("PestaneoLargo").toString()
-                root!!.param3.text = viajesDoc!!.getValue("Bostezo").toString()
-                root!!.param4.text = viajesDoc!!.getValue("velocidadMedia").toString() + " km/h"
-                root!!.param5.text = viajesDoc!!.getValue("kmRecorrido").toString() + " km"
-            }catch (e:Exception) {
-                Toast.makeText(getActivity(),e.message + " + No se encontro en la base de datos",Toast.LENGTH_SHORT).show();
-            }
+            root!!.param0.text = viajesDoc!!.getValue("tiempoTotal").toString() + " hs"
+            root!!.param1.text = viajesDoc!!.getValue("Fatiga").toString()
+            root!!.param2.text = viajesDoc!!.getValue("PestaneoLargo").toString()
+            root!!.param3.text = viajesDoc!!.getValue("Bostezo").toString()
+            root!!.param4.text = viajesDoc!!.getValue("velocidadMedia").toString() + " km/h"
+            root!!.param5.text = viajesDoc!!.getValue("kmRecorrido").toString() + " km"
         }
     }
 
