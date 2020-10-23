@@ -47,6 +47,7 @@ class HomeFragment : Fragment() {
             } else {
                 root!!.mainTitle.text = title + userDoc!!.getValue("nomYApe")
                 root!!.mainTitle.textAlignment = View.TEXT_ALIGNMENT_TEXT_START
+                //test
                 chargeData()
             }
         }
