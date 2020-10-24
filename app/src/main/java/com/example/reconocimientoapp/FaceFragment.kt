@@ -165,32 +165,32 @@ private var root: View? = null
         var horas = 0
         if (totalSegundos >= 60) {
             minutos = totalSegundos / 60
-            totalSegundos = totalSegundos - (minutos * 60)
+            totalSegundos -= (minutos * 60)
             if (minutos >= 60) {
                 horas = minutos / 60
-                minutos = minutos - (horas * 60)
+                minutos -= (horas * 60)
             }
         }
         var h: String
         var s: String
         var m: String
         if (horas < 10) {
-            h = "0" + horas.toString()
+            h = "0$horas"
         } else {
             h = horas.toString()
         }
         if (minutos < 10) {
-            m = "0" + minutos.toString()
+            m = "0$minutos"
         } else {
             m = minutos.toString()
         }
         if (totalSegundos < 10) {
-            s = "0" + totalSegundos.toString()
+            s = "0$totalSegundos"
         } else {
             s = totalSegundos.toString()
         }
 
-        var duracion = h + ":" + m + ":" + s
+        var duracion = "$h:$m:$s"
         var fatigas = (cantPest / 3)
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("Estadisticas del viaje")
