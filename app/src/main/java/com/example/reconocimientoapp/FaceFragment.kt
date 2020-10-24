@@ -101,7 +101,7 @@ private var root: View? = null
     }
 
     var inicio = false
-    var pestañeos = arrayListOf<String>()
+    var pestaneos = arrayListOf<String>()
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onStart() {
         super.onStart()
@@ -116,8 +116,8 @@ private var root: View? = null
             else {
                 root!!.iniciarViaje.setBackgroundResource(R.drawable.inicio)
                 root!!.duracionViaje.stop()
-                postStats(pestañeos.size)
-                showAlert(pestañeos.size)
+                postStats(pestaneos.size)
+                showAlert(pestaneos.size)
 
             }
         }
@@ -138,7 +138,7 @@ private var root: View? = null
     @RequiresApi(Build.VERSION_CODES.O)//esto es para la fecha
     private fun postStats(cantPest :Int){
         val tiempoTotal = ((SystemClock.elapsedRealtime()-duracionViaje.base)/1000)/60.toInt()
-        val fatigas = pestañeos.size/3
+        val fatigas = pestaneos.size/3
         val df = DecimalFormat("#.##")
         df.roundingMode = RoundingMode.CEILING
         val stats = hashMapOf(
@@ -195,7 +195,7 @@ private var root: View? = null
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("Estadisticas del viaje")
 
-        builder.setMessage("Duracion del viaje: $duracion\nCantidad de pestañeos largos: $cantPest\n Cantidad de fatigas detectadas: $fatigas")
+        builder.setMessage("Duracion del viaje: $duracion\nCantidad de pestaneos largos: $cantPest\n Cantidad de fatigas detectadas: $fatigas")
 
         builder.setPositiveButton("aceptar", null)
         val dialog: AlertDialog = builder.create()
@@ -242,7 +242,7 @@ private var root: View? = null
                                         )
                                         r.play()
                                         vibratePhone()
-                                        pestañeos.add(((((SystemClock.elapsedRealtime() - duracionViaje.getBase()) / 1000) / 60).toString()))
+                                        pestaneos.add(((((SystemClock.elapsedRealtime() - duracionViaje.getBase()) / 1000) / 60).toString()))
                                         /*mTTS = TextToSpeech(requireActivity(),TextToSpeech.OnInitListener { status->
                                             t.text=status.toString()
                                         })
