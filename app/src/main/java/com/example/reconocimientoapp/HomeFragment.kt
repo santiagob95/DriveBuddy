@@ -12,9 +12,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.activity_register.*
-import kotlinx.android.synthetic.main.activity_welcome__screen.*
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_home.view.*
+import java.math.RoundingMode
+import java.text.DecimalFormat
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -33,21 +34,64 @@ class HomeFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         val userRef = db.collection("users").document(auth.currentUser!!.uid)
+        val docRef =  db.collection("/viajes").whereEqualTo("id", auth.currentUser!!.uid)
 
         userRef.get().addOnSuccessListener { docSnapshot ->
-                val userDoc = docSnapshot.data
-                var title = "Bienvenido de vuelta, "
+            val userDoc = docSnapshot.data
+            var title = "Bienvenido de vuelta, "
 
-                if (auth.currentUser!!.isAnonymous) {
-                    mainTitle.text = "¡Registrate para ver tus estadisticas!"
-                    textView6.visibility = View.INVISIBLE
-                    registerback.visibility = View.VISIBLE
-                    txtregis.visibility = View.VISIBLE
-                } else {
-                    mainTitle.text = title + userDoc!!.getValue("nomYApe")
-                    mainTitle.textAlignment = View.TEXT_ALIGNMENT_TEXT_START
-                    chargeData()
+            if (auth.currentUser!!.isAnonymous) {
+                root!!.mainTitle.text = "¡Registrate para ver tus estadisticas!"
+                root!!.textView6.visibility = View.INVISIBLE
+                root!!.registerback.visibility = View.VISIBLE
+                root!!.txtregis.visibility = View.VISIBLE
+            } else {
+                root!!.mainTitle.text = title + userDoc!!.getValue("nomYApe")
+                root!!.mainTitle.textAlignment = View.TEXT_ALIGNMENT_TEXT_START
+                //test
+                //chargeData()
+            }
+
+        }
+        docRef.get()
+            .addOnFailureListener { exception ->
+                fatigaTotal.text = "0"
+                Log.v("GetDoc", "Error getting documents: ", exception)
+            }
+            .addOnSuccessListener { documents ->
+                Log.v("GetDoc", "Doc created CORRECTLY")
+                var total = object {
+                    var fatiga=0
+                    var bostezo=0
+                    var pestLargo =0
+                    var kmtotales =0
+                    var tiempoViajeTotal =0.0
+                    var velMedia =0
+
                 }
+                var contDoc = 0;
+                for(document in documents){
+
+                   if( document.exists() ) {
+                       Log.v("GetDoc", "\n-------Doc:\n"+document.data.values)
+                       total.fatiga += document.data!!.getValue("Fatiga").toString().toInt()
+                       total.bostezo += document.data!!.getValue("Bostezo").toString().toInt()
+                       total.pestLargo += document.data!!.getValue("PestaneoLargo").toString().toInt()
+                       total.kmtotales +=document.data!!.getValue("kmRecorrido").toString().toInt()
+                       total.tiempoViajeTotal += document.data!!.getValue("tiempoTotal").toString().toDouble()
+                       total.velMedia += document.data!!.getValue("velocidadMedia").toString().toInt()
+                       contDoc++
+
+                   }
+                }
+                val df = DecimalFormat("#.##")
+                df.roundingMode = RoundingMode.CEILING
+                fatigaTotal.text = if(contDoc == 0) "0" else total.fatiga.toString()
+                tiempoViajeTotal.text =if(contDoc == 0) "0" else df.format(total.tiempoViajeTotal) + " hs"
+                pestLargoTotal.text = if(contDoc == 0) "0" else total.pestLargo.toString()
+                bostezosTotal.text = if(contDoc == 0) "0" else total.bostezo.toString()
+                velMedia.text = if(contDoc == 0) "0" else (total.velMedia/contDoc).toString() +" km/h"
+                kmTotales.text = if(contDoc == 0) "0" else total.kmtotales.toString() +" km"
             }
 
         registerback.setOnClickListener{
@@ -58,40 +102,13 @@ class HomeFragment : Fragment() {
         }
 
     }
-
-    fun chargeData() {
-        val viajesRef = db.collection("viajes").document(auth.currentUser!!.uid)
-        viajesRef.get().addOnSuccessListener { docSnapshot ->
-            val viajesDoc = docSnapshot.data
-
-            val titles = arrayOf("Tiempo de viaje total","Fatigas detectadas" ,"Pestaneo largo", "Bostezos", "Velocidad media","Kilometros recorridos")
-
-            title0.text = titles[0]
-            title1.text = titles[1]
-            title2.text = titles[2]
-            title3.text = titles[3]
-            title4.text = titles[4]
-            title5.text = titles[5]
-            try {
-                param0.text = viajesDoc!!.getValue("tiempoTotal").toString() + " hs"
-                param1.text = viajesDoc!!.getValue("Fatiga").toString()
-                param2.text = viajesDoc!!.getValue("PestaneoLargo").toString()
-                param3.text = viajesDoc!!.getValue("Bostezo").toString()
-                param4.text = viajesDoc!!.getValue("velocidadMedia").toString() + " km/h"
-                param5.text = viajesDoc!!.getValue("kmRecorrido").toString() + " km"
-            }catch (e:Exception) {
-                Toast.makeText(getActivity(),e.message + " + No se encontro en la base de datos",Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
-
+    private var root: View? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        root= inflater.inflate(R.layout.fragment_home, container, false)
+        return root
     }
-
 }
