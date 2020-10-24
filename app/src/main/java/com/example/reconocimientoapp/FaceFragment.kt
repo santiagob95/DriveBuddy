@@ -17,6 +17,7 @@ import android.view.Surface
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.camera.core.*
 import androidx.camera.core.Camera
@@ -25,6 +26,10 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.facebook.FacebookSdk.getApplicationContext
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.ml.vision.FirebaseVision
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetectorOptions
@@ -32,13 +37,15 @@ import kotlinx.android.synthetic.main.fragment_face.*
 import kotlinx.android.synthetic.main.fragment_face.view.*
 import java.io.ByteArrayOutputStream
 import java.nio.ByteBuffer
+import java.time.LocalDateTime
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
-
+private var auth: FirebaseAuth = Firebase.auth
+private val db = FirebaseFirestore.getInstance()
 class FaceFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
@@ -92,8 +99,7 @@ private var root: View? = null
     }
 
     var inicio = false
-    var pestañeos = arrayListOf<Int>()
-    var bostezos= arrayListOf<Int>()
+    var pestañeos = arrayListOf<String>()
     override fun onStart() {
         super.onStart()
         iniciarViaje.setOnClickListener {
@@ -107,8 +113,7 @@ private var root: View? = null
             else {
                 root!!.iniciarViaje.setBackgroundResource(R.drawable.inicio)
                 root!!.duracionViaje.stop()
-                inicio=false
-                showAlert(pestañeos.size.toString())
+                showAlert(pestañeos.size)
 
             }
         }
@@ -121,7 +126,8 @@ private var root: View? = null
             vibrator.vibrate(500)
         }
     }
-    private fun showAlert(pestañeos: String){
+    @RequiresApi(Build.VERSION_CODES.O)//esto es para la fecha
+    private fun showAlert(pestañeos: Number){
         var totalSegundos = ((SystemClock.elapsedRealtime()-duracionViaje.base)/1000).toInt()
         var minutos=0
         var horas=0
@@ -153,22 +159,36 @@ private var root: View? = null
         }
 
         var duracion = h+":"+m+":"+s
-        var fatigas = (pestañeos.toInt()/3).toString()
+        var fatigas = (pestañeos.toInt()/3)
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("Estadisticas del viaje")
 
-        builder.setMessage("Duracion del viaje: $duracion\nCantidad de pestañeos largos: $pestañeos\n Cantidad de fatigas detectadas: $fatigas\nCantidad de bostezos:${bostezos.size}")
-
-        builder.setPositiveButton("Aceptar", null)
+        builder.setMessage("Duracion del viaje: $duracion\nCantidad de pestañeos largos: $pestañeos\n Cantidad de fatigas detectadas: $fatigas")
+        val stats = hashMapOf(
+            "Fatiga" to fatigas,
+            "Bostezo" to 1,
+            "PestaneoLargo" to pestañeos,
+            "kmRecorrido" to 1,
+            "tiempoTotal" to h.toInt()*60 + m.toInt() +6,
+            "velocidadMedia" to 1,
+            "id" to auth.currentUser!!.uid,
+            "fecha" to LocalDateTime.now().toString()
+        )
+        builder.setPositiveButton("aceptar", null)
         val dialog: AlertDialog = builder.create()
-
         dialog.show()
+
+
+        db.collection("viajes").document()
+            .set(stats)
+            .addOnSuccessListener { Log.v("setViaje","Viaje guardado correctamente") }
+            .addOnFailureListener { e -> Log.w("setViaje", "Error subiendo el viaje",e) }
 
     }
 
 
     var inicioContador=false
-    var inicioContadorBostezos=false
+
 
 
     private fun startCamera(){
@@ -204,8 +224,7 @@ private var root: View? = null
                                         )
                                         r.play()
                                         vibratePhone()
-                                        pestañeos.add(((((SystemClock.elapsedRealtime() - duracionViaje.getBase()) / 1000) / 60).toInt()))
-
+                                        pestañeos.add(((((SystemClock.elapsedRealtime() - duracionViaje.getBase()) / 1000) / 60).toString()))
                                         /*mTTS = TextToSpeech(requireActivity(),TextToSpeech.OnInitListener { status->
                                             t.text=status.toString()
                                         })
@@ -215,35 +234,13 @@ private var root: View? = null
                                         inicioContador = false
                                         root!!.contador.setBase(SystemClock.elapsedRealtime())
                                     }
-                                    if (inicioContadorBostezos == true && ((SystemClock.elapsedRealtime() - contadorBostezo.getBase()) / 1000) >= 2 && inicio == true) {
-                                        val notification: Uri =
-                                            RingtoneManager.getDefaultUri(
-                                                RingtoneManager.TYPE_NOTIFICATION
-                                            )
-                                        val r = RingtoneManager.getRingtone(
-                                            getApplicationContext(),
-                                            notification
-                                        )
-                                        r.play()
-                                        vibratePhone()
-                                        bostezos.add(((((SystemClock.elapsedRealtime() - duracionViaje.getBase()) / 1000) / 60).toInt()))
-
-                                        /*mTTS = TextToSpeech(requireActivity(),TextToSpeech.OnInitListener { status->
-                                            t.text=status.toString()
-                                        })
-                                        //mTTS.language= Locale.ROOT
-
-                                        mTTS!!.speak("Are you sleeping", TextToSpeech.QUEUE_FLUSH, null,"")*/
-                                        inicioContador = false
-                                        root!!.contadorBostezo.setBase(SystemClock.elapsedRealtime())
-                                    }
                                     if (inicio == true) {
                                         detector.detectInImage(imagen)
                                             .addOnSuccessListener { faces ->
                                                 if (faces.size != 0) {
-                                                    reconocer.text = "Reconocimiento correcto"
 
-                                                    if ((faces[0].leftEyeOpenProbability < 0.3 && faces[0].rightEyeOpenProbability < 0.3)) {
+
+                                                    if (faces[0].leftEyeOpenProbability < 0.3 && faces[0].rightEyeOpenProbability < 0.3) {
                                                         if (inicioContador == false) {
                                                             inicioContador = true
                                                             root!!.contador.setBase(SystemClock.elapsedRealtime())
@@ -253,27 +250,11 @@ private var root: View? = null
                                                         inicioContador = false
                                                         root!!.contador.stop()
                                                     }
-                                                    if ((faces[0].smilingProbability > 0.66)) {
-                                                        if (inicioContadorBostezos == false) {
-                                                            inicioContadorBostezos = true
-                                                            root!!.contadorBostezo.setBase(
-                                                                SystemClock.elapsedRealtime()
-                                                            )
-                                                            root!!.contadorBostezo.start()
-                                                        }
-                                                    } else {
-                                                        inicioContadorBostezos = false
-                                                        root!!.contadorBostezo.stop()
-                                                    }
 
-                                                } else {
-                                                    reconocer.text = "Reconocimiento incorrecto"
                                                 }
                                             }
                                     } else {
                                         inicioContador = false
-                                        inicioContadorBostezos = false
-                                        root!!.contadorBostezo.stop()
                                         root!!.contador.stop()
                                     }
                                     /*if (faces.size != 0) {
@@ -483,7 +464,6 @@ private var root: View? = null
     override fun onDestroy() {
         super.onDestroy()
         cameraExecutor.shutdown()
-        resources.getString(R.string.app_name)
     }
 
     companion object {

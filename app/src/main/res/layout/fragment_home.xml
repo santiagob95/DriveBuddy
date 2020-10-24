@@ -172,11 +172,11 @@
         tools:ignore="DuplicateIds,MissingConstraints" />
 
     <TextView
-        android:id="@+id/title0"
+        android:id="@+id/titleTiempoTotal"
         android:layout_width="154dp"
         android:layout_height="40dp"
         android:fontFamily="@font/montserrat_bold"
-        android:text="Title_opc"
+        android:text="Tiempo de Viaje Total"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="12sp"
@@ -189,7 +189,7 @@
         app:layout_constraintVertical_bias="0.173" />
 
     <TextView
-        android:id="@+id/param0"
+        android:id="@+id/tiempoViajeTotal"
         android:layout_width="156dp"
         android:layout_height="55dp"
         android:fontFamily="@font/montserrat_bold"
@@ -202,7 +202,7 @@
         app:layout_constraintEnd_toEndOf="@+id/view0"
         app:layout_constraintHorizontal_bias="0.554"
         app:layout_constraintStart_toStartOf="@+id/view0"
-        app:layout_constraintTop_toBottomOf="@+id/title0"
+        app:layout_constraintTop_toBottomOf="@+id/titleTiempoTotal"
         app:layout_constraintVertical_bias="0.361" />
 
     <View
@@ -220,11 +220,11 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/title1"
+        android:id="@+id/titleFatiga"
         android:layout_width="152dp"
         android:layout_height="39dp"
         android:fontFamily="@font/montserrat_bold"
-        android:text="Title_opc"
+        android:text="Fatigas detectadas"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="12sp"
@@ -237,7 +237,7 @@
         app:layout_constraintVertical_bias="0.166" />
 
     <TextView
-        android:id="@+id/param1"
+        android:id="@+id/fatigaTotal"
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:fontFamily="@font/montserrat_bold"
@@ -250,7 +250,7 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintHorizontal_bias="0.58"
         app:layout_constraintStart_toStartOf="@+id/guideline4"
-        app:layout_constraintTop_toBottomOf="@+id/title1"
+        app:layout_constraintTop_toBottomOf="@+id/titleFatiga"
         app:layout_constraintVertical_bias="0.355" />
 
     <View
@@ -268,11 +268,11 @@
 
 
     <TextView
-        android:id="@+id/title2"
+        android:id="@+id/titlePestaneos"
         android:layout_width="152dp"
         android:layout_height="39dp"
         android:fontFamily="@font/montserrat_bold"
-        android:text="Title_opc"
+        android:text="Pestaneos Largos"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="12sp"
@@ -285,7 +285,7 @@
         app:layout_constraintVertical_bias="0.191" />
 
     <TextView
-        android:id="@+id/param2"
+        android:id="@+id/pestLargoTotal"
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:fontFamily="@font/montserrat_bold"
@@ -297,7 +297,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/view2"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintStart_toStartOf="@+id/guideline4"
-        app:layout_constraintTop_toBottomOf="@+id/title2" />
+        app:layout_constraintTop_toBottomOf="@+id/titlePestaneos" />
 
     <View
         android:id="@+id/view3"
@@ -311,11 +311,11 @@
         app:layout_constraintTop_toTopOf="@+id/guideline9" />
 
     <TextView
-        android:id="@+id/title3"
+        android:id="@+id/titleBostezos"
         android:layout_width="152dp"
         android:layout_height="39dp"
         android:fontFamily="@font/montserrat_bold"
-        android:text="Title_opc"
+        android:text="Bostezos"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="12sp"
@@ -328,7 +328,7 @@
         app:layout_constraintVertical_bias="0.191" />
 
     <TextView
-        android:id="@+id/param3"
+        android:id="@+id/bostezosTotal"
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:fontFamily="@font/montserrat_bold"
@@ -340,7 +340,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/view3"
         app:layout_constraintEnd_toStartOf="@+id/guideline5"
         app:layout_constraintStart_toStartOf="@+id/guideline8"
-        app:layout_constraintTop_toBottomOf="@+id/title3" />
+        app:layout_constraintTop_toBottomOf="@+id/titleBostezos" />
 
     <View
         android:id="@+id/view4"
@@ -354,11 +354,11 @@
         app:layout_constraintTop_toTopOf="@+id/guideline11" />
 
     <TextView
-        android:id="@+id/title4"
+        android:id="@+id/titleVelMedia"
         android:layout_width="152dp"
         android:layout_height="39dp"
         android:fontFamily="@font/montserrat_bold"
-        android:text="Title_opc"
+        android:text="Velocidad Media"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="12sp"
@@ -371,7 +371,7 @@
         app:layout_constraintVertical_bias="0.121" />
 
     <TextView
-        android:id="@+id/param4"
+        android:id="@+id/velMedia"
         android:layout_width="152dp"
         android:layout_height="48dp"
         android:fontFamily="@font/montserrat_bold"
@@ -384,7 +384,7 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintHorizontal_bias="0.517"
         app:layout_constraintStart_toStartOf="@+id/guideline4"
-        app:layout_constraintTop_toBottomOf="@+id/title4"
+        app:layout_constraintTop_toBottomOf="@+id/titleVelMedia"
         app:layout_constraintVertical_bias="0.452" />
 
     <View
@@ -400,11 +400,11 @@
         app:layout_constraintTop_toTopOf="@+id/guideline11" />
 
     <TextView
-        android:id="@+id/title5"
+        android:id="@+id/titleKmRecorridos"
         android:layout_width="152dp"
         android:layout_height="39dp"
         android:fontFamily="@font/montserrat_bold"
-        android:text="Title_opc"
+        android:text="Kilometros Recorridos"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="12sp"
@@ -417,7 +417,7 @@
         app:layout_constraintVertical_bias="0.121" />
 
     <TextView
-        android:id="@+id/param5"
+        android:id="@+id/kmTotales"
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:fontFamily="@font/montserrat_bold"
@@ -429,7 +429,7 @@
         app:layout_constraintBottom_toTopOf="@+id/guideline10"
         app:layout_constraintEnd_toStartOf="@+id/guideline5"
         app:layout_constraintStart_toStartOf="@+id/guideline8"
-        app:layout_constraintTop_toBottomOf="@+id/title5" />
+        app:layout_constraintTop_toBottomOf="@+id/titleKmRecorridos" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline6"
