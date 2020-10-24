@@ -36,20 +36,20 @@ class HomeFragment : Fragment() {
         val userRef = db.collection("users").document(auth.currentUser!!.uid)
 
         userRef.get().addOnSuccessListener { docSnapshot ->
-                val userDoc = docSnapshot.data
-                var title = "Bienvenido de vuelta, "
+            val userDoc = docSnapshot.data
+            var title = "Bienvenido de vuelta, "
 
-                if (auth.currentUser!!.isAnonymous) {
-                    root!!.mainTitle.text = "¡Registrate para ver tus estadisticas!"
-                    root!!.textView6.visibility = View.INVISIBLE
-                    root!!.registerback.visibility = View.VISIBLE
-                    root!!.txtregis.visibility = View.VISIBLE
-                } else {
-                    root!!.mainTitle.text = title + userDoc!!.getValue("nomYApe")
-                    root!!.mainTitle.textAlignment = View.TEXT_ALIGNMENT_TEXT_START
-                    chargeData()
-                }
+            if (auth.currentUser!!.isAnonymous) {
+                root!!.mainTitle.text = "¡Registrate para ver tus estadisticas!"
+                root!!.textView6.visibility = View.INVISIBLE
+                root!!.registerback.visibility = View.VISIBLE
+                root!!.txtregis.visibility = View.VISIBLE
+            } else {
+                root!!.mainTitle.text = title + userDoc!!.getValue("nomYApe")
+                root!!.mainTitle.textAlignment = View.TEXT_ALIGNMENT_TEXT_START
+                chargeData()
             }
+        }
 
         registerback.setOnClickListener{
             activity?.let{
