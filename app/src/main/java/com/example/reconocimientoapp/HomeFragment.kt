@@ -84,6 +84,7 @@ class HomeFragment : Fragment() {
 
                    }
                 }
+
                 val df = DecimalFormat("#.##")
                 df.roundingMode = RoundingMode.CEILING
                 fatigaTotal.text = if(contDoc == 0) "0" else total.fatiga.toString()
@@ -92,6 +93,7 @@ class HomeFragment : Fragment() {
                 bostezosTotal.text = if(contDoc == 0) "0" else total.bostezo.toString()
                 velMedia.text = if(contDoc == 0) "0" else (total.velMedia/contDoc).toString() +" km/h"
                 kmTotales.text = if(contDoc == 0) "0" else total.kmtotales.toString() +" km"
+
             }
 
         registerback.setOnClickListener{
