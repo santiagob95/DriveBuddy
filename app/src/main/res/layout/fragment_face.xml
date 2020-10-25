@@ -52,6 +52,17 @@
         app:layout_constraintLeft_toRightOf="@id/duracionViaje"
         app:layout_constraintBottom_toBottomOf="@id/view"
         android:layout_marginLeft="30dp"/>
+    <TextView
+        android:id="@+id/speedtext"
+        android:layout_width="150dp"
+        android:layout_height="match_parent"
+        android:fontFamily="sans-serif-black"
+        android:gravity="center"
+        android:singleLine="true"
+        android:text="00.00 km/hr"
+        android:textColor="@color/whiteColor"
+        android:textSize="20dp"
+        tools:ignore="MissingConstraints" />
     <Chronometer
         android:id="@+id/duracionViaje"
         android:layout_width="106dp"
