@@ -3,6 +3,7 @@ package com.example.reconocimientoapp
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Context.VIBRATOR_SERVICE
 import android.content.pm.PackageManager
 import android.graphics.*
 import android.media.Image
@@ -10,6 +11,7 @@ import android.media.RingtoneManager
 import android.net.Uri
 import android.os.*
 import android.speech.tts.TextToSpeech
+
 import android.util.Log
 import android.util.Size
 import android.view.LayoutInflater
@@ -24,6 +26,7 @@ import androidx.camera.core.Camera
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import com.facebook.FacebookSdk.getApplicationContext
 import com.google.firebase.auth.FirebaseAuth
@@ -35,11 +38,13 @@ import com.google.firebase.ml.vision.common.FirebaseVisionImage
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetectorOptions
 import kotlinx.android.synthetic.main.fragment_face.*
 import kotlinx.android.synthetic.main.fragment_face.view.*
+import org.w3c.dom.Text
 import java.io.ByteArrayOutputStream
 import java.math.RoundingMode
 import java.nio.ByteBuffer
 import java.text.DecimalFormat
 import java.time.LocalDateTime
+import java.util.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -48,7 +53,7 @@ private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 private var auth: FirebaseAuth = Firebase.auth
 private val db = FirebaseFirestore.getInstance()
-class FaceFragment : Fragment() {
+class FaceFragment : Fragment()  {
     private var param1: String? = null
     private var param2: String? = null
     private var preview: Preview?= null
@@ -65,9 +70,10 @@ class FaceFragment : Fragment() {
 
     private var imageAnalyzer:ImageAnalysis?=null
     private lateinit var cameraExecutor: ExecutorService
-    private lateinit var mTTS: TextToSpeech
+    private  var mTTS: TextToSpeech?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
@@ -78,7 +84,8 @@ class FaceFragment : Fragment() {
     }
 
 
-private var root: View? = null
+
+    private var root: View? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -86,6 +93,7 @@ private var root: View? = null
         // Inflate the layout for this fragment
 
         if(allPermissionsGranted()) {
+
             startCamera()
             cameraExecutor = Executors.newSingleThreadExecutor()
         }else{
@@ -101,7 +109,8 @@ private var root: View? = null
     }
 
     var inicio = false
-    var pestaneos = arrayListOf<String>()
+    var pestañeos = arrayListOf<Int>()
+    var bostezos= arrayListOf<Int>()
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onStart() {
         super.onStart()
@@ -116,8 +125,9 @@ private var root: View? = null
             else {
                 root!!.iniciarViaje.setBackgroundResource(R.drawable.inicio)
                 root!!.duracionViaje.stop()
-                postStats(pestaneos.size)
-                showAlert(pestaneos.size)
+                inicio=false
+                postStats()
+                showAlert()
 
             }
         }
@@ -131,20 +141,68 @@ private var root: View? = null
         }
     }
 
+    private fun showAlert(){
+        var totalSegundos = ((SystemClock.elapsedRealtime()-duracionViaje.base)/1000).toInt()
+        var minutos=0
+        var horas=0
+        if(totalSegundos>=60){
+            minutos= totalSegundos/60
+            totalSegundos=totalSegundos-(minutos*60)
+            if(minutos>=60){
+                horas=minutos/60
+                minutos=minutos-(horas*60)
+            }
+        }
+        var h : String
+        var s : String
+        var m: String
+        if(horas<10){
+            h="0"+horas.toString()
+        }else{
+            h=horas.toString()
+        }
+        if(minutos<10){
+            m="0"+minutos.toString()
+        }else{
+            m=minutos.toString()
+        }
+        if(totalSegundos<10){
+            s="0"+totalSegundos.toString()
+        }else{
+            s=totalSegundos.toString()
+        }
+
+        var duracion = h+":"+m+":"+s
+        var fatigas = (pestañeos.size/3).toString()
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Estadisticas del viaje")
+
+        builder.setMessage("Duracion del viaje: $duracion\nCantidad de pestañeos largos: ${pestañeos.size}\n Cantidad de fatigas detectadas: $fatigas\nCantidad de bostezos:${bostezos.size}")
+
+        builder.setPositiveButton("Aceptar", null)
+        val dialog: AlertDialog = builder.create()
+
+        dialog.show()
+        pestañeos.clear()
+        bostezos.clear()
+
+    }
+
     fun rand(start: Int, end: Int): Int {
         require(start <= end) { "Illegal Argument" }
         return (Math.random() * (end - start + 1)).toInt() + start
     }
+
     @RequiresApi(Build.VERSION_CODES.O)//esto es para la fecha
-    private fun postStats(cantPest :Int){
-        val tiempoTotal = ((SystemClock.elapsedRealtime()-duracionViaje.base)/1000)/60.toInt()
-        val fatigas = pestaneos.size/3
+    private fun postStats(){
+
+        val fatigas = (pestañeos.size/3)
         val df = DecimalFormat("#.##")
         df.roundingMode = RoundingMode.CEILING
         val stats = hashMapOf(
-            "Fatiga" to rand(1,5),//fatigas
-            "Bostezo" to rand(1,20),
-            "PestaneoLargo" to rand(1,10), //cantPest
+            "Fatiga" to fatigas,//fatigas
+            "Bostezo" to bostezos.size,
+            "PestaneoLargo" to pestañeos.size, //cantPest
             "kmRecorrido" to rand(90,650),
             "tiempoTotal" to df.format((rand(4500,36000)/100.0)/60), //entre 45 min y 6 horas
             "velocidadMedia" to rand(20,180),
@@ -159,54 +217,10 @@ private var root: View? = null
 
 
     }
-    private fun showAlert(cantPest: Int) {
-        var totalSegundos = ((SystemClock.elapsedRealtime() - duracionViaje.base) / 1000).toInt()
-        var minutos = 0
-        var horas = 0
-        if (totalSegundos >= 60) {
-            minutos = totalSegundos / 60
-            totalSegundos -= (minutos * 60)
-            if (minutos >= 60) {
-                horas = minutos / 60
-                minutos -= (horas * 60)
-            }
-        }
-        var h: String
-        var s: String
-        var m: String
-        if (horas < 10) {
-            h = "0$horas"
-        } else {
-            h = horas.toString()
-        }
-        if (minutos < 10) {
-            m = "0$minutos"
-        } else {
-            m = minutos.toString()
-        }
-        if (totalSegundos < 10) {
-            s = "0$totalSegundos"
-        } else {
-            s = totalSegundos.toString()
-        }
-
-        var duracion = "$h:$m:$s"
-        var fatigas = (cantPest / 3)
-        val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle("Estadisticas del viaje")
-
-        builder.setMessage("Duracion del viaje: $duracion\nCantidad de pestaneos largos: $cantPest\n Cantidad de fatigas detectadas: $fatigas")
-
-        builder.setPositiveButton("aceptar", null)
-        val dialog: AlertDialog = builder.create()
-        dialog.show()
-    }
-
-
 
 
     var inicioContador=false
-
+    var inicioContadorBostezos=false
 
 
     private fun startCamera(){
@@ -242,23 +256,44 @@ private var root: View? = null
                                         )
                                         r.play()
                                         vibratePhone()
-                                        pestaneos.add(((((SystemClock.elapsedRealtime() - duracionViaje.getBase()) / 1000) / 60).toString()))
+                                        pestañeos.add(((((SystemClock.elapsedRealtime() - duracionViaje.getBase()) / 1000) / 60).toInt()))
+
+
+                                        //mTTS.language= Locale.ROOT
+
+                                        //mTTS!!.speak("Are you sleeping", TextToSpeech.QUEUE_FLUSH, null,"")
+                                        inicioContador = false
+                                        root!!.contador.setBase(SystemClock.elapsedRealtime())
+                                    }
+                                    if (inicioContadorBostezos == true && ((SystemClock.elapsedRealtime() - contadorBostezo.getBase()) / 1000) >= 2 && inicio == true) {
+                                        val notification: Uri =
+                                            RingtoneManager.getDefaultUri(
+                                                RingtoneManager.TYPE_NOTIFICATION
+                                            )
+                                        val r = RingtoneManager.getRingtone(
+                                            getApplicationContext(),
+                                            notification
+                                        )
+                                        r.play()
+                                        vibratePhone()
+                                        bostezos.add(((((SystemClock.elapsedRealtime() - duracionViaje.getBase()) / 1000) / 60).toInt()))
+
                                         /*mTTS = TextToSpeech(requireActivity(),TextToSpeech.OnInitListener { status->
                                             t.text=status.toString()
                                         })
-                                        //mTTS.language= Locale.ROOT
+                                        //mTTS.language= Locale.ROOT*/
 
-                                        mTTS!!.speak("Are you sleeping", TextToSpeech.QUEUE_FLUSH, null,"")*/
+                                        //mTTS!!.speak("Are you sleeping", TextToSpeech.QUEUE_FLUSH, null,"")
                                         inicioContador = false
-                                        root!!.contador.setBase(SystemClock.elapsedRealtime())
+                                        root!!.contadorBostezo.setBase(SystemClock.elapsedRealtime())
                                     }
                                     if (inicio == true) {
                                         detector.detectInImage(imagen)
                                             .addOnSuccessListener { faces ->
                                                 if (faces.size != 0) {
 
-
-                                                    if (faces[0].leftEyeOpenProbability < 0.3 && faces[0].rightEyeOpenProbability < 0.3) {
+                                                    reconocer.text="Correcto"
+                                                    if ((faces[0].leftEyeOpenProbability < 0.3 && faces[0].rightEyeOpenProbability < 0.3)) {
                                                         if (inicioContador == false) {
                                                             inicioContador = true
                                                             root!!.contador.setBase(SystemClock.elapsedRealtime())
@@ -268,11 +303,25 @@ private var root: View? = null
                                                         inicioContador = false
                                                         root!!.contador.stop()
                                                     }
+                                                    if ((faces[0].smilingProbability>0.66)) {
+                                                        if (inicioContadorBostezos == false) {
+                                                            inicioContadorBostezos = true
+                                                            root!!.contadorBostezo.setBase(SystemClock.elapsedRealtime())
+                                                            root!!.contadorBostezo.start()
+                                                        }
+                                                    } else {
+                                                        inicioContadorBostezos = false
+                                                        root!!.contadorBostezo.stop()
+                                                    }
 
+                                                }else{
+                                                    reconocer.text="Sin reconocimiento"
                                                 }
                                             }
                                     } else {
                                         inicioContador = false
+                                        inicioContadorBostezos=false
+                                        root!!.contadorBostezo.stop()
                                         root!!.contador.stop()
                                     }
                                     /*if (faces.size != 0) {
@@ -415,7 +464,7 @@ private var root: View? = null
         override fun analyze(imageProxy: ImageProxy) {
             val mediaImage = imageProxy?.image
             if (mediaImage != null) {
-                val image = FirebaseVisionImage.fromMediaImage(mediaImage, Surface.ROTATION_270)
+                val image = FirebaseVisionImage.fromMediaImage(mediaImage,0)
                 mListener.setOnLumaListener(image)
                 imageProxy.close()
             }
@@ -496,5 +545,6 @@ private var root: View? = null
                 }
             }
     }
-}
 
+
+}
