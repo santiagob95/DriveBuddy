@@ -14,6 +14,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
+import java.math.RoundingMode
+import java.text.DecimalFormat
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -63,29 +65,35 @@ class HomeFragment : Fragment() {
                     var bostezo=0
                     var pestLargo =0
                     var kmtotales =0
-                    var tiempoViajeTotal =0
+                    var tiempoViajeTotal =0.0
                     var velMedia =0
 
                 }
                 var contDoc = 0;
                 for(document in documents){
+
                    if( document.exists() ) {
+                       Log.v("GetDoc", "\n-------Doc:\n"+document.data.values)
                        total.fatiga += document.data!!.getValue("Fatiga").toString().toInt()
                        total.bostezo += document.data!!.getValue("Bostezo").toString().toInt()
                        total.pestLargo += document.data!!.getValue("PestaneoLargo").toString().toInt()
                        total.kmtotales +=document.data!!.getValue("kmRecorrido").toString().toInt()
-                       total.tiempoViajeTotal += document.data!!.getValue("tiempoTotal").toString().toInt()
+                       total.tiempoViajeTotal += document.data!!.getValue("tiempoTotal").toString().toDouble()
                        total.velMedia += document.data!!.getValue("velocidadMedia").toString().toInt()
                        contDoc++
 
                    }
                 }
-                root!!.fatigaTotal.text = if(contDoc == 0) "0" else total.fatiga.toString()
-                root!!.tiempoViajeTotal.text =if(contDoc == 0) "0" else total.tiempoViajeTotal.toString() + " hs"
-                root!!.pestLargoTotal.text = if(contDoc == 0) "0" else total.pestLargo.toString()
-                root!!.bostezosTotal.text = if(contDoc == 0) "0" else total.bostezo.toString()
-                root!!.velMedia.text = if(contDoc == 0) "0" else (total.velMedia/contDoc).toString() +" km/h"
-                root!!.kmTotales.text = if(contDoc == 0) "0" else total.kmtotales.toString() +" km"
+
+                val df = DecimalFormat("#.##")
+                df.roundingMode = RoundingMode.CEILING
+                fatigaTotal.text = if(contDoc == 0) "0" else total.fatiga.toString()
+                tiempoViajeTotal.text =if(contDoc == 0) "0" else df.format(total.tiempoViajeTotal) + " hs"
+                pestLargoTotal.text = if(contDoc == 0) "0" else total.pestLargo.toString()
+                bostezosTotal.text = if(contDoc == 0) "0" else total.bostezo.toString()
+                velMedia.text = if(contDoc == 0) "0" else (total.velMedia/contDoc).toString() +" km/h"
+                kmTotales.text = if(contDoc == 0) "0" else total.kmtotales.toString() +" km"
+
             }
 
         registerback.setOnClickListener{
