@@ -205,7 +205,7 @@ class FaceFragment : Fragment()  {
             "Bostezo" to bostezos.size,
             "PestaneoLargo" to pestañeos.size, //cantPest
             "kmRecorrido" to rand(90,650),
-            "tiempoTotal" to df.format((rand(4500,36000)/100.0)/60), //entre 45 min y 6 horas
+            "tiempoTotal" to (((rand(4500,36000))/100.0)/60), //entre 45 min y 6 horas
             "velocidadMedia" to rand(20,180),
             "id" to auth.currentUser!!.uid,
             "fecha" to LocalDateTime.now().toString()
