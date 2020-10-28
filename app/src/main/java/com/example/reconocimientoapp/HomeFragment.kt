@@ -87,12 +87,12 @@ class HomeFragment : Fragment() {
 
                 val df = DecimalFormat("#.##")
                 df.roundingMode = RoundingMode.CEILING
-                fatigaTotal.text = if(contDoc == 0) "0" else total.fatiga.toString()
-                tiempoViajeTotal.text =if(contDoc == 0) "0" else df.format(total.tiempoViajeTotal) + " hs"
-                pestLargoTotal.text = if(contDoc == 0) "0" else total.pestLargo.toString()
-                bostezosTotal.text = if(contDoc == 0) "0" else total.bostezo.toString()
-                velMedia.text = if(contDoc == 0) "0" else (total.velMedia/contDoc).toString() +" km/h"
-                kmTotales.text = if(contDoc == 0) "0" else total.kmtotales.toString() +" km"
+                root!!.fatigaTotal.text = if(contDoc == 0) "0" else total.fatiga.toString()
+                root!!.tiempoViajeTotal.text =if(contDoc == 0) "0" else df.format(total.tiempoViajeTotal) + " hs"
+                root!!.pestLargoTotal.text = if(contDoc == 0) "0" else total.pestLargo.toString()
+                root!!.bostezosTotal.text = if(contDoc == 0) "0" else total.bostezo.toString()
+                root!!.velMedia.text = if(contDoc == 0) "0" else (total.velMedia/contDoc).toString() +" km/h"
+                root!!.kmTotales.text = if(contDoc == 0) "0" else total.kmtotales.toString() +" km"
 
             }
 

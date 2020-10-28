@@ -53,7 +53,7 @@
         app:layout_constraintBottom_toBottomOf="@id/view"
         android:layout_marginLeft="30dp"/>
     <TextView
-        android:id="@+id/speedtext"
+        android:id="@+id/currentSpeedId"
         android:layout_width="150dp"
         android:layout_height="match_parent"
         android:fontFamily="sans-serif-black"
