@@ -27,20 +27,30 @@ class MainActivity : AppCompatActivity() {
 
     // Access a Cloud Firestore instance from your Activity
     private val db = FirebaseFirestore.getInstance()
-
+    var nav=R.id.home
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+
         when(item.itemId){
             R.id.home -> {
-                replaceFragment(HomeFragment())
-                return@OnNavigationItemSelectedListener true
+                if(nav!=item.itemId) {
+                    nav=item.itemId
+                    replaceFragment(HomeFragment())
+                    return@OnNavigationItemSelectedListener true
+                }
             }
             R.id.face -> {
-                replaceFragment(FaceFragment())
-                return@OnNavigationItemSelectedListener true
+                if(nav!=item.itemId) {
+                    nav=item.itemId
+                    replaceFragment(FaceFragment())
+                    return@OnNavigationItemSelectedListener true
+                }
             }
             R.id.cons -> {
-                replaceFragment(ConsFragment())
-                return@OnNavigationItemSelectedListener true
+                if(nav!=item.itemId) {
+                    nav=item.itemId
+                    replaceFragment(ConsFragment())
+                    return@OnNavigationItemSelectedListener true
+                }
             }
         }
         false
