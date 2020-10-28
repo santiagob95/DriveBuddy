@@ -295,7 +295,7 @@ class FaceFragment : Fragment()  {
                                             .addOnSuccessListener { faces ->
                                                 if (faces.size != 0) {
 
-                                                    reconocer.text="Correcto"
+                                                    root!!.recOk.setBackgroundResource(R.drawable.reconocimientook)
                                                     if ((faces[0].leftEyeOpenProbability < 0.3 && faces[0].rightEyeOpenProbability < 0.3)) {
                                                         if (inicioContador == false) {
                                                             inicioContador = true
@@ -318,7 +318,7 @@ class FaceFragment : Fragment()  {
                                                     }
 
                                                 }else{
-                                                    reconocer.text="Sin reconocimiento"
+                                                    root!!.recOk.setBackgroundResource(R.drawable.reconocimientobad)
                                                 }
                                             }
                                     } else {
