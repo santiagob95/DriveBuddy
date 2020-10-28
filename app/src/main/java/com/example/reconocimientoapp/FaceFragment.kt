@@ -117,14 +117,16 @@ class FaceFragment : Fragment()  {
         super.onStart()
         iniciarViaje.setOnClickListener {
             if(inicio==false) {
-                root!!.iniciarViaje.setBackgroundResource(R.drawable.finalv)
+                root!!.iniciarViaje.setBackgroundResource(R.drawable.stop)
+                root!!.pausarViaje.visibility = View.VISIBLE
                 root!!.duracionViaje.setBase(SystemClock.elapsedRealtime())
                 root!!.duracionViaje.start()
                 inicio = true
 
             }
             else {
-                root!!.iniciarViaje.setBackgroundResource(R.drawable.inicio)
+                root!!.iniciarViaje.setBackgroundResource(R.drawable.start)
+                root!!.pausarViaje.visibility = View.INVISIBLE
                 root!!.duracionViaje.stop()
                 inicio=false
                 postStats()
@@ -293,7 +295,7 @@ class FaceFragment : Fragment()  {
                                             .addOnSuccessListener { faces ->
                                                 if (faces.size != 0) {
 
-                                                    reconocer.text="Correcto"
+                                                    root!!.recOk.setBackgroundResource(R.drawable.reconocimientook)
                                                     if ((faces[0].leftEyeOpenProbability < 0.3 && faces[0].rightEyeOpenProbability < 0.3)) {
                                                         if (inicioContador == false) {
                                                             inicioContador = true
@@ -316,7 +318,7 @@ class FaceFragment : Fragment()  {
                                                     }
 
                                                 }else{
-                                                    reconocer.text="Sin reconocimiento"
+                                                    root!!.recOk.setBackgroundResource(R.drawable.reconocimientobad)
                                                 }
                                             }
                                     } else {
