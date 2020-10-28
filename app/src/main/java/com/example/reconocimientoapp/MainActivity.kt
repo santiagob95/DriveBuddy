@@ -31,17 +31,14 @@ class MainActivity : AppCompatActivity() {
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when(item.itemId){
             R.id.home -> {
-                println("home pressed")
                 replaceFragment(HomeFragment())
                 return@OnNavigationItemSelectedListener true
             }
             R.id.face -> {
-                println("face pressed")
                 replaceFragment(FaceFragment())
                 return@OnNavigationItemSelectedListener true
             }
             R.id.cons -> {
-                println("cons pressed")
                 replaceFragment(ConsFragment())
                 return@OnNavigationItemSelectedListener true
             }
