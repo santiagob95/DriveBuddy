@@ -40,7 +40,7 @@
 
     <Button
         android:id="@+id/loginBtn"
-        android:layout_width="177dp"
+        android:layout_width="0dp"
         android:layout_height="58dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
@@ -50,17 +50,17 @@
         android:textColor="#494949"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline16"
         app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline15"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.618" />
 
 
     <TextView
         android:id="@+id/iniciar_ses"
-        android:layout_width="162dp"
-        android:layout_height="32dp"
+        android:layout_width="165dp"
+        android:layout_height="36dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:fontFamily="@font/montserrat_bold"
@@ -72,44 +72,45 @@
         android:translationZ="90dp"
         app:layout_constraintBottom_toBottomOf="@+id/loginBtn"
         app:layout_constraintEnd_toEndOf="@+id/loginBtn"
-        app:layout_constraintHorizontal_bias="0.661"
+        app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintStart_toStartOf="@+id/loginBtn"
         app:layout_constraintTop_toTopOf="@+id/loginBtn"
-        app:layout_constraintVertical_bias="0.52" />
+        app:layout_constraintVertical_bias="0.409" />
 
     <TextView
         android:id="@+id/no_est_s_re"
-        android:layout_width="139dp"
-        android:layout_height="18dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:fontFamily="@font/montserrat_bold"
-        android:gravity="top"
         android:text="¿No estás registrado? "
+        android:textAlignment="textEnd"
         android:textAppearance="@style/no_est_s_re"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintBottom_toTopOf="@+id/guideline13"
+        app:layout_constraintEnd_toStartOf="@+id/guideline14"
+        app:layout_constraintHorizontal_bias="0.275"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.684" />
+        app:layout_constraintTop_toTopOf="@+id/guideline12"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/makeregisterBtn"
-        android:layout_width="74dp"
-        android:layout_height="18dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
+        android:layout_marginLeft="10dp"
         android:clickable="true"
         android:fontFamily="@font/montserrat_bold"
-        android:gravity="top"
         android:text="@string/registrate"
+        android:textAlignment="textStart"
         android:textAppearance="@style/registrate"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/guideline13"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.051"
-        app:layout_constraintStart_toEndOf="@+id/no_est_s_re"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline14"
+        app:layout_constraintTop_toTopOf="@+id/guideline12"
         app:layout_constraintVertical_bias="0.684" />
 
     <View
@@ -249,15 +250,15 @@
         android:layout_width="301dp"
         android:layout_height="52dp"
         android:drawableStart="@drawable/ic_person"
-        android:hint="Email o nombre de usuario"
-        android:textSize="15dp"
         android:drawablePadding="12dp"
         android:ems="10"
+        android:hint="Email o nombre de usuario"
         android:inputType="textPersonName"
         android:paddingStart="10.5dp"
         android:paddingEnd="12dp"
         android:textColor="@color/whiteColor"
         android:textColorHint="@color/whiteColor"
+        android:textSize="15dp"
         android:theme="@style/logintxt"
         app:layout_constraintBottom_toTopOf="@+id/idPassword"
         app:layout_constraintEnd_toEndOf="parent"
@@ -266,4 +267,39 @@
         app:layout_constraintTop_toBottomOf="@+id/drive_buddy"
         app:layout_constraintVertical_bias="0.518"
         tools:ignore="TextFields" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.66" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.69" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.53" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.28" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.71" />
 </androidx.constraintlayout.widget.ConstraintLayout>

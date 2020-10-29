@@ -14,7 +14,7 @@
     <View
         android:id="@+id/nav_top"
         android:layout_width="409dp"
-        android:layout_height="55dp"
+        android:layout_height="60dp"
         android:background="#606060"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -59,31 +59,16 @@
         app:layout_constraintVertical_bias="1.0"
         app:menu="@menu/bottom_nav" />
 
-    <TextView
-        android:id="@+id/drive_buddy"
-        android:layout_width="76dp"
-        android:layout_height="54dp"
-        android:fontFamily="@font/montserrat_bold"
-        android:orientation="vertical"
-        android:text="Drive Buddy"
-        android:textAppearance="@style/drive_buddy"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/exitBtn"
-        app:layout_constraintHorizontal_bias="0.312"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
     <View
         android:id="@+id/exitBtn"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:background="@drawable/ic_logout"
+        android:background="@drawable/iclogout"
         android:clickable="true"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="@+id/nav_top"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.957"
+        app:layout_constraintHorizontal_bias="0.965"
         app:layout_constraintStart_toStartOf="@+id/nav_top"
         app:layout_constraintTop_toTopOf="@+id/nav_top"
         app:layout_constraintVertical_bias="0.65999997" />
@@ -103,29 +88,18 @@
 
     <View
         android:id="@+id/logo_drive_"
-        android:layout_width="45dp"
-        android:layout_height="48dp"
+        android:layout_width="146dp"
+        android:layout_height="0dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:background="@drawable/ic_logo"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/logofull"
         app:layout_constraintBottom_toBottomOf="@+id/nav_top"
-        app:layout_constraintEnd_toStartOf="@+id/drive_buddy"
-        app:layout_constraintHorizontal_bias="0.372"
+        app:layout_constraintEnd_toStartOf="@+id/exitBtn"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.65999997" />
-
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="13dp"
-        android:layout_height="45dp"
-        app:layout_constraintBottom_toBottomOf="@+id/drive_buddy"
-        app:layout_constraintEnd_toStartOf="@+id/drive_buddy"
-        app:layout_constraintHorizontal_bias="0.46"
-        app:layout_constraintStart_toEndOf="@+id/logo_drive_"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.96"
-        app:srcCompat="@drawable/line" />
+        app:layout_constraintVertical_bias="0.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
