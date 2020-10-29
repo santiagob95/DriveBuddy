@@ -37,6 +37,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.ml.vision.FirebaseVision
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetectorOptions
+import com.google.firebase.ml.vision.face.FirebaseVisionFaceLandmark
 import kotlinx.android.synthetic.main.fragment_face.*
 import kotlinx.android.synthetic.main.fragment_face.view.*
 import org.w3c.dom.Text
@@ -54,14 +55,14 @@ private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 private var auth: FirebaseAuth = Firebase.auth
 private val db = FirebaseFirestore.getInstance()
-class FaceFragment : Fragment()  {
+class FaceFragment : Fragment() , TextToSpeech.OnInitListener {
     private var param1: String? = null
     private var param2: String? = null
     private var preview: Preview?= null
     private var camera:Camera?= null
     private val mCamera: Camera? = null
     val realTimeOpts = FirebaseVisionFaceDetectorOptions.Builder()
-
+        .setLandmarkMode(FirebaseVisionFaceDetectorOptions.ALL_LANDMARKS)
         .setClassificationMode(FirebaseVisionFaceDetectorOptions.ALL_CLASSIFICATIONS)
         .build()
 
@@ -94,7 +95,7 @@ class FaceFragment : Fragment()  {
         // Inflate the layout for this fragment
 
         if(allPermissionsGranted()) {
-
+            mTTS= TextToSpeech(context,this)
             startCamera()
             cameraExecutor = Executors.newSingleThreadExecutor()
         }else{
@@ -257,8 +258,10 @@ class FaceFragment : Fragment()  {
                                             getApplicationContext(),
                                             notification
                                         )
+
                                         r.play()
                                         vibratePhone()
+                                        mTTS!!.speak("Abre esos ojos! no te quedes dormido",TextToSpeech.QUEUE_FLUSH,null)
                                         pestañeos.add(((((SystemClock.elapsedRealtime() - duracionViaje.getBase()) / 1000) / 60).toInt()))
 
 
@@ -279,6 +282,7 @@ class FaceFragment : Fragment()  {
                                         )
                                         r.play()
                                         vibratePhone()
+                                        mTTS!!.speak("Bostezando? estas con sueño?",TextToSpeech.QUEUE_FLUSH,null)
                                         bostezos.add(((((SystemClock.elapsedRealtime() - duracionViaje.getBase()) / 1000) / 60).toInt()))
 
                                         /*mTTS = TextToSpeech(requireActivity(),TextToSpeech.OnInitListener { status->
@@ -294,7 +298,7 @@ class FaceFragment : Fragment()  {
                                         detector.detectInImage(imagen)
                                             .addOnSuccessListener { faces ->
                                                 if (faces.size != 0) {
-
+                                                    
                                                     root!!.recOk.setBackgroundResource(R.drawable.reconocimientook)
                                                     if ((faces[0].leftEyeOpenProbability < 0.3 && faces[0].rightEyeOpenProbability < 0.3)) {
                                                         if (inicioContador == false) {
@@ -547,6 +551,10 @@ class FaceFragment : Fragment()  {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+
+    override fun onInit(p0: Int) {
+
     }
 
 
