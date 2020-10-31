@@ -62,10 +62,10 @@
         android:layout_height="wrap_content"
         android:textSize="24dp"
         android:id="@+id/speeds"
-        android:text="hola amigo"
-        android:paddingTop="100dp"
+        android:text="zxczxc"
         android:textColor="#FFFFFF"
-        />
+        android:paddingTop="100dp"
+        android:paddingLeft="5dp"/>
     <View
         android:id="@+id/view"
         android:layout_width="0dp"

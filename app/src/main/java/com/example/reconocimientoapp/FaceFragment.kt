@@ -124,6 +124,8 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
                         val speedToInt = locationResult.lastLocation.speed.toInt()
                         calcSpeed(speedToInt)
 
+                    }else{
+                        root!!.speeds.text="jeje"
                     }
                 }
             }
@@ -153,7 +155,7 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
 
 
     private fun calcSpeed(speed:Int){
-        speeds.text=speed.toString()+ "KM/H"
+        root!!.speeds.text=speed.toString()+"km/h"
 
     }
 
@@ -406,7 +408,7 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
                                         detector.detectInImage(imagen)
                                             .addOnSuccessListener { faces ->
                                                 if (faces.size != 0) {
-                                                    
+
                                                     root!!.recOk.setBackgroundResource(R.drawable.reconocimientook)
                                                     if ((faces[0].leftEyeOpenProbability < 0.3 && faces[0].rightEyeOpenProbability < 0.3)) {
                                                         if (inicioContador == false) {
