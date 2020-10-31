@@ -467,7 +467,7 @@ class FaceFragment : Fragment()  {
         override fun analyze(imageProxy: ImageProxy) {
             val mediaImage = imageProxy?.image
             if (mediaImage != null) {
-                val image = FirebaseVisionImage.fromMediaImage(mediaImage,0)
+                val image = FirebaseVisionImage.fromMediaImage(mediaImage,Surface.ROTATION_270)
                 mListener.setOnLumaListener(image)
                 imageProxy.close()
             }
