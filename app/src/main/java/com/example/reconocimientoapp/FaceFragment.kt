@@ -3,18 +3,15 @@ package com.example.reconocimientoapp
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Context.VIBRATOR_SERVICE
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.*
 import android.location.Location
 import android.media.Image
-import android.media.MediaRecorder.VideoSource.SURFACE
 import android.media.RingtoneManager
 import android.net.Uri
 import android.os.*
 import android.speech.tts.TextToSpeech
-
 import android.util.Log
 import android.util.Size
 import android.view.LayoutInflater
@@ -24,13 +21,14 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.*
 import androidx.camera.core.Camera
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.facebook.FacebookSdk.getApplicationContext
 import com.google.android.gms.location.*
 import com.google.firebase.auth.FirebaseAuth
@@ -40,10 +38,8 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.ml.vision.FirebaseVision
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetectorOptions
-import com.google.firebase.ml.vision.face.FirebaseVisionFaceLandmark
 import kotlinx.android.synthetic.main.fragment_face.*
 import kotlinx.android.synthetic.main.fragment_face.view.*
-import org.w3c.dom.Text
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 import java.io.ByteArrayOutputStream
@@ -51,10 +47,8 @@ import java.math.RoundingMode
 import java.nio.ByteBuffer
 import java.text.DecimalFormat
 import java.time.LocalDateTime
-import java.util.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
-import java.util.jar.Manifest
 import kotlin.properties.Delegates
 
 
@@ -305,13 +299,18 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
 
         builder.setMessage("Duracion del viaje: $duracion\nCantidad de pestañeos largos: ${pestañeos.size}\n Cantidad de fatigas detectadas: $fatigas\nCantidad de bostezos:${bostezos.size}")
 
-        builder.setPositiveButton("Aceptar", null)
-        val dialog: AlertDialog = builder.create()
 
-        dialog.show()
+        customModal()
+
         pestañeos.clear()
         bostezos.clear()
 
+    }
+
+    fun customModal() {
+        val fragManager: FragmentManager = (activity as AppCompatActivity).supportFragmentManager
+        val dialog = MyCustomDialog()
+        dialog.show(fragManager , "MyCustomFragment")
     }
 
     fun rand(start: Int, end: Int): Int {
