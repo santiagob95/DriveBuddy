@@ -299,21 +299,18 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
 
         builder.setMessage("Duracion del viaje: $duracion\nCantidad de pestañeos largos: ${pestañeos.size}\n Cantidad de fatigas detectadas: $fatigas\nCantidad de bostezos:${bostezos.size}")
 
-        builder.setPositiveButton("Aceptar", null)
-        val dialog: AlertDialog = builder.create()
 
-
-        customModal(duracion,{pestañeos.size}.toString(),fatigas,{bostezos.size}.toString())
+        customModal()
 
         pestañeos.clear()
         bostezos.clear()
 
     }
 
-    fun customModal(time:String, pestaneo: String, fatiga:String, bostezo:String) {
+    fun customModal() {
         val fragManager: FragmentManager = (activity as AppCompatActivity).supportFragmentManager
-        //MyCustomDialog().recibirData(time,pestaneo,fatiga,bostezo)
-        MyCustomDialog().show(fragManager , "MyCustomFragment")
+        val dialog = MyCustomDialog()
+        dialog.show(fragManager , "MyCustomFragment")
     }
 
     fun rand(start: Int, end: Int): Int {
