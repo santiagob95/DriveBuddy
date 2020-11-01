@@ -40,6 +40,8 @@ import com.google.firebase.ml.vision.common.FirebaseVisionImage
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetectorOptions
 import kotlinx.android.synthetic.main.fragment_face.*
 import kotlinx.android.synthetic.main.fragment_face.view.*
+import kotlinx.android.synthetic.main.modaldialog.*
+import kotlinx.android.synthetic.main.modaldialog.view.*
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 import java.io.ByteArrayOutputStream
@@ -247,7 +249,7 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
                 root!!.duracionViaje.stop()
                 inicio=false
                 postStats()
-                showAlert()
+                customModal()
 
             }
         }
@@ -261,7 +263,7 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
         }
     }
 
-    private fun showAlert(){
+    fun customModal() {
         var totalSegundos = ((SystemClock.elapsedRealtime()-duracionViaje.base)/1000).toInt()
         var minutos=0
         var horas=0
@@ -293,24 +295,13 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
         }
 
         var duracion = h+":"+m+":"+s
-        var fatigas = (pestañeos.size/3).toString()
-        val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle("Estadisticas del viaje")
-
-        builder.setMessage("Duracion del viaje: $duracion\nCantidad de pestañeos largos: ${pestañeos.size}\n Cantidad de fatigas detectadas: $fatigas\nCantidad de bostezos:${bostezos.size}")
-
-
-        customModal()
-
-        pestañeos.clear()
-        bostezos.clear()
-
-    }
-
-    fun customModal() {
         val fragManager: FragmentManager = (activity as AppCompatActivity).supportFragmentManager
-        val dialog = MyCustomDialog()
+        val dialog = MyCustomDialog.newInstance(duracion,bostezos.size.toString(),(pestañeos.size/3).toString(),pestañeos.size.toString())
+
         dialog.show(fragManager , "MyCustomFragment")
+        bostezos.clear()
+        pestañeos.clear()
+
     }
 
     fun rand(start: Int, end: Int): Int {
@@ -493,7 +484,7 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
         override fun analyze(imageProxy: ImageProxy) {
             val mediaImage = imageProxy?.image
             if (mediaImage != null) {
-                val image = FirebaseVisionImage.fromMediaImage(mediaImage,Surface.ROTATION_270)
+                val image = FirebaseVisionImage.fromMediaImage(mediaImage,0)
                 mListener.setOnLumaListener(image)
                 imageProxy.close()
             }
