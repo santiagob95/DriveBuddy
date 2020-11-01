@@ -303,15 +303,16 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
         val dialog: AlertDialog = builder.create()
 
 
-        customModal()
+        customModal(duracion,{pestañeos.size}.toString(),fatigas,{bostezos.size}.toString())
 
         pestañeos.clear()
         bostezos.clear()
 
     }
 
-    fun customModal() {
+    fun customModal(time:String, pestaneo: String, fatiga:String, bostezo:String) {
         val fragManager: FragmentManager = (activity as AppCompatActivity).supportFragmentManager
+        //MyCustomDialog().recibirData(time,pestaneo,fatiga,bostezo)
         MyCustomDialog().show(fragManager , "MyCustomFragment")
     }
 
