@@ -4,8 +4,10 @@ package com.example.reconocimientoapp
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Context.VIBRATOR_SERVICE
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.*
+import android.location.Location
 import android.media.Image
 import android.media.MediaRecorder.VideoSource.SURFACE
 import android.media.RingtoneManager
@@ -30,6 +32,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import com.facebook.FacebookSdk.getApplicationContext
+import com.google.android.gms.location.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -37,9 +40,12 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.ml.vision.FirebaseVision
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetectorOptions
+import com.google.firebase.ml.vision.face.FirebaseVisionFaceLandmark
 import kotlinx.android.synthetic.main.fragment_face.*
 import kotlinx.android.synthetic.main.fragment_face.view.*
 import org.w3c.dom.Text
+import pub.devrel.easypermissions.AppSettingsDialog
+import pub.devrel.easypermissions.EasyPermissions
 import java.io.ByteArrayOutputStream
 import java.math.RoundingMode
 import java.nio.ByteBuffer
@@ -48,26 +54,39 @@ import java.time.LocalDateTime
 import java.util.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import java.util.jar.Manifest
+import kotlin.properties.Delegates
 
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 private var auth: FirebaseAuth = Firebase.auth
 private val db = FirebaseFirestore.getInstance()
-class FaceFragment : Fragment()  {
+class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermissions.RationaleCallbacks, TextToSpeech.OnInitListener {
+
+    private val LOCATION_PERM=124
+
+    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    private lateinit var locationRequest: LocationRequest
+    private lateinit var locationCallback: LocationCallback
     private var param1: String? = null
     private var param2: String? = null
     private var preview: Preview?= null
     private var camera:Camera?= null
     private val mCamera: Camera? = null
     val realTimeOpts = FirebaseVisionFaceDetectorOptions.Builder()
-
         .setClassificationMode(FirebaseVisionFaceDetectorOptions.ALL_CLASSIFICATIONS)
         .build()
 
 
     val detector = FirebaseVision.getInstance()
         .getVisionFaceDetector(realTimeOpts)
+
+    private var isDone:Boolean by Delegates.observable(false){property, oldValue, newValue ->
+        if(newValue){
+            fusedLocationProviderClient.removeLocationUpdates(locationCallback)
+        }
+    }
 
     private var imageAnalyzer:ImageAnalysis?=null
     private lateinit var cameraExecutor: ExecutorService
@@ -94,7 +113,23 @@ class FaceFragment : Fragment()  {
         // Inflate the layout for this fragment
 
         if(allPermissionsGranted()) {
+            fusedLocationProviderClient=LocationServices.getFusedLocationProviderClient(requireContext())
+            askForLocationPermission()
+            createLocationRequest()
 
+            locationCallback = object :LocationCallback(){
+                override fun onLocationResult(locationResult: LocationResult?) {
+                    locationResult ?:return
+                    if(!isDone){
+                        val speedToInt = locationResult.lastLocation.speed.toInt()
+                        calcSpeed(speedToInt)
+
+                    }else{
+                        root!!.speeds.text="jeje"
+                    }
+                }
+            }
+            mTTS= TextToSpeech(context,this)
             startCamera()
             cameraExecutor = Executors.newSingleThreadExecutor()
         }else{
@@ -107,6 +142,94 @@ class FaceFragment : Fragment()  {
         root = inflater.inflate(R.layout.fragment_face, container, false)
 
         return root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        startLocationUpdates()
+    }
+
+    private fun hasLocationPermissions():Boolean{
+        return EasyPermissions.hasPermissions(requireContext(),android.Manifest.permission.ACCESS_FINE_LOCATION)
+    }
+
+
+    private fun calcSpeed(speed:Int){
+        root!!.speeds.text=speed.toString()+"km/h"
+
+    }
+
+    private fun startLocationUpdates(){
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                android.Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                requireContext(),
+                android.Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return
+        }
+        fusedLocationProviderClient.requestLocationUpdates(
+            locationRequest,
+            locationCallback,
+            Looper.getMainLooper()
+        )
+    }
+
+    override fun onPause() {
+        super.onPause()
+        fusedLocationProviderClient.removeLocationUpdates(locationCallback)
+    }
+
+
+
+    private fun askForLocationPermission(){
+
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                android.Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                requireContext(),
+                android.Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return
+        }
+        if(hasLocationPermissions())
+            fusedLocationProviderClient.lastLocation
+                .addOnSuccessListener { location: Location? ->
+
+                }
+        else{
+            EasyPermissions.requestPermissions(
+                this,
+                "Necesitamos permiso de tu ubicacion para acceder a la velocidad en la que te mueves",
+                LOCATION_PERM,
+                android.Manifest.permission.ACCESS_FINE_LOCATION
+            )
+        }
+    }
+
+    private fun createLocationRequest(){
+        locationRequest=LocationRequest.create().apply {
+            interval = 1000
+            priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        }
     }
 
     var inicio = false
@@ -257,14 +380,11 @@ class FaceFragment : Fragment()  {
                                             getApplicationContext(),
                                             notification
                                         )
+
                                         r.play()
                                         vibratePhone()
+                                        mTTS!!.speak("Abre esos ojos! no te quedes dormido",TextToSpeech.QUEUE_FLUSH,null)
                                         pestañeos.add(((((SystemClock.elapsedRealtime() - duracionViaje.getBase()) / 1000) / 60).toInt()))
-
-
-                                        //mTTS.language= Locale.ROOT
-
-                                        //mTTS!!.speak("Are you sleeping", TextToSpeech.QUEUE_FLUSH, null,"")
                                         inicioContador = false
                                         root!!.contador.setBase(SystemClock.elapsedRealtime())
                                     }
@@ -279,14 +399,8 @@ class FaceFragment : Fragment()  {
                                         )
                                         r.play()
                                         vibratePhone()
+                                        mTTS!!.speak("Bostezando? estas con sueño?",TextToSpeech.QUEUE_FLUSH,null)
                                         bostezos.add(((((SystemClock.elapsedRealtime() - duracionViaje.getBase()) / 1000) / 60).toInt()))
-
-                                        /*mTTS = TextToSpeech(requireActivity(),TextToSpeech.OnInitListener { status->
-                                            t.text=status.toString()
-                                        })
-                                        //mTTS.language= Locale.ROOT*/
-
-                                        //mTTS!!.speak("Are you sleeping", TextToSpeech.QUEUE_FLUSH, null,"")
                                         inicioContador = false
                                         root!!.contadorBostezo.setBase(SystemClock.elapsedRealtime())
                                     }
@@ -327,93 +441,6 @@ class FaceFragment : Fragment()  {
                                         root!!.contadorBostezo.stop()
                                         root!!.contador.stop()
                                     }
-                                    /*if (faces.size != 0) {
-                                                        root!!.caracorrecto.visibility = View.VISIBLE
-                                                        root!!.caraincorrecto.visibility = View.GONE
-                                                    if (faces[0].rightEyeOpenProbability < 0.1000 || faces[0].leftEyeOpenProbability < 0.1000) {
-                                                        root!!.ojoscerrados.visibility = View.VISIBLE
-                                                        root!!.ojosabiertos.visibility = View.GONE
-                                                        val notification: Uri =
-                                                            RingtoneManager.getDefaultUri(
-                                                                RingtoneManager.TYPE_NOTIFICATION
-                                                            )
-                                                        val r = RingtoneManager.getRingtone(
-                                                            getApplicationContext(),
-                                                            notification
-                                                        )
-                                                        r.play()
-                                                    }else{
-                                                        root!!.ojoscerrados.visibility = View.GONE
-                                                        root!!.ojosabiertos.visibility = View.VISIBLE
-                                                    }
-                                                    if (faces[0].smilingProbability > 0.3777) {
-                                                        root!!.sonrisabien.visibility = View.VISIBLE
-                                                        root!!.sonrisamal.visibility = View.GONE
-                                                        val notification: Uri =
-                                                            RingtoneManager.getDefaultUri(
-                                                                RingtoneManager.TYPE_NOTIFICATION
-                                                            )
-                                                        val r = RingtoneManager.getRingtone(
-                                                            getApplicationContext(),
-                                                            notification
-                                                        )
-                                                        r.play()
-                                                    }else{
-                                                        root!!.sonrisabien.visibility = View.GONE
-                                                        root!!.sonrisamal.visibility = View.VISIBLE
-                                                    }
-    //                                                cara.text = "Reconocido correcto"
-    //                                                if (faces[0].smilingProbability > 0.6777) {
-    //                                                    sonrisa.text =
-    //                                                        "sonrisa" + "%.3f".format(faces[0].smilingProbability)
-    //                                                    val notification: Uri =
-    //                                                        RingtoneManager.getDefaultUri(
-    //                                                            RingtoneManager.TYPE_NOTIFICATION
-    //                                                        )
-    //                                                    val r = RingtoneManager.getRingtone(
-    //                                                        getApplicationContext(),
-    //                                                        notification
-    //                                                    )
-    //                                                    r.play()
-    //                                                } else {
-    //                                                    sonrisa.text = "NaN"
-    //                                                }
-    //                                                if (faces[0].rightEyeOpenProbability < 0.1000 || faces[0].leftEyeOpenProbability < 0.1000) {
-    //                                                    val notification: Uri =
-    //                                                        RingtoneManager.getDefaultUri(
-    //                                                            RingtoneManager.TYPE_NOTIFICATION
-    //                                                        )
-    //                                                    val r = RingtoneManager.getRingtone(
-    //                                                        getApplicationContext(),
-    //                                                        notification
-    //                                                    )
-    //                                                    r.play()
-    //                                                } else {
-    //                                                    ojod.text =
-    //                                                        "ojo derecho" + "%.3f".format(faces[0].rightEyeOpenProbability)
-    //                                                    ojoi.text =
-    //                                                        "ojo izquierdo" + "%.3f".format(faces[0].leftEyeOpenProbability)
-    //                                                }
-    //                                                ojod.text =
-    //                                                    "ojo derecho" + "%.3f".format(faces[0].rightEyeOpenProbability)
-    //                                                ojoi.text =
-    //                                                    "ojo izquierdo" + "%.3f".format(faces[0].leftEyeOpenProbability)
-    //                                                sonrisa.text =
-    //                                                    "sonrisa" + "%.3f".format(faces[0].smilingProbability)
-    //                                            } else {
-    //                                                cara.text = "Reconocido incorrecto"
-    //                                                ojod.text = "NaN"
-    //                                                ojoi.text = "NaN"
-    //                                                sonrisa.text = "NaN"
-                                                }else{
-                                                        root!!.caraincorrecto.visibility = View.VISIBLE
-                                                        root!!.caracorrecto.visibility = View.GONE
-                                                    root!!.ojosabiertos.visibility = View.GONE
-                                                    root!!.ojoscerrados.visibility = View.GONE
-                                                    root!!.sonrisamal.visibility= View.GONE
-                                                    root!!.sonrisabien.visibility=View.GONE
-                                                }*/
-
 
                                 }
                             }
@@ -467,7 +494,7 @@ class FaceFragment : Fragment()  {
         override fun analyze(imageProxy: ImageProxy) {
             val mediaImage = imageProxy?.image
             if (mediaImage != null) {
-                val image = FirebaseVisionImage.fromMediaImage(mediaImage,0)
+                val image = FirebaseVisionImage.fromMediaImage(mediaImage,Surface.ROTATION_270)
                 mListener.setOnLumaListener(image)
                 imageProxy.close()
             }
@@ -530,7 +557,36 @@ class FaceFragment : Fragment()  {
 
             }
         }
+        EasyPermissions.onRequestPermissionsResult(requestCode,permissions,grantResults,this)
     }
+
+    override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
+        if(EasyPermissions.somePermissionPermanentlyDenied(requireActivity(),perms)){
+            AppSettingsDialog.Builder(requireActivity()).build().show()
+        }
+    }
+
+    override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode==AppSettingsDialog.DEFAULT_SETTINGS_REQ_CODE){
+            val yes = "Allow"
+            val no= "Deny"
+
+        }
+    }
+
+    override fun onRationaleAccepted(requestCode: Int) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onRationaleDenied(requestCode: Int) {
+        TODO("Not yet implemented")
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         cameraExecutor.shutdown()
@@ -547,6 +603,10 @@ class FaceFragment : Fragment()  {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+
+    override fun onInit(p0: Int) {
+
     }
 
 
