@@ -250,7 +250,7 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
 
         iniciarViaje.setOnClickListener {
             if(inicio==false) {
-                mTTS!!.speak("Drive Buddy le desea un buen viaje!", TextToSpeech.QUEUE_FLUSH, null)
+                mTTS!!.speak("Drive Buddy te desea un buen viaje!", TextToSpeech.QUEUE_FLUSH, null)
                 val audio: AudioManager = context?.getSystemService(Context.AUDIO_SERVICE) as AudioManager
                 val currentVolume: Int = audio.getStreamVolume(AudioManager.STREAM_MUSIC)
                 val maxVolume: Int = audio.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
