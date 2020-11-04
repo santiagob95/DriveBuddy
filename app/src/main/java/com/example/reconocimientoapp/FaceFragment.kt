@@ -18,6 +18,8 @@ import android.view.LayoutInflater
 import android.view.Surface
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AlphaAnimation
+import android.view.animation.Animation
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
@@ -68,6 +70,7 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var locationRequest: LocationRequest
     private lateinit var locationCallback: LocationCallback
+    private var animacion = false
     private var param1: String? = null
     private var param2: String? = null
     private var preview: Preview?= null
@@ -351,6 +354,24 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
     var inicioContadorBostezos=false
 
 
+    fun View.blink(
+        times: Int = Animation.INFINITE,
+        duration: Long = 120L,
+        offset: Long = 20L,
+        minAlpha: Float = 0.0f,
+        maxAlpha: Float = 1.0f,
+        repeatMode: Int = Animation.REVERSE
+    ) {
+        root!!.alerta_flash.visibility = View.VISIBLE
+        startAnimation(AlphaAnimation(minAlpha, maxAlpha).also {
+            it.duration = duration
+            it.startOffset = offset
+            it.repeatMode = repeatMode
+            it.repeatCount = times
+        })
+        root!!.alerta_flash.visibility = View.INVISIBLE
+    }
+
     private fun startCamera(){
 
         val cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())
@@ -388,6 +409,7 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
                                         mTTS!!.speak("Abre esos ojos! no te quedes dormido",TextToSpeech.QUEUE_FLUSH,null)
                                         pestañeos.add(((((SystemClock.elapsedRealtime() - duracionViaje.getBase()) / 1000) / 60).toInt()))
                                         inicioContador = false
+                                        alerta_flash.blink(20)
                                         root!!.contador.setBase(SystemClock.elapsedRealtime())
                                     }
                                     if (inicioContadorBostezos == true && ((SystemClock.elapsedRealtime() - contadorBostezo.getBase()) / 1000) >= 2 && inicio == true) {
@@ -401,9 +423,10 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
                                         )
                                         r.play()
                                         vibratePhone()
-                                        mTTS!!.speak("Bostezando? estas con sueño?",TextToSpeech.QUEUE_FLUSH,null)
+                                        mTTS!!.speak("Bostezando? estás con sueño?",TextToSpeech.QUEUE_FLUSH,null)
                                         bostezos.add(((((SystemClock.elapsedRealtime() - duracionViaje.getBase()) / 1000) / 60).toInt()))
                                         inicioContador = false
+                                        alerta_flash.blink(20)
                                         root!!.contadorBostezo.setBase(SystemClock.elapsedRealtime())
                                     }
                                     if (inicio == true) {
