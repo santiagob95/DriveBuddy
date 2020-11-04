@@ -203,5 +203,29 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.7" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:text="true"
+        android:id="@+id/notification"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:text="true"
+        android:id="@+id/texttospeech"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:text="true"
+        android:id="@+id/vibracion"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:text="true"
+        android:id="@+id/flash"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
