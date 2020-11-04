@@ -3,16 +3,16 @@
     <item android:state_checked="false">
         <shape android:shape="oval">
             <solid android:color="#FFFFFF"/>
-            <size android:width="20dp"
-                android:height="20dp" />
-        </shape>
+<size android:width="20dp"
+android:height="20dp" />
+    </shape>
     </item>
 
-    <item android:state_checked="true">
-        <shape android:shape="oval">
-            <solid android:color="#EBEE4D" />
-            <size android:width="20dp"
-                android:height="20dp" />
-        </shape>
-    </item>
-</selector>
+<item android:state_checked="true">
+<shape android:shape="oval">
+    <solid android:color="#EBEE4D" />
+    <size android:width="20dp"
+        android:height="20dp" />
+</shape>
+</item>
+    </selector>
