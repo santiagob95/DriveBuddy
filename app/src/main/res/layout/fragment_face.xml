@@ -43,6 +43,21 @@
         app:layout_constraintVertical_bias="0.933" />
 
     <Button
+        android:id="@+id/configuracion"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:background="@drawable/ic_config"
+        android:elevation="2dp"
+        android:scaleType="fitCenter"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.78"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/previewView"
+        app:layout_constraintVertical_bias="0.9" />
+
+    <Button
         android:id="@+id/recOk"
         android:layout_width="0dp"
         android:layout_height="0dp"
