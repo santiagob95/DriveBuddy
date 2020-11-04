@@ -29,6 +29,8 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import com.example.reconocimientoapp.FaceFragment.Companion.newInstance
+import com.example.reconocimientoapp.MyCustomDialog.Companion.newInstance
 import com.facebook.FacebookSdk.getApplicationContext
 import com.google.android.gms.location.*
 import com.google.firebase.auth.FirebaseAuth
@@ -45,6 +47,7 @@ import kotlinx.android.synthetic.main.modaldialog.view.*
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 import java.io.ByteArrayOutputStream
+import java.lang.reflect.Array.newInstance
 import java.math.RoundingMode
 import java.nio.ByteBuffer
 import java.text.DecimalFormat
@@ -234,10 +237,18 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onStart() {
         super.onStart()
+        configuracion.setOnClickListener {
+            val fragManager: FragmentManager = (activity as AppCompatActivity).supportFragmentManager
+            val dialog = ConfiguracionDialog()
+            dialog.show(fragManager , "OpcionesFragment")
+        }
+
+
         iniciarViaje.setOnClickListener {
             if(inicio==false) {
                 root!!.iniciarViaje.setBackgroundResource(R.drawable.stop)
                 root!!.pausarViaje.visibility = View.VISIBLE
+                root!!.configuracion.visibility = View.GONE
                 root!!.duracionViaje.setBase(SystemClock.elapsedRealtime())
                 root!!.duracionViaje.start()
                 inicio = true
@@ -246,6 +257,7 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
             else {
                 root!!.iniciarViaje.setBackgroundResource(R.drawable.start)
                 root!!.pausarViaje.visibility = View.INVISIBLE
+                root!!.configuracion.visibility = View.VISIBLE
                 root!!.duracionViaje.stop()
                 inicio=false
                 postStats()
@@ -484,7 +496,7 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
         override fun analyze(imageProxy: ImageProxy) {
             val mediaImage = imageProxy?.image
             if (mediaImage != null) {
-                val image = FirebaseVisionImage.fromMediaImage(mediaImage,0)
+                val image = FirebaseVisionImage.fromMediaImage(mediaImage,Surface.ROTATION_270)
                 mListener.setOnLumaListener(image)
                 imageProxy.close()
             }
