@@ -243,7 +243,7 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
                 val audio: AudioManager = context?.getSystemService(Context.AUDIO_SERVICE) as AudioManager
                 val currentVolume: Int = audio.getStreamVolume(AudioManager.STREAM_MUSIC)
                 val maxVolume: Int = audio.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
-                val percent = 0.7f
+                val percent = 1.0f
                 val seventyVolume = (maxVolume * percent).toInt()
                 audio.setStreamVolume(AudioManager.STREAM_MUSIC, seventyVolume, 0)
                 mTTS!!.speak("Drive Buddy le desea un buen viaje!", TextToSpeech.QUEUE_FLUSH, null)
