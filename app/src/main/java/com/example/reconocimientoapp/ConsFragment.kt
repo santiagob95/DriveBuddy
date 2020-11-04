@@ -56,16 +56,16 @@ class ConsFragment : Fragment() {
     }
 
     private fun postToList(){
-        addToList(titulo = "Consejo 1", contenido = "Este es el contenido del consejo 1", imagen = R.drawable.ic_volume)
-        addToList(titulo = "Consejo 2", contenido = "Este es el contenido del consejo 2", imagen = R.drawable.ic_volume)
-        addToList(titulo = "Consejo 3", contenido = "Este es el contenido del consejo 3", imagen = R.drawable.ic_volume)
-        addToList(titulo = "Consejo 4", contenido = "Este es el contenido del consejo 4", imagen = R.drawable.ic_volume)
-        addToList(titulo = "Consejo 5", contenido = "Este es el contenido del consejo 5", imagen = R.drawable.ic_volume)
-        addToList(titulo = "Consejo 6", contenido = "Este es el contenido del consejo 6", imagen = R.drawable.ic_volume)
-        addToList(titulo = "Consejo 7", contenido = "Este es el contenido del consejo 7", imagen = R.drawable.ic_volume)
-        addToList(titulo = "Consejo 8", contenido = "Este es el contenido del consejo 8", imagen = R.drawable.ic_volume)
-        addToList(titulo = "Consejo 9", contenido = "Este es el contenido del consejo 9", imagen = R.drawable.ic_volume)
-        addToList(titulo = "Consejo 10", contenido = "Este es el contenido del consejo 10", imagen = R.drawable.ic_volume)
+        addToList(titulo = "Realiza algo de actividad antes de un viaje largo.", contenido = "Dar un paseo o algo de ejercicio moderado antes de conducir ayuda a despejarse y activar el cuerpo.", imagen = R.drawable.ic_volume)
+        addToList(titulo = "Recordá beber mucho líquido", contenido = "La deshidratación causa fatiga, así que hay que beber para evitarlo, sobre todo en verano.", imagen = R.drawable.ic_volume)
+        addToList(titulo = "Tené cuidado con los estimulantes.", contenido = "El café, el té o las bebidas energéticas pueden evitar la fatiga a corto plazo, pero pasados sus efectos volverá a aparecer.", imagen = R.drawable.ic_volume)
+        addToList(titulo = "Nada de alimentos pesados.", contenido = "Una comida copiosa conlleva una digestión más pesada y al incremento de la fatiga.", imagen = R.drawable.ic_volume)
+        addToList(titulo = "¡No te quedes dormido!", contenido = "Es esencial haber descansado lo suficiente si se va a conducir de noche.", imagen = R.drawable.ic_volume)
+        addToList(titulo = "Especial atención en la última hora de conducción.", contenido = "Cuando se está llegando al destino hay mayor cansancio acumulado y se baja la guardia, hay que mantenerse atentos.", imagen = R.drawable.ic_volume)
+        addToList(titulo = "Alimentos ricos en hierro.", contenido = "La fatiga puede aumentar por la falta de nutrientes, así que mejorar ese aspecto ayuda.", imagen = R.drawable.ic_volume)
+        addToList(titulo = "¡No manejes incómodo!", contenido = "Recordá usar ropa cómoda y mantener una buena postura de conducción.", imagen = R.drawable.ic_volume)
+        addToList(titulo = "Toma una ducha bien fría.", contenido = "Un baño frío estimula el cuerpo y el shock de temperatura te ayudará a despertar.", imagen = R.drawable.ic_volume)
+        addToList(titulo = "¡Cambia cosas!", contenido = "La monotonía no te ayuda a permanecer alerta. Trata de meter variedad en tu día para mantenerte en movimiento.", imagen = R.drawable.ic_volume)
     }
 
     override fun onCreateView(

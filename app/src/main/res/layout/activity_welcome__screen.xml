@@ -58,10 +58,10 @@
         android:textAppearance="@style/no_est_s_re"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.396"
+        app:layout_constraintHorizontal_bias="0.375"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/guestBtn"
-        app:layout_constraintVertical_bias="0.123" />
+        app:layout_constraintVertical_bias="0.121" />
 
     <View
         android:id="@+id/top_border"
@@ -98,14 +98,13 @@
 
     <TextView
         android:id="@+id/iniciar_ses"
-        android:layout_width="181dp"
+        android:layout_width="0dp"
         android:layout_height="36dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:fontFamily="@font/montserrat_bold"
-        android:gravity="top"
-        android:orientation="vertical"
         android:text="Iniciar sesión"
+        android:textAlignment="center"
         android:textAppearance="@style/iniciar_ses"
         android:translationZ="90dp"
         app:layout_constraintBottom_toBottomOf="@+id/welcomeBtn"
@@ -113,7 +112,7 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/welcomeBtn"
         app:layout_constraintTop_toTopOf="@+id/welcomeBtn"
-        app:layout_constraintVertical_bias="0.545" />
+        app:layout_constraintVertical_bias="0.39" />
 
     <Button
         android:id="@+id/welcomeBtn"
@@ -153,12 +152,11 @@
 
     <TextView
         android:id="@+id/ingresar_co"
-        android:layout_width="163dp"
+        android:layout_width="0dp"
         android:layout_height="19dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:gravity="top"
-        android:orientation="vertical"
+        android:textAlignment="center"
         android:text="Ingresar como invitado"
         android:textAppearance="@style/ingresar_co"
         app:layout_constraintBottom_toBottomOf="@+id/guestBtn"
