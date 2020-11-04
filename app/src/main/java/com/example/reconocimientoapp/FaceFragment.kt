@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.*
 import android.location.Location
+import android.media.AudioManager
 import android.media.Image
 import android.media.RingtoneManager
 import android.net.Uri
@@ -249,6 +250,14 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
 
         iniciarViaje.setOnClickListener {
             if(inicio==false) {
+                mTTS!!.speak("Drive Buddy le desea un buen viaje!", TextToSpeech.QUEUE_FLUSH, null)
+                val audio: AudioManager = context?.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+                val currentVolume: Int = audio.getStreamVolume(AudioManager.STREAM_MUSIC)
+                val maxVolume: Int = audio.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
+                val percent = 1.0f
+                val seventyVolume = (maxVolume * percent).toInt()
+                audio.setStreamVolume(AudioManager.STREAM_MUSIC, seventyVolume, 0)
+                mTTS!!.speak("Drive Buddy le desea un buen viaje!", TextToSpeech.QUEUE_FLUSH, null)
                 root!!.iniciarViaje.setBackgroundResource(R.drawable.stop)
                 root!!.pausarViaje.visibility = View.VISIBLE
                 root!!.configuracion.visibility = View.GONE
