@@ -241,6 +241,19 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onStart() {
         super.onStart()
+
+        var cambio = false
+        cambioface.setOnClickListener{
+            if (cambio == false) {
+                root!!.back_fondo.visibility = View.VISIBLE
+                cambio = true
+            }else{
+                root!!.back_fondo.visibility = View.INVISIBLE
+                cambio = false
+            }
+        }
+
+
         configuracion.setOnClickListener {
             val fragManager: FragmentManager = (activity as AppCompatActivity).supportFragmentManager
             val dialog = ConfiguracionDialog()
