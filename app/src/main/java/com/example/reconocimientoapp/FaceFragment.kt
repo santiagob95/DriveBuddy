@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.*
 import android.location.Location
+import android.media.AudioManager
 import android.media.Image
 import android.media.RingtoneManager
 import android.net.Uri
@@ -18,6 +19,8 @@ import android.view.LayoutInflater
 import android.view.Surface
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AlphaAnimation
+import android.view.animation.Animation
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
@@ -29,6 +32,8 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import com.example.reconocimientoapp.FaceFragment.Companion.newInstance
+import com.example.reconocimientoapp.MyCustomDialog.Companion.newInstance
 import com.facebook.FacebookSdk.getApplicationContext
 import com.google.android.gms.location.*
 import com.google.firebase.auth.FirebaseAuth
@@ -45,6 +50,7 @@ import kotlinx.android.synthetic.main.modaldialog.view.*
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 import java.io.ByteArrayOutputStream
+import java.lang.reflect.Array.newInstance
 import java.math.RoundingMode
 import java.nio.ByteBuffer
 import java.text.DecimalFormat
@@ -65,6 +71,7 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var locationRequest: LocationRequest
     private lateinit var locationCallback: LocationCallback
+    private var animacion = false
     private var param1: String? = null
     private var param2: String? = null
     private var preview: Preview?= null
@@ -234,11 +241,25 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onStart() {
         super.onStart()
+        configuracion.setOnClickListener {
+            val fragManager: FragmentManager = (activity as AppCompatActivity).supportFragmentManager
+            val dialog = ConfiguracionDialog()
+            dialog.show(fragManager , "OpcionesFragment")
+        }
+
+
         iniciarViaje.setOnClickListener {
             if(inicio==false) {
-                mTTS!!.speak("Drive Buddy le desea un buen viaje!",TextToSpeech.QUEUE_FLUSH,null)
+                val audio: AudioManager = context?.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+                val currentVolume: Int = audio.getStreamVolume(AudioManager.STREAM_MUSIC)
+                val maxVolume: Int = audio.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
+                val percent = 1.0f
+                val seventyVolume = (maxVolume * percent).toInt()
+                audio.setStreamVolume(AudioManager.STREAM_MUSIC, seventyVolume, 0)
+                mTTS!!.speak("Drive Buddy te desea un buen viaje!", TextToSpeech.QUEUE_FLUSH, null)
                 root!!.iniciarViaje.setBackgroundResource(R.drawable.stop)
                 root!!.pausarViaje.visibility = View.VISIBLE
+                root!!.configuracion.visibility = View.GONE
                 root!!.duracionViaje.setBase(SystemClock.elapsedRealtime())
                 root!!.duracionViaje.start()
                 inicio = true
@@ -247,6 +268,7 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
             else {
                 root!!.iniciarViaje.setBackgroundResource(R.drawable.start)
                 root!!.pausarViaje.visibility = View.INVISIBLE
+                root!!.configuracion.visibility = View.VISIBLE
                 root!!.duracionViaje.stop()
                 inicio=false
                 postStats()
@@ -340,6 +362,24 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
     var inicioContadorBostezos=false
 
 
+    fun View.blink(
+        times: Int = Animation.INFINITE,
+        duration: Long = 120L,
+        offset: Long = 20L,
+        minAlpha: Float = 0.0f,
+        maxAlpha: Float = 1.0f,
+        repeatMode: Int = Animation.REVERSE
+    ) {
+        root!!.alerta_flash.visibility = View.VISIBLE
+        startAnimation(AlphaAnimation(minAlpha, maxAlpha).also {
+            it.duration = duration
+            it.startOffset = offset
+            it.repeatMode = repeatMode
+            it.repeatCount = times
+        })
+        root!!.alerta_flash.visibility = View.INVISIBLE
+    }
+
     private fun startCamera(){
 
         val cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())
@@ -377,6 +417,7 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
                                         mTTS!!.speak("Abre esos ojos! no te quedes dormido",TextToSpeech.QUEUE_FLUSH,null)
                                         pestañeos.add(((((SystemClock.elapsedRealtime() - duracionViaje.getBase()) / 1000) / 60).toInt()))
                                         inicioContador = false
+                                        alerta_flash.blink(20)
                                         root!!.contador.setBase(SystemClock.elapsedRealtime())
                                     }
                                     if (inicioContadorBostezos == true && ((SystemClock.elapsedRealtime() - contadorBostezo.getBase()) / 1000) >= 2 && inicio == true) {
@@ -390,9 +431,10 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
                                         )
                                         r.play()
                                         vibratePhone()
-                                        mTTS!!.speak("Bostezando? estas con sueño?",TextToSpeech.QUEUE_FLUSH,null)
+                                        mTTS!!.speak("Bostezando? estás con sueño?",TextToSpeech.QUEUE_FLUSH,null)
                                         bostezos.add(((((SystemClock.elapsedRealtime() - duracionViaje.getBase()) / 1000) / 60).toInt()))
                                         inicioContador = false
+                                        alerta_flash.blink(20)
                                         root!!.contadorBostezo.setBase(SystemClock.elapsedRealtime())
                                     }
                                     if (inicio == true) {
