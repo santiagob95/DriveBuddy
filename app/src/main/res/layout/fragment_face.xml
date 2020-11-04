@@ -90,6 +90,17 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <View
+        android:id="@+id/alerta_flash"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:visibility="invisible"
+        android:background="@drawable/alerta"
+        android:translationZ="20dp"
+        tools:layout_editor_absoluteX="197dp" />
+
+    <View
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_alignParentLeft="true"
