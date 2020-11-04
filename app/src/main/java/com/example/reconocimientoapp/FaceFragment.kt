@@ -389,12 +389,6 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
 
                                         r.play()
                                         vibratePhone()
-                                        val audio: AudioManager = context?.getSystemService(Context.AUDIO_SERVICE) as AudioManager
-                                        val currentVolume: Int = audio.getStreamVolume(AudioManager.STREAM_MUSIC)
-                                        val maxVolume: Int = audio.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
-                                        val percent = 1.0f
-                                        val seventyVolume = (maxVolume * percent).toInt()
-                                        audio.setStreamVolume(AudioManager.STREAM_MUSIC, seventyVolume, 0)
                                         mTTS!!.speak(
                                             "Abre esos ojos! no te quedes dormido",
                                             TextToSpeech.QUEUE_FLUSH,
@@ -415,12 +409,6 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
                                         )
                                         r.play()
                                         vibratePhone()
-                                        val audio: AudioManager = context?.getSystemService(Context.AUDIO_SERVICE) as AudioManager
-                                        val currentVolume: Int = audio.getStreamVolume(AudioManager.STREAM_MUSIC)
-                                        val maxVolume: Int = audio.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
-                                        val percent = 1.0f
-                                        val seventyVolume = (maxVolume * percent).toInt()
-                                        audio.setStreamVolume(AudioManager.STREAM_MUSIC, seventyVolume, 0)
                                         mTTS!!.speak(
                                             "Bostezando? estas con sueño?",
                                             TextToSpeech.QUEUE_FLUSH,
