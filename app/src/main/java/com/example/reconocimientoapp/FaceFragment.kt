@@ -236,6 +236,7 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
         super.onStart()
         iniciarViaje.setOnClickListener {
             if(inicio==false) {
+                mTTS!!.speak("Drive Buddy le desea un buen viaje!",TextToSpeech.QUEUE_FLUSH,null)
                 root!!.iniciarViaje.setBackgroundResource(R.drawable.stop)
                 root!!.pausarViaje.visibility = View.VISIBLE
                 root!!.duracionViaje.setBase(SystemClock.elapsedRealtime())
