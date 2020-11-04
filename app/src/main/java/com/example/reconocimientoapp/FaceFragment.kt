@@ -239,6 +239,9 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
     var pestañeos = arrayListOf<Int>()
     var bostezos= arrayListOf<Int>()
     @RequiresApi(Build.VERSION_CODES.O)
+
+
+
     override fun onStart() {
         super.onStart()
 
@@ -256,8 +259,11 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
 
         configuracion.setOnClickListener {
             val fragManager: FragmentManager = (activity as AppCompatActivity).supportFragmentManager
-            val dialog = ConfiguracionDialog()
+            val dialog = ConfiguracionDialog.newInstance(notification.text as String,
+                flash.text as String, vibracion.text as String, texttospeech.text as String
+            )
             dialog.show(fragManager , "OpcionesFragment")
+
         }
 
 
@@ -415,39 +421,59 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
                         setOnLumaListener(object : CustomImageAnalyzer.LumaListener {
                             override fun setOnLumaListener(imagen: FirebaseVisionImage) {
                                 requireActivity().runOnUiThread {
-                                    if (inicioContador == true && ((SystemClock.elapsedRealtime() - contador.getBase()) / 1000) >= 2 && inicio == true) {
-                                        val notification: Uri =
-                                            RingtoneManager.getDefaultUri(
-                                                RingtoneManager.TYPE_NOTIFICATION
-                                            )
-                                        val r = RingtoneManager.getRingtone(
-                                            getApplicationContext(),
-                                            notification
-                                        )
 
-                                        r.play()
-                                        vibratePhone()
-                                        mTTS!!.speak("Abre esos ojos! no te quedes dormido",TextToSpeech.QUEUE_FLUSH,null)
+                                    if (inicioContador == true && ((SystemClock.elapsedRealtime() - contador.getBase()) / 1000) >= 2 && inicio == true) {
+                                        if(notification.text=="true") {
+                                            val notification: Uri =
+                                                RingtoneManager.getDefaultUri(
+                                                    RingtoneManager.TYPE_NOTIFICATION
+                                                )
+                                            val r = RingtoneManager.getRingtone(
+                                                getApplicationContext(),
+                                                notification
+                                            )
+
+                                            r.play()
+                                        }
+                                        if(vibracion.text=="true") {
+                                            vibratePhone()
+                                        }
+                                        if(texttospeech.text=="true") {
+                                            mTTS!!.speak(
+                                                "Abre esos ojos! no te quedes dormido",
+                                                TextToSpeech.QUEUE_FLUSH,
+                                                null
+                                            )
+                                        }
+
                                         pestañeos.add(((((SystemClock.elapsedRealtime() - duracionViaje.getBase()) / 1000) / 60).toInt()))
                                         inicioContador = false
-                                        alerta_flash.blink(20)
+                                        if(flash.text=="true") {
+                                            alerta_flash.blink(20)
+                                        }
                                         root!!.contador.setBase(SystemClock.elapsedRealtime())
                                     }
                                     if (inicioContadorBostezos == true && ((SystemClock.elapsedRealtime() - contadorBostezo.getBase()) / 1000) >= 2 && inicio == true) {
-                                        val notification: Uri =
-                                            RingtoneManager.getDefaultUri(
-                                                RingtoneManager.TYPE_NOTIFICATION
+                                        if(notification.text=="true") {
+                                            val notification: Uri =
+                                                RingtoneManager.getDefaultUri(
+                                                    RingtoneManager.TYPE_NOTIFICATION
+                                                )
+                                            val r = RingtoneManager.getRingtone(
+                                                getApplicationContext(),
+                                                notification
                                             )
-                                        val r = RingtoneManager.getRingtone(
-                                            getApplicationContext(),
-                                            notification
-                                        )
-                                        r.play()
-                                        vibratePhone()
-                                        mTTS!!.speak("Bostezando? estás con sueño?",TextToSpeech.QUEUE_FLUSH,null)
+                                            r.play()
+                                        }
+                                        if(vibracion.text=="true") {
+                                            vibratePhone()
+                                        }
+                                        if(texttospeech.text=="true")
+                                            mTTS!!.speak("Bostezando? estás con sueño?",TextToSpeech.QUEUE_FLUSH,null)
                                         bostezos.add(((((SystemClock.elapsedRealtime() - duracionViaje.getBase()) / 1000) / 60).toInt()))
                                         inicioContador = false
-                                        alerta_flash.blink(20)
+                                        if(flash.text=="true")
+                                            alerta_flash.blink(20)
                                         root!!.contadorBostezo.setBase(SystemClock.elapsedRealtime())
                                     }
                                     if (inicio == true) {
