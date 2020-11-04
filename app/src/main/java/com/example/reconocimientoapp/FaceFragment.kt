@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.*
 import android.location.Location
+import android.media.AudioManager
 import android.media.Image
 import android.media.RingtoneManager
 import android.net.Uri
@@ -20,13 +21,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.*
 import androidx.camera.core.Camera
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.facebook.FacebookSdk.getApplicationContext
@@ -40,8 +41,6 @@ import com.google.firebase.ml.vision.common.FirebaseVisionImage
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetectorOptions
 import kotlinx.android.synthetic.main.fragment_face.*
 import kotlinx.android.synthetic.main.fragment_face.view.*
-import kotlinx.android.synthetic.main.modaldialog.*
-import kotlinx.android.synthetic.main.modaldialog.view.*
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 import java.io.ByteArrayOutputStream
@@ -78,7 +77,7 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
     val detector = FirebaseVision.getInstance()
         .getVisionFaceDetector(realTimeOpts)
 
-    private var isDone:Boolean by Delegates.observable(false){property, oldValue, newValue ->
+    private var isDone:Boolean by Delegates.observable(false){ property, oldValue, newValue ->
         if(newValue){
             fusedLocationProviderClient.removeLocationUpdates(locationCallback)
         }
@@ -109,7 +108,9 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
         // Inflate the layout for this fragment
 
         if(allPermissionsGranted()) {
-            fusedLocationProviderClient=LocationServices.getFusedLocationProviderClient(requireContext())
+            fusedLocationProviderClient=LocationServices.getFusedLocationProviderClient(
+                requireContext()
+            )
             askForLocationPermission()
             createLocationRequest()
 
@@ -125,7 +126,7 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
                     }
                 }
             }
-            mTTS= TextToSpeech(context,this)
+            mTTS= TextToSpeech(context, this)
             startCamera()
             cameraExecutor = Executors.newSingleThreadExecutor()
         }else{
@@ -146,11 +147,14 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
     }
 
     private fun hasLocationPermissions():Boolean{
-        return EasyPermissions.hasPermissions(requireContext(),android.Manifest.permission.ACCESS_FINE_LOCATION)
+        return EasyPermissions.hasPermissions(
+            requireContext(),
+            android.Manifest.permission.ACCESS_FINE_LOCATION
+        )
     }
 
 
-    private fun calcSpeed(speed:Int){
+    private fun calcSpeed(speed: Int){
         root!!.speeds.text=speed.toString()+"km/h"
 
     }
@@ -236,7 +240,13 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
         super.onStart()
         iniciarViaje.setOnClickListener {
             if(inicio==false) {
-                mTTS!!.speak("Drive Buddy le desea un buen viaje!",TextToSpeech.QUEUE_FLUSH,null)
+                val audio: AudioManager = context?.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+                val currentVolume: Int = audio.getStreamVolume(AudioManager.STREAM_MUSIC)
+                val maxVolume: Int = audio.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
+                val percent = 0.7f
+                val seventyVolume = (maxVolume * percent).toInt()
+                audio.setStreamVolume(AudioManager.STREAM_MUSIC, seventyVolume, 0)
+                mTTS!!.speak("Drive Buddy le desea un buen viaje!", TextToSpeech.QUEUE_FLUSH, null)
                 root!!.iniciarViaje.setBackgroundResource(R.drawable.stop)
                 root!!.pausarViaje.visibility = View.VISIBLE
                 root!!.duracionViaje.setBase(SystemClock.elapsedRealtime())
@@ -297,9 +307,14 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
 
         var duracion = h+":"+m+":"+s
         val fragManager: FragmentManager = (activity as AppCompatActivity).supportFragmentManager
-        val dialog = MyCustomDialog.newInstance(duracion,bostezos.size.toString(),(pestañeos.size/3).toString(),pestañeos.size.toString())
+        val dialog = MyCustomDialog.newInstance(
+            duracion,
+            bostezos.size.toString(),
+            (pestañeos.size / 3).toString(),
+            pestañeos.size.toString()
+        )
 
-        dialog.show(fragManager , "MyCustomFragment")
+        dialog.show(fragManager, "MyCustomFragment")
         bostezos.clear()
         pestañeos.clear()
 
@@ -320,16 +335,16 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
             "Fatiga" to fatigas,//fatigas
             "Bostezo" to bostezos.size,
             "PestaneoLargo" to pestañeos.size, //cantPest
-            "kmRecorrido" to rand(90,650),
-            "tiempoTotal" to (((rand(4500,36000))/100.0)/60), //entre 45 min y 6 horas
-            "velocidadMedia" to rand(20,180),
+            "kmRecorrido" to rand(90, 650),
+            "tiempoTotal" to (((rand(4500, 36000)) / 100.0) / 60), //entre 45 min y 6 horas
+            "velocidadMedia" to rand(20, 180),
             "id" to auth.currentUser!!.uid,
             "fecha" to LocalDateTime.now().toString()
         )
         db.collection("viajes").document()
             .set(stats)
-            .addOnSuccessListener { Log.v("setViaje","Viaje guardado correctamente") }
-            .addOnFailureListener { e -> Log.w("setViaje", "Error subiendo el viaje",e)
+            .addOnSuccessListener { Log.v("setViaje", "Viaje guardado correctamente") }
+            .addOnFailureListener { e -> Log.w("setViaje", "Error subiendo el viaje", e)
             }
 
 
@@ -374,7 +389,11 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
 
                                         r.play()
                                         vibratePhone()
-                                        mTTS!!.speak("Abre esos ojos! no te quedes dormido",TextToSpeech.QUEUE_FLUSH,null)
+                                        mTTS!!.speak(
+                                            "Abre esos ojos! no te quedes dormido",
+                                            TextToSpeech.QUEUE_FLUSH,
+                                            null
+                                        )
                                         pestañeos.add(((((SystemClock.elapsedRealtime() - duracionViaje.getBase()) / 1000) / 60).toInt()))
                                         inicioContador = false
                                         root!!.contador.setBase(SystemClock.elapsedRealtime())
@@ -390,7 +409,11 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
                                         )
                                         r.play()
                                         vibratePhone()
-                                        mTTS!!.speak("Bostezando? estas con sueño?",TextToSpeech.QUEUE_FLUSH,null)
+                                        mTTS!!.speak(
+                                            "Bostezando? estas con sueño?",
+                                            TextToSpeech.QUEUE_FLUSH,
+                                            null
+                                        )
                                         bostezos.add(((((SystemClock.elapsedRealtime() - duracionViaje.getBase()) / 1000) / 60).toInt()))
                                         inicioContador = false
                                         root!!.contadorBostezo.setBase(SystemClock.elapsedRealtime())
@@ -411,10 +434,12 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
                                                         inicioContador = false
                                                         root!!.contador.stop()
                                                     }
-                                                    if ((faces[0].smilingProbability>0.66)) {
+                                                    if ((faces[0].smilingProbability > 0.66)) {
                                                         if (inicioContadorBostezos == false) {
                                                             inicioContadorBostezos = true
-                                                            root!!.contadorBostezo.setBase(SystemClock.elapsedRealtime())
+                                                            root!!.contadorBostezo.setBase(
+                                                                SystemClock.elapsedRealtime()
+                                                            )
                                                             root!!.contadorBostezo.start()
                                                         }
                                                     } else {
@@ -422,13 +447,13 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
                                                         root!!.contadorBostezo.stop()
                                                     }
 
-                                                }else{
+                                                } else {
                                                     root!!.recOk.setBackgroundResource(R.drawable.reconocimientobad)
                                                 }
                                             }
                                     } else {
                                         inicioContador = false
-                                        inicioContadorBostezos=false
+                                        inicioContadorBostezos = false
                                         root!!.contadorBostezo.stop()
                                         root!!.contador.stop()
                                     }
@@ -485,7 +510,7 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
         override fun analyze(imageProxy: ImageProxy) {
             val mediaImage = imageProxy?.image
             if (mediaImage != null) {
-                val image = FirebaseVisionImage.fromMediaImage(mediaImage,Surface.ROTATION_270)
+                val image = FirebaseVisionImage.fromMediaImage(mediaImage, Surface.ROTATION_270)
                 mListener.setOnLumaListener(image)
                 imageProxy.close()
             }
@@ -548,11 +573,11 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
 
             }
         }
-        EasyPermissions.onRequestPermissionsResult(requestCode,permissions,grantResults,this)
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
     }
 
     override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
-        if(EasyPermissions.somePermissionPermanentlyDenied(requireActivity(),perms)){
+        if(EasyPermissions.somePermissionPermanentlyDenied(requireActivity(), perms)){
             AppSettingsDialog.Builder(requireActivity()).build().show()
         }
     }
