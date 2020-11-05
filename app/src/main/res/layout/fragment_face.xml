@@ -124,8 +124,8 @@
             android:id="@+id/speeds2"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:fontFamily="sans-serif"
             android:gravity="center"
-            android:fontFamily="@font/montserrat_bold"
             android:text="0km/h"
             android:textAlignment="center"
             android:textColor="#EBEE4D"
@@ -141,7 +141,7 @@
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:background="#606060"
+        android:background="#494949"
         android:translationZ="1dp"
         android:visibility="invisible" />
 
