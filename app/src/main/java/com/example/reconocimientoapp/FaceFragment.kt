@@ -240,8 +240,9 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
     var bostezos= arrayListOf<Int>()
     @RequiresApi(Build.VERSION_CODES.O)
 
-
-
+    var base=0L
+    var viajeIniciado=true
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onStart() {
         super.onStart()
         configuracion.setOnClickListener {
@@ -252,6 +253,7 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
             dialog.show(fragManager , "OpcionesFragment")
 
         }
+
 
 
         iniciarViaje.setOnClickListener {
@@ -282,6 +284,21 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
 
             }
         }
+
+        pausarViaje.setOnClickListener {
+            if(viajeIniciado){
+                root!!.pausarViaje.setBackgroundResource(R.drawable.start)
+                viajeIniciado=!viajeIniciado
+                base = SystemClock.elapsedRealtime()
+                root!!.duracionViaje.stop()
+            }else{
+                root!!.pausarViaje.setBackgroundResource(R.drawable.pausav)
+                viajeIniciado=!viajeIniciado
+                duracionViaje.setBase(duracionViaje.getBase() + SystemClock.elapsedRealtime() - base);
+                base=0L
+                root!!.duracionViaje.start()
+            }
+        }
     }
     fun Fragment.vibratePhone() {
         val vibrator = context?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
@@ -293,7 +310,17 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
     }
 
     fun customModal() {
-        var totalSegundos = ((SystemClock.elapsedRealtime()-duracionViaje.base)/1000).toInt()
+
+        var totalSegundos : Int ?=null
+        if(viajeIniciado){
+            totalSegundos = ((SystemClock.elapsedRealtime()-duracionViaje.base)/1000).toInt()
+        }else{
+            duracionViaje.setBase(duracionViaje.getBase() + SystemClock.elapsedRealtime() - base);
+            totalSegundos = ((SystemClock.elapsedRealtime()-duracionViaje.base)/1000).toInt()
+            pausarViaje.setBackgroundResource(R.drawable.pausav)
+            viajeIniciado=true
+        }
+
         var minutos=0
         var horas=0
         if(totalSegundos>=60){
@@ -463,42 +490,46 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
                                             alerta_flash.blink(20)
                                         root!!.contadorBostezo.setBase(SystemClock.elapsedRealtime())
                                     }
-                                    if (inicio == true) {
-                                        detector.detectInImage(imagen)
-                                            .addOnSuccessListener { faces ->
-                                                if (faces.size != 0) {
+                                    if(viajeIniciado) {
+                                        if (inicio == true) {
+                                            detector.detectInImage(imagen)
+                                                .addOnSuccessListener { faces ->
+                                                    if (faces.size != 0) {
 
-                                                    root!!.recOk.setBackgroundResource(R.drawable.reconocimientook)
-                                                    if ((faces[0].leftEyeOpenProbability < 0.3 && faces[0].rightEyeOpenProbability < 0.3)) {
-                                                        if (inicioContador == false) {
-                                                            inicioContador = true
-                                                            root!!.contador.setBase(SystemClock.elapsedRealtime())
-                                                            root!!.contador.start()
+                                                        root!!.recOk.setBackgroundResource(R.drawable.reconocimientook)
+                                                        if ((faces[0].leftEyeOpenProbability < 0.3 && faces[0].rightEyeOpenProbability < 0.3)) {
+                                                            if (inicioContador == false) {
+                                                                inicioContador = true
+                                                                root!!.contador.setBase(SystemClock.elapsedRealtime())
+                                                                root!!.contador.start()
+                                                            }
+                                                        } else {
+                                                            inicioContador = false
+                                                            root!!.contador.stop()
                                                         }
-                                                    } else {
-                                                        inicioContador = false
-                                                        root!!.contador.stop()
-                                                    }
-                                                    if ((faces[0].smilingProbability>0.66)) {
-                                                        if (inicioContadorBostezos == false) {
-                                                            inicioContadorBostezos = true
-                                                            root!!.contadorBostezo.setBase(SystemClock.elapsedRealtime())
-                                                            root!!.contadorBostezo.start()
+                                                        if ((faces[0].smilingProbability > 0.66)) {
+                                                            if (inicioContadorBostezos == false) {
+                                                                inicioContadorBostezos = true
+                                                                root!!.contadorBostezo.setBase(
+                                                                    SystemClock.elapsedRealtime()
+                                                                )
+                                                                root!!.contadorBostezo.start()
+                                                            }
+                                                        } else {
+                                                            inicioContadorBostezos = false
+                                                            root!!.contadorBostezo.stop()
                                                         }
-                                                    } else {
-                                                        inicioContadorBostezos = false
-                                                        root!!.contadorBostezo.stop()
-                                                    }
 
-                                                }else{
-                                                    root!!.recOk.setBackgroundResource(R.drawable.reconocimientobad)
+                                                    } else {
+                                                        root!!.recOk.setBackgroundResource(R.drawable.reconocimientobad)
+                                                    }
                                                 }
-                                            }
-                                    } else {
-                                        inicioContador = false
-                                        inicioContadorBostezos=false
-                                        root!!.contadorBostezo.stop()
-                                        root!!.contador.stop()
+                                        } else {
+                                            inicioContador = false
+                                            inicioContadorBostezos = false
+                                            root!!.contadorBostezo.stop()
+                                            root!!.contador.stop()
+                                        }
                                     }
 
                                 }
@@ -553,7 +584,7 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
         override fun analyze(imageProxy: ImageProxy) {
             val mediaImage = imageProxy?.image
             if (mediaImage != null) {
-                val image = FirebaseVisionImage.fromMediaImage(mediaImage,Surface.ROTATION_270)
+                val image = FirebaseVisionImage.fromMediaImage(mediaImage,0)
                 mListener.setOnLumaListener(image)
                 imageProxy.close()
             }
