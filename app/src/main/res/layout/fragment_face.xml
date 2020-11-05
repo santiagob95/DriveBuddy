@@ -76,61 +76,74 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.01" />
 
-    <TextView
-        android:id="@+id/textView12"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/montserrat_bold"
-        android:text="Tiempo de viaje"
-        android:textColor="#F6F5F5"
-        android:textSize="22dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/previewView"
-        app:layout_constraintTop_toTopOf="@+id/guideline21" />
-
-
-    <Chronometer
-        android:id="@+id/duracionViaje2"
-        android:layout_width="165dp"
-        android:layout_height="58dp"
-        android:fontFamily="sans-serif"
-        android:textAlignment="center"
-        android:textColor="#EBEE4D"
-        android:textSize="26dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline46"
-        app:layout_constraintEnd_toEndOf="@+id/previewView"
-        app:layout_constraintStart_toStartOf="@+id/previewView"
-        app:layout_constraintTop_toBottomOf="@+id/textView12"
-        app:layout_constraintVertical_bias="0.060000002" />
-
-    <TextView
-        android:id="@+id/textView13"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/montserrat_bold"
-        android:text="Velocidad"
-        android:textColor="#F6F5F5"
-        android:textSize="22dp"
+    <LinearLayout
+        android:layout_width="0dp"
+        android:id="@+id/linearLayout"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:visibility="invisible"
+        android:translationZ="8dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline46"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/duracionViaje2"
-        app:layout_constraintVertical_bias="0.07999998" />
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="@+id/guideline21">
 
-    <TextView
-        android:id="@+id/speeds2"
-        android:layout_width="166dp"
-        android:layout_height="52dp"
-        android:fontFamily="sans-serif"
-        android:text="0km/h"
-        android:textAlignment="center"
-        android:textColor="#EBEE4D"
-        android:textSize="24dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline46"
-        app:layout_constraintEnd_toEndOf="@+id/previewView"
-        app:layout_constraintStart_toStartOf="@+id/previewView"
-        app:layout_constraintTop_toBottomOf="@+id/textView13"
-        app:layout_constraintVertical_bias="0.18" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="Tiempo de viaje"
+            android:textColor="#F6F5F5"
+            android:textSize="26dp" />
+
+
+        <Chronometer
+            android:id="@+id/duracionViaje2"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:fontFamily="@font/montserrat_bold"
+            android:textAlignment="center"
+            android:textColor="#EBEE4D"
+            android:textSize="30dp"
+             />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="Velocidad"
+            android:textColor="#F6F5F5"
+            android:textSize="26dp"
+           />
+
+        <TextView
+            android:id="@+id/speeds2"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="0km/h"
+            android:textAlignment="center"
+            android:textColor="#EBEE4D"
+            android:textSize="30dp" />
+
+
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/back_fondo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="#606060"
+        android:translationZ="1dp"
+        android:visibility="invisible" />
 
     <View
         android:id="@+id/view"
@@ -263,26 +276,41 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.7" />
 
-    <View
-        android:id="@+id/back_fondo"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:background="#606060"
-        android:translationZ="1dp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline46"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.78" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:text="true"
+        android:id="@+id/notification"
+        tools:ignore="MissingConstraints" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:text="true"
+        android:id="@+id/texttospeech"
+        tools:ignore="MissingConstraints" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:text="true"
+        android:id="@+id/vibracion"
+        tools:ignore="MissingConstraints" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:text="true"
+        android:id="@+id/flash"
+        tools:ignore="MissingConstraints" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

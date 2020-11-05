@@ -159,7 +159,7 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
 
     private fun calcSpeed(speed:Int){
         root!!.speeds.text=speed.toString()+"km/h"
-
+        root!!.speeds2.text=speed.toString()+"km/h"
     }
 
     private fun startLocationUpdates(){
@@ -248,9 +248,11 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
         var cambio = false
         cambioface.setOnClickListener{
             if (cambio == false) {
+                root!!.linearLayout.visibility = View.VISIBLE
                 root!!.back_fondo.visibility = View.VISIBLE
                 cambio = true
             }else{
+                root!!.linearLayout.visibility = View.INVISIBLE
                 root!!.back_fondo.visibility = View.INVISIBLE
                 cambio = false
             }
@@ -281,6 +283,8 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
                 root!!.configuracion.visibility = View.GONE
                 root!!.duracionViaje.setBase(SystemClock.elapsedRealtime())
                 root!!.duracionViaje.start()
+                root!!.duracionViaje2.setBase(SystemClock.elapsedRealtime())
+                root!!.duracionViaje2.start()
                 inicio = true
 
             }
@@ -289,6 +293,7 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
                 root!!.pausarViaje.visibility = View.INVISIBLE
                 root!!.configuracion.visibility = View.VISIBLE
                 root!!.duracionViaje.stop()
+                root!!.duracionViaje2.stop()
                 inicio=false
                 postStats()
                 customModal()
