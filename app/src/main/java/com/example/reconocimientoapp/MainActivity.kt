@@ -12,6 +12,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.auth.ktx.userProfileChangeRequest
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.ktx.Firebase
@@ -55,6 +56,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -65,6 +67,7 @@ class MainActivity : AppCompatActivity() {
 
         val bundle = intent.extras
         val nomYApe = bundle?.getString("nomYApe")
+        val anonID = bundle?.getString("anonID")
         if(nomYApe!= null){
             val profileUpdate= userProfileChangeRequest {
                 displayName = nomYApe
@@ -76,58 +79,86 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
         }
+        if(anonID!=null){
+            updateAnonDocs(anonID)
+        }
         exitBtn.setOnClickListener {
             auth.signOut()
             val welcomeIntent = Intent(this, Welcome_Screen::class.java)
             startActivity(welcomeIntent)
         }
     }
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun updateAnonDocs(anonID :String){
+        val anonViajesRef = db.collection("viajes").whereEqualTo("id",anonID)
+        val userActual =  auth.currentUser!!.uid
+        Log.v("AnonMigration", "$anonID => $userActual")
+        val docRefs = mutableListOf<DocumentReference>()
+        anonViajesRef.get()
+            .addOnSuccessListener { documents ->
+                if(!documents.isEmpty){
+                    for(doc in documents){
 
+                        docRefs.add(doc.reference)
+                        Log.v("AnonMigration", "Adding : ${doc.reference} to the list" )
+                    }
+                    db.runBatch { batch ->
+                        for (docRef in docRefs){
+                            Log.v("AnonMigration","Editing $docRef")
+                            batch.update(docRef,"id",userActual)
+                            Log.v("AnonMigration", "Id in doc now is?: ${auth.currentUser?.uid}" )
+                        }
+                    }
 
-     @RequiresApi(Build.VERSION_CODES.O)//esto es para la fecha de lastLogin
+                }
+            }
+
+    }
+
+     @RequiresApi(Build.VERSION_CODES.O)
      override fun onStart(){
          super.onStart()
          val bundle = intent.extras
          val userDocRef = db.document("users/" + auth.currentUser!!.uid)
 
-             val guestUser = hashMapOf(
-                 "id" to auth.currentUser!!.uid,
-                 "lastLogin" to LocalDateTime.now().toString()
-             )
-             val user = hashMapOf(
-                 "id" to auth.currentUser!!.uid,
-                 "nomYApe" to (bundle?.getString("nomYApe")
-                     ?: auth.currentUser!!.displayName.toString()),
-                 "email" to auth.currentUser!!.email.toString(),
-                 "foto" to auth.currentUser!!.photoUrl.toString(),
-                 "lastLogin" to LocalDateTime.now().toString()
-             )
-             if(auth.currentUser!!.isAnonymous){
-                 userDocRef
-                     .set(guestUser)
-                     .addOnSuccessListener {
-                         Log.d(
-                             "Firestore DB",
-                             "Document added with ID: ${auth.currentUser!!.email.toString()}"
-                         )
-                     }
-                     .addOnFailureListener { e ->
-                         Log.w("Firestore DB", "Error adding document", e)
-                     }
-             }
-             else {
-                 userDocRef
-                     .set(user, SetOptions.merge())
-                     .addOnSuccessListener {
-                         Log.d(
-                             "Firestore DB",
-                             "Document added with ID: ${auth.currentUser!!.email.toString()}"
-                         )
-                     }
-                     .addOnFailureListener { e ->
-                         Log.w("Firestore DB", "Error adding document", e)
-                     }
-             }
+         val guestUser = hashMapOf(
+             "id" to auth.currentUser!!.uid,
+             "lastLogin" to LocalDateTime.now().toString()
+         )
+         val user = hashMapOf(
+             "id" to auth.currentUser!!.uid,
+             "nomYApe" to (bundle?.getString("nomYApe")
+                 ?: auth.currentUser!!.displayName.toString()),
+             "email" to auth.currentUser!!.email.toString(),
+             "foto" to auth.currentUser!!.photoUrl.toString(),
+             "lastLogin" to LocalDateTime.now().toString()
+         )
+         if(auth.currentUser!!.isAnonymous){
+             userDocRef
+                 .set(guestUser)
+                 .addOnSuccessListener {
+                     Log.d(
+                         "Firestore DB",
+                         "Document added with ID: ${auth.currentUser!!.email.toString()}"
+                     )
+                 }
+                 .addOnFailureListener { e ->
+                     Log.w("Firestore DB", "Error adding document", e)
+                 }
+         }
+         else {
+             userDocRef
+                 .set(user, SetOptions.merge())
+                 .addOnSuccessListener {
+                     Log.d(
+                         "Firestore DB",
+                         "Document added with ID: ${auth.currentUser!!.email.toString()}"
+                     )
+                 }
+                 .addOnFailureListener { e ->
+                     Log.w("Firestore DB", "Error adding document", e)
+                 }
+         }
 
     }
     private fun replaceFragment(fragment: Fragment){

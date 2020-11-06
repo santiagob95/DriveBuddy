@@ -28,31 +28,27 @@ private val db = FirebaseFirestore.getInstance()
  * Use the [HomeFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+
 class HomeFragment : Fragment() {
 
 
     override fun onStart() {
         super.onStart()
-        val userRef = db.collection("users").document(auth.currentUser!!.uid)
-        val docRef =  db.collection("/viajes").whereEqualTo("id", auth.currentUser!!.uid)
-
-        userRef.get().addOnSuccessListener { docSnapshot ->
-            val userDoc = docSnapshot.data
-            var title = "Bienvenido de vuelta, "
-
-            if (auth.currentUser!!.isAnonymous) {
-                root!!.mainTitle.text = "¡Registrate para ver tus estadisticas!"
-                root!!.textView6.visibility = View.INVISIBLE
-                root!!.registerback.visibility = View.VISIBLE
-                root!!.txtregis.visibility = View.VISIBLE
-            } else {
-                root!!.mainTitle.text = title + userDoc!!.getValue("nomYApe")
-                root!!.mainTitle.textAlignment = View.TEXT_ALIGNMENT_TEXT_START
-                //test
-                //chargeData()
+        loadUserData()
+        loadViajesData()
+        registerback.setOnClickListener{
+            val anonID = auth.currentUser?.uid
+            auth.signOut()
+            activity?.let{
+                val intent = Intent (it, RegisterActivity::class.java).apply{
+                    putExtra("anonID", anonID)
+                }
+                it.startActivity(intent)
             }
-
         }
+    }
+    private fun loadViajesData(){
+        val docRef =  db.collection("/viajes").whereEqualTo("id", auth.currentUser!!.uid)
         docRef.get()
             .addOnFailureListener { exception ->
                 fatigaTotal.text = "0"
@@ -60,7 +56,7 @@ class HomeFragment : Fragment() {
             }
             .addOnSuccessListener { documents ->
                 Log.v("GetDoc", "Doc created CORRECTLY")
-                var total = object {
+                val total = object {
                     var fatiga=0
                     var bostezo=0
                     var pestLargo =0
@@ -69,20 +65,20 @@ class HomeFragment : Fragment() {
                     var velMedia =0
 
                 }
-                var contDoc = 0;
+                var contDoc = 0
                 for(document in documents){
 
-                   if( document.exists() ) {
-                       Log.v("GetDoc", "\n-------Doc:\n"+document.data.values)
-                       total.fatiga += document.data!!.getValue("Fatiga").toString().toInt()
-                       total.bostezo += document.data!!.getValue("Bostezo").toString().toInt()
-                       total.pestLargo += document.data!!.getValue("PestaneoLargo").toString().toInt()
-                       total.kmtotales +=document.data!!.getValue("kmRecorrido").toString().toInt()
-                       total.tiempoViajeTotal += document.data!!.getValue("tiempoTotal").toString().toDouble()
-                       total.velMedia += document.data!!.getValue("velocidadMedia").toString().toInt()
-                       contDoc++
+                    if( document.exists() ) {
+                        Log.v("GetDoc", "\n-------Doc:\n"+document.data.values)
+                        total.fatiga += document.data.getValue("Fatiga").toString().toInt()
+                        total.bostezo += document.data.getValue("Bostezo").toString().toInt()
+                        total.pestLargo += document.data.getValue("PestaneoLargo").toString().toInt()
+                        total.kmtotales +=document.data.getValue("kmRecorrido").toString().toInt()
+                        total.tiempoViajeTotal += document.data.getValue("tiempoTotal").toString().toDouble()
+                        total.velMedia += document.data.getValue("velocidadMedia").toString().toInt()
+                        contDoc++
 
-                   }
+                    }
                 }
 
                 val df = DecimalFormat("#.##")
@@ -96,13 +92,25 @@ class HomeFragment : Fragment() {
 
             }
 
-        registerback.setOnClickListener{
-            activity?.let{
-                val intent = Intent (it, RegisterActivity::class.java)
-                it.startActivity(intent)
+    }
+    private fun loadUserData() {
+        val userRef = db.collection("users").document(auth.currentUser!!.uid)
+        userRef.get().addOnSuccessListener { docSnapshot ->
+            val userDoc = docSnapshot.data
+            val title = "Bienvenido de vuelta, "
+
+            if (auth.currentUser!!.isAnonymous) {
+                root!!.mainTitle.text = "¡Registrate para ver tus estadisticas!"
+                root!!.textView6.visibility = View.INVISIBLE
+                root!!.registerback.visibility = View.VISIBLE
+                root!!.txtregis.visibility = View.VISIBLE
+            } else {
+                root!!.mainTitle.text = title + userDoc!!.getValue("nomYApe")
+                root!!.mainTitle.textAlignment = View.TEXT_ALIGNMENT_TEXT_START
+                //test
+                //chargeData()
             }
         }
-
     }
     private var root: View? = null
     override fun onCreateView(
