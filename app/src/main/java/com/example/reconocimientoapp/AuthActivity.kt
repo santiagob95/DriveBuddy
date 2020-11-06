@@ -51,8 +51,7 @@ class AuthActivity : AppCompatActivity() {
         }
     }
     private fun setup (){
-        title ="Autenticacion"
-
+        title = getString(R.string.authentication)
 
         loginBtn.setOnClickListener{
             if ( idEmail.text.isNotEmpty() && idPassword.text.isNotEmpty()){
@@ -114,8 +113,10 @@ class AuthActivity : AppCompatActivity() {
     private fun showAlert(err:String ){
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Error")
-        builder.setMessage("Hubo un error autenticando al usuario.\n Codigo de error: \n $err")
-        builder.setPositiveButton("aceptar", null)
+        //builder.setMessage("Hubo un error autenticando al usuario.\n Codigo de error: \n $err")
+        builder.setMessage(getString(R.string.authenticationError) + "ErrorCode: "+ err)
+        //builder.setPositiveButton("aceptar", null)
+        builder.setPositiveButton(getString(R.string.ok),null)
         val dialog: AlertDialog = builder.create()
         dialog.show()
 
@@ -123,8 +124,10 @@ class AuthActivity : AppCompatActivity() {
     private fun showAlert(){
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Error")
-        builder.setMessage("Hubo un error autenticando al usuario")
-        builder.setPositiveButton("aceptar",null)
+        //builder.setMessage("Hubo un error autenticando al usuario")
+        builder.setMessage(getString(R.string.authenticationError))
+        //builder.setPositiveButton("aceptar",null)
+        builder.setPositiveButton(getString(R.string.ok),null)
         val dialog: AlertDialog = builder.create()
         dialog.show()
     }
