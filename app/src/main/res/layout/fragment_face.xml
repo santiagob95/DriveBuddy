@@ -11,7 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
     </androidx.camera.view.PreviewView>
 
     <Button
@@ -21,6 +20,7 @@
         android:background="@drawable/start"
         android:elevation="2dp"
         android:scaleType="fitCenter"
+        android:translationZ="18dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -34,6 +34,7 @@
         android:background="@drawable/pausav"
         android:elevation="2dp"
         android:scaleType="fitCenter"
+        android:translationZ="18dp"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.21"
@@ -49,6 +50,7 @@
         android:background="@drawable/ic_config"
         android:elevation="2dp"
         android:scaleType="fitCenter"
+        android:translationZ="18dp"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.78"
@@ -62,8 +64,8 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/reconocimientobad"
-        android:elevation="2dp"
         android:scaleType="fitCenter"
+        android:translationZ="10dp"
         android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/guideline21"
         app:layout_constraintEnd_toStartOf="@+id/guideline20"
@@ -73,6 +75,75 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.01" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:id="@+id/linearLayout"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:visibility="invisible"
+        android:translationZ="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline46"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="@+id/guideline21">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="Tiempo de viaje"
+            android:textColor="#F6F5F5"
+            android:textSize="26dp" />
+
+
+        <Chronometer
+            android:id="@+id/duracionViaje2"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:fontFamily="@font/montserrat_bold"
+            android:textAlignment="center"
+            android:textColor="#EBEE4D"
+            android:textSize="30dp"
+             />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="Velocidad"
+            android:textColor="#F6F5F5"
+            android:textSize="26dp"
+           />
+
+        <TextView
+            android:id="@+id/speeds2"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:fontFamily="sans-serif"
+            android:gravity="center"
+            android:text="0km/h"
+            android:textAlignment="center"
+            android:textColor="#EBEE4D"
+            android:textSize="30dp" />
+
+
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/back_fondo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="#494949"
+        android:translationZ="1dp"
+        android:visibility="invisible" />
 
     <View
         android:id="@+id/view"
@@ -90,26 +161,17 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <View
-        android:id="@+id/alerta_flash"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:visibility="invisible"
-        android:background="@drawable/alerta"
-        android:translationZ="20dp"
-        tools:layout_editor_absoluteX="197dp" />
-
-    <View
+        android:id="@+id/cambioface"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="5dp"
+        android:layout_marginStart="0dp"
         android:layout_marginEnd="12dp"
         android:background="@drawable/barras"
         android:clickable="true"
         android:orientation="vertical"
+        android:translationZ="10dp"
         app:layout_constraintBottom_toBottomOf="@+id/view"
         app:layout_constraintEnd_toEndOf="@+id/view"
         app:layout_constraintHorizontal_bias="1.0"
@@ -117,9 +179,19 @@
         app:layout_constraintTop_toTopOf="@+id/view"
         app:layout_constraintVertical_bias="0.39" />
 
+    <View
+        android:id="@+id/alerta_flash"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/alerta"
+        android:translationZ="20dp"
+        android:visibility="invisible" />
+
     <Chronometer
         android:id="@+id/duracionViaje"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif"
         android:textAlignment="center"
@@ -127,7 +199,7 @@
         android:textSize="18dp"
         app:layout_constraintBottom_toBottomOf="@+id/view"
         app:layout_constraintEnd_toStartOf="@+id/guideline17"
-        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline22"
         app:layout_constraintTop_toTopOf="@+id/view"
         app:layout_constraintVertical_bias="0.48" />
@@ -203,29 +275,41 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.7" />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline46"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.78" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="invisible"
         android:text="true"
-        android:id="@+id/notification"/>
+        android:id="@+id/notification"
+        tools:ignore="MissingConstraints" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="invisible"
         android:text="true"
-        android:id="@+id/texttospeech"/>
+        android:id="@+id/texttospeech"
+        tools:ignore="MissingConstraints" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="invisible"
         android:text="true"
-        android:id="@+id/vibracion"/>
+        android:id="@+id/vibracion"
+        tools:ignore="MissingConstraints" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="invisible"
         android:text="true"
-        android:id="@+id/flash"/>
+        android:id="@+id/flash"
+        tools:ignore="MissingConstraints" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
