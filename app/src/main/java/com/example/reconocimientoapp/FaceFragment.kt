@@ -140,6 +140,7 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
                 requireActivity(), REQUIRED_CODE_PERMISSIONS, REQUIRED_PERMISSIONS
             )
 
+
         }
 
         root = inflater.inflate(R.layout.fragment_face, container, false)
@@ -705,6 +706,7 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
         private const val TAG="Camerax"
         private const val REQUIRED_PERMISSIONS=10
         private val REQUIRED_CODE_PERMISSIONS= arrayOf(android.Manifest.permission.CAMERA)
+
         @JvmStatic fun newInstance(param1: String, param2: String) =
             FaceFragment().apply {
                 arguments = Bundle().apply {
