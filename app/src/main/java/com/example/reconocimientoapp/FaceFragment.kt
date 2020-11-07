@@ -158,8 +158,8 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
 
 
     private fun calcSpeed(speed:Int){
-        root!!.speeds.text=speed.toString()+"km/h"
-        root!!.speeds2.text=speed.toString()+"km/h"
+        root!!.speeds.text=(speed*4).toString()+"km/h"
+        root!!.speeds2.text=(speed*4).toString()+"km/h"
     }
 
     private fun startLocationUpdates(){
@@ -262,9 +262,7 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
 
         configuracion.setOnClickListener {
             val fragManager: FragmentManager = (activity as AppCompatActivity).supportFragmentManager
-            val dialog = ConfiguracionDialog.newInstance(notification.text as String,
-                flash.text as String, vibracion.text as String, texttospeech.text as String
-            )
+            val dialog = ConfiguracionDialog()
             dialog.show(fragManager , "OpcionesFragment")
 
         }
