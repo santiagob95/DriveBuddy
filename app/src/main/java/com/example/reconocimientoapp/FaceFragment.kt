@@ -309,12 +309,15 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
                 viajeIniciado=!viajeIniciado
                 base = SystemClock.elapsedRealtime()
                 root!!.duracionViaje.stop()
+                root!!.duracionViaje2.stop()
             }else{
                 root!!.pausarViaje.setBackgroundResource(R.drawable.pausav)
                 viajeIniciado=!viajeIniciado
                 duracionViaje.setBase(duracionViaje.getBase() + SystemClock.elapsedRealtime() - base);
+                duracionViaje2.setBase(duracionViaje.base)
                 base=0L
                 root!!.duracionViaje.start()
+                root!!.duracionViaje2.start()
             }
         }
     }
