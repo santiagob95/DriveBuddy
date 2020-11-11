@@ -54,8 +54,8 @@ class Welcome_Screen : AppCompatActivity() {
     private fun showAlert(){
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Error")
-        builder.setMessage("Hubo un error autenticando al usuario")
-        builder.setPositiveButton("aceptar",null)
+        builder.setMessage(getString(R.string.authenticationError))
+        builder.setPositiveButton(getString(R.string.ok),null)
         val dialog: AlertDialog = builder.create()
         dialog.show()
     }

@@ -1,0 +1,49 @@
+<resources>
+    <string name="app_name">Drive Buddy</string>
+    <string name="prefs_file">com.example.reconocimientoapp.PREFERENCE_FILE_KEY</string>
+    <string name="facebook_app_id">1586766231508725</string>
+    <string name="fb_login_protocol_scheme">fb1586766231508725</string>
+    <string name="title_activity_welcome__screen">Welcome_Screen</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Siguiente</string>
+    <string name="previous">Previo</string>
+    <string name="bienvenido">Bienvenido!</string>
+    <string name="estas_listo">¿Estas listo para viajar seguro?</string>
+    <string name="registrate">Registrate</string>
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="email">email</string>
+    <string name="viajes">Te mostramos cómo fueron tus<font fgcolor='#EBEE4D'> ultimos viajes</font></string>
+    <string name="hintEmailLogin">Email o nombre de usuario</string>
+    <string name="hintPassword">Contraseña</string>
+    <string name="logIn">Ingresar</string>
+    <string name="noAccount">¿No estás registrado?</string>
+    <string name="createAccount">Crear cuenta</string>
+    <string name="saveYourStats">Accedé a tus estadísticas!</string>
+    <string name="fullName">Nombre y apellido</string>
+    <string name="confirmPassword">Repetir Contraseña</string>
+    <string name="haveAnAccount">Ya tenes una cuenta?</string>
+    <string name="logInAsAGuest">Ingresar como invitado</string>
+    <string name="generalStats">Estadisticas Generales</string>
+    <string name="detectedFatigue">Fatigas detectadas</string>
+    <string name="totalTripsTime">Tiempo de viaje total</string>
+    <string name="longBlinks">Pestañeos largos</string>
+    <string name="yawns">Bostezos</string>
+    <string name="avgSpeed">Velocidad media</string>
+    <string name="kmTraveled">Kilometros recorridos</string>
+    <string name="tipsBeforeYouStart">¡Hace esto antes de manejar!</string>
+    <string name="loremIpsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
+    <string name="tripFinished">¡Terminaste tu viaje!</string>
+    <string name="trippingTime">Duración del viaje</string>
+    <string name="settings">Configuración</string>
+    <string name="vibratingAlert">Vibración</string>
+    <string name="notificationSound">Sonido de notificación</string>
+    <string name="textToSpeechAlerts">Text to spech de alertas</string>
+    <string name="flashingAlerts">Flash en pantalla</string>
+    <string name="save">Guardar</string>
+    <string name="authentication">Autenticación</string>
+    <string name="authenticationError">Hubo un error autenticando al usuario. </string>
+    <string name="ok">Aceptar</string>
+</resources>

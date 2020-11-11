@@ -117,6 +117,16 @@
         app:layout_constraintTop_toTopOf="@+id/view"
         app:layout_constraintVertical_bias="0.39" />
 
+    <View
+        android:id="@+id/alerta_flash"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/alerta"
+        android:translationZ="20dp"
+        android:visibility="invisible" />
+
     <Chronometer
         android:id="@+id/duracionViaje"
         android:layout_width="0dp"
