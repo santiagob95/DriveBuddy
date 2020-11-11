@@ -1,6 +1,7 @@
 package com.example.reconocimientoapp
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,11 +10,14 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.fragment_cons.*
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.android.synthetic.main.fragment_home.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
+private val db = FirebaseFirestore.getInstance()
 
 /**
  * A simple [Fragment] subclass.
@@ -36,7 +40,9 @@ class ConsFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+        postToList()
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -44,28 +50,39 @@ class ConsFragment : Fragment() {
     }
 
     private fun initView(){
-        postToList()
         rv_recyclerView.layoutManager = LinearLayoutManager(this.context)
         rv_recyclerView.adapter = RecyclerAdapter(tituloslist, contenidoslist, imageneslist)
+
     }
 
-    private fun addToList(titulo: String, contenido: String, imagen: Int){
+    private fun addToList(titulo: String, contenido: String){
         tituloslist.add(titulo)
         contenidoslist.add(contenido)
-        imageneslist.add(imagen)
+        imageneslist.add(R.drawable.ic_volume)
     }
 
+
     private fun postToList(){
-        addToList(titulo = "Realiza algo de actividad antes de un viaje largo.", contenido = "Dar un paseo o algo de ejercicio moderado antes de conducir ayuda a despejarse y activar el cuerpo.", imagen = R.drawable.ic_volume)
-        addToList(titulo = "Recordá beber mucho líquido", contenido = "La deshidratación causa fatiga, así que hay que beber para evitarlo, sobre todo en verano.", imagen = R.drawable.ic_volume)
-        addToList(titulo = "Tené cuidado con los estimulantes.", contenido = "El café, el té o las bebidas energéticas pueden evitar la fatiga a corto plazo, pero pasados sus efectos volverá a aparecer.", imagen = R.drawable.ic_volume)
-        addToList(titulo = "Nada de alimentos pesados.", contenido = "Una comida copiosa conlleva una digestión más pesada y al incremento de la fatiga.", imagen = R.drawable.ic_volume)
-        addToList(titulo = "¡No te quedes dormido!", contenido = "Es esencial haber descansado lo suficiente si se va a conducir de noche.", imagen = R.drawable.ic_volume)
-        addToList(titulo = "Especial atención en la última hora de conducción.", contenido = "Cuando se está llegando al destino hay mayor cansancio acumulado y se baja la guardia, hay que mantenerse atentos.", imagen = R.drawable.ic_volume)
-        addToList(titulo = "Alimentos ricos en hierro.", contenido = "La fatiga puede aumentar por la falta de nutrientes, así que mejorar ese aspecto ayuda.", imagen = R.drawable.ic_volume)
-        addToList(titulo = "¡No manejes incómodo!", contenido = "Recordá usar ropa cómoda y mantener una buena postura de conducción.", imagen = R.drawable.ic_volume)
-        addToList(titulo = "Toma una ducha bien fría.", contenido = "Un baño frío estimula el cuerpo y el shock de temperatura te ayudará a despertar.", imagen = R.drawable.ic_volume)
-        addToList(titulo = "¡Cambia cosas!", contenido = "La monotonía no te ayuda a permanecer alerta. Trata de meter variedad en tu día para mantenerte en movimiento.", imagen = R.drawable.ic_volume)
+        val consRef = db.collection("consejos")
+        consRef.get()
+            .addOnSuccessListener { consejos->
+                Log.v("GetConsejo", "Get consejo operation, succesful")
+                for (consejo in consejos){
+                    if (consejo.exists()) {
+                        val t = consejo.data.getValue("titulo").toString()
+                        val c = consejo.data.getValue("descripcion").toString()
+                        addToList(
+                            titulo = t,
+                            contenido = c
+                        )
+                        Log.v("GetConsejo", "Añadi: {$t}")
+                    }
+                }
+                rv_recyclerView.adapter = RecyclerAdapter(tituloslist, contenidoslist, imageneslist)
+            }
+            .addOnFailureListener { exception ->
+                Log.v("GetConsejo", "Error getting documents: ", exception)
+            }
     }
 
     override fun onCreateView(
