@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
@@ -22,6 +23,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_auth.*
 
@@ -87,13 +89,20 @@ class AuthActivity : AppCompatActivity() {
                     result?.let{
                         val token = it.accessToken
                         val credential = FacebookAuthProvider.getCredential(token.token)
+
+
                         FirebaseAuth.getInstance().signInWithCredential(credential).addOnCompleteListener {
                             if(it.isSuccessful){
+
                                 Log.d("FacebookSignIn", "signInWithCredential:success")
                                 showHome()
                             }else{
-                                Log.w("FacebookSignIn", "signInWithCredential:failure", it.exception)
-                                showAlert()
+                                Log.w("FacebookSignIn", "signInWithCredential:failure\n ${it.exception?.message}")
+                                if (it.exception?.message == "An account already exists with the same email address but different sign-in credentials." +
+                                    " Sign in using a provider associated with this email address." )
+                                    showAlert("Ya hay una cuenta vinculada a ese mail. Inicia sesion via Google o mail y contraseña.")
+                                else
+                                    showAlert()
                             }
                         }
                     }
@@ -113,10 +122,9 @@ class AuthActivity : AppCompatActivity() {
     private fun showAlert(err:String ){
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Error")
-        //builder.setMessage("Hubo un error autenticando al usuario.\n Codigo de error: \n $err")
-        builder.setMessage(getString(R.string.authenticationError) + "ErrorCode: "+ err)
-        //builder.setPositiveButton("aceptar", null)
-        builder.setPositiveButton(getString(R.string.ok),null)
+
+        builder.setMessage(err)
+        builder.setPositiveButton("aceptar", null)
         val dialog: AlertDialog = builder.create()
         dialog.show()
 
@@ -148,7 +156,7 @@ class AuthActivity : AppCompatActivity() {
                     showHome()
 
                 } else {
-                    Log.w("GoogleSignIn", "signInWithCredential:failure", task.exception)
+                    Log.w("GoogleSignIn", "signInWithCredential:failure +${task.exception?.message}", task.exception)
                     showAlert(task.result.toString())
                 }
 

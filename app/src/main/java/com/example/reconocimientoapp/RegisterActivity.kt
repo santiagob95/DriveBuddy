@@ -1,22 +1,17 @@
 package com.example.reconocimientoapp
 
 import android.content.Intent
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_auth.idEmail
 import kotlinx.android.synthetic.main.activity_auth.idPassword
 import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.activity_register.backloginBtn
-import java.time.LocalDateTime
 
 class RegisterActivity : AppCompatActivity() {
     private var auth: FirebaseAuth = Firebase.auth
@@ -33,9 +28,10 @@ class RegisterActivity : AppCompatActivity() {
         setup()
     }
 
-    private fun showHome(nomYApe:String) {
+    private fun showHome(nomYApe: String, anonID: String?) {
         val homeIntent = Intent(this, MainActivity::class.java).apply{
             putExtra("nomYApe",nomYApe)
+            putExtra("anonID", anonID)
         }
         startActivity(homeIntent)
     }
@@ -58,6 +54,9 @@ class RegisterActivity : AppCompatActivity() {
     }
     private fun setup() {
         title = "Autenticacion"
+        val bundle = intent.extras
+        val anonID = bundle?.getString("anonID")
+
 
         //EMAIL Y PASSWORD
         registrarBtn.setOnClickListener {
@@ -70,7 +69,7 @@ class RegisterActivity : AppCompatActivity() {
                         ).addOnCompleteListener {
                             if (it.isSuccessful) {
                                 Toast.makeText(this, "¡Registro exitoso!", Toast.LENGTH_SHORT).show()
-                                showHome(idNyA.text.toString())
+                                showHome(idNyA.text.toString(),anonID)
                             } else {
                                 showAlert()
                             }

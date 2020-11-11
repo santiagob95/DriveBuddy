@@ -69,12 +69,13 @@ class ConsFragment : Fragment() {
                 Log.v("GetConsejo", "Get consejo operation, succesful")
                 for (consejo in consejos){
                     if (consejo.exists()) {
-                        val t = consejo.data.getValue("titulo").toString()
-                        val c = consejo.data.getValue("descripcion").toString()
-                        addToList(
-                            titulo = t,
-                            contenido = c
-                        )
+                            val t = consejo.data.getValue("titulo").toString()
+                            val c = consejo.data.getValue("descripcion").toString()
+                            addToList(
+                                titulo = t,
+                                contenido = c
+                            )
+
                         Log.v("GetConsejo", "Añadi: {$t}")
                     }
                 }
