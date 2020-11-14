@@ -55,6 +55,7 @@ import java.math.RoundingMode
 import java.nio.ByteBuffer
 import java.text.DecimalFormat
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import kotlin.properties.Delegates
@@ -160,7 +161,7 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
 
     private fun calcSpeed(speed:Int){
         root!!.speeds.text=(speed*4).toString()+"km/h"
-        root!!.speeds2.text=(speed*4).toString()+"km/h"
+        //root!!.speeds2.text=(speed*4).toString()+"km/h"
     }
 
     private fun startLocationUpdates(){
@@ -290,15 +291,15 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
                 viajeIniciado=!viajeIniciado
                 base = SystemClock.elapsedRealtime()
                 root!!.duracionViaje.stop()
-                root!!.duracionViaje2.stop()
+                //root!!.duracionViaje2.stop()
             }else{
                 root!!.pausarViaje.setBackgroundResource(R.drawable.pausav)
                 viajeIniciado=!viajeIniciado
                 duracionViaje.setBase(duracionViaje.getBase() + SystemClock.elapsedRealtime() - base);
-                duracionViaje2.setBase(duracionViaje.base)
+                //duracionViaje2.setBase(duracionViaje.base)
                 base=0L
                 root!!.duracionViaje.start()
-                root!!.duracionViaje2.start()
+                //root!!.duracionViaje2.start()
             }
         }
     }
@@ -373,6 +374,7 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
         val fatigas = (pestañeos.size/3)
         val df = DecimalFormat("#.##")
         df.roundingMode = RoundingMode.CEILING
+
         val stats = hashMapOf(
             "Fatiga" to fatigas,//fatigas
             "Bostezo" to bostezos.size,
@@ -381,7 +383,8 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
             "tiempoTotal" to (((rand(4500,36000))/100.0)/60), //entre 45 min y 6 horas
             "velocidadMedia" to rand(20,180),
             "id" to auth.currentUser!!.uid,
-            "fecha" to LocalDateTime.now().toString()
+            "fecha" to LocalDateTime.now().dayOfMonth.toString()+"/"+LocalDateTime.now().monthValue.toString()+"/"+LocalDateTime.now().year.toString()
+                    //LocalDateTime.now().toString()
         )
         db.collection("viajes").document()
             .set(stats)

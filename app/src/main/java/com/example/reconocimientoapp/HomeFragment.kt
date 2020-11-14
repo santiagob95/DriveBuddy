@@ -10,8 +10,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.ktx.Firebase
+import com.squareup.okhttp.internal.DiskLruCache
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
 import java.math.RoundingMode
@@ -31,11 +34,13 @@ private val db = FirebaseFirestore.getInstance()
 
 class HomeFragment : Fragment() {
 
+    private var viajeRef = db.collection("viajes").whereEqualTo("id", auth.currentUser?.uid).orderBy("fecha", Query.Direction.DESCENDING)
+    private lateinit var docSnap: List<DocumentSnapshot>
+    private var pos = 0
+    private var cantViajes =0
 
     override fun onStart() {
         super.onStart()
-        loadUserData()
-        loadViajesData()
         registerback.setOnClickListener{
             val anonID = auth.currentUser?.uid
             auth.signOut()
@@ -46,9 +51,54 @@ class HomeFragment : Fragment() {
                 it.startActivity(intent)
             }
         }
+        loadUserData()
+        loadViajesData()
+
+
+        fechaAnt.setOnClickListener {
+            if(pos-1>=0)
+                loadViaje(-1)
+            else
+                loadViajesData()
+        }
+        fechaSig.setOnClickListener {
+            if(pos+1 <cantViajes)
+                loadViaje(1)
+            else
+               Toast.makeText(this.activity,"No hay más viajes!", Toast.LENGTH_SHORT).show()
+        }
+
     }
+    private  fun loadViaje(n :Int){
+        pos += n
+        Log.v("GetDoc","pos: $pos, cantViajes: $cantViajes")
+
+        val viaje = object {
+            var fatiga=docSnap[pos].data?.getValue("Fatiga").toString().toInt()
+            var bostezo=docSnap[pos].data?.getValue("Bostezo").toString().toInt()
+            var pestLargo =docSnap[pos].data?.getValue("PestaneoLargo").toString().toInt()
+            var kmtotales =docSnap[pos].data?.getValue("kmRecorrido").toString().toInt()
+            var tiempoViajeTotal =docSnap[pos].data?.getValue("tiempoTotal").toString().toDouble()
+            var velMedia =docSnap[pos].data?.getValue("velocidadMedia").toString().toInt()
+        }
+
+        val df = DecimalFormat("#.##")
+        df.roundingMode = RoundingMode.CEILING
+
+        root!!.estad_title.text = docSnap[pos].data?.getValue("fecha").toString()
+        root!!.fatigaTotal.text = viaje.fatiga.toString()
+        root!!.tiempoViajeTotal.text =df.format(viaje.tiempoViajeTotal) + " hs"
+        root!!.pestLargoTotal.text =  viaje.pestLargo.toString()
+        root!!.bostezosTotal.text = viaje.bostezo.toString()
+        root!!.velMedia.text = viaje.velMedia.toString() +" km/h"
+        root!!.kmTotales.text = viaje.kmtotales.toString() +" km"
+
+    }
+
     private fun loadViajesData(){
+        pos=-1
         val docRef =  db.collection("/viajes").whereEqualTo("id", auth.currentUser!!.uid)
+        estad_title.text = "General Stats"
         docRef.get()
             .addOnFailureListener { exception ->
                 fatigaTotal.text = "0"
@@ -66,10 +116,11 @@ class HomeFragment : Fragment() {
 
                 }
                 var contDoc = 0
+                docSnap = documents.documents
+                cantViajes=0
                 for(document in documents){
-
                     if( document.exists() ) {
-                        Log.v("GetDoc", "\n-------Doc:\n"+document.data.values)
+                        Log.v("GetDoc", "\n-------Doc: "+document.data.values)
                         total.fatiga += document.data.getValue("Fatiga").toString().toInt()
                         total.bostezo += document.data.getValue("Bostezo").toString().toInt()
                         total.pestLargo += document.data.getValue("PestaneoLargo").toString().toInt()
@@ -77,6 +128,7 @@ class HomeFragment : Fragment() {
                         total.tiempoViajeTotal += document.data.getValue("tiempoTotal").toString().toDouble()
                         total.velMedia += document.data.getValue("velocidadMedia").toString().toInt()
                         contDoc++
+                        cantViajes++
 
                     }
                 }
