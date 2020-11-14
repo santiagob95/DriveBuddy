@@ -54,7 +54,7 @@ class HomeFragment : Fragment() {
         loadUserData()
         loadViajesData()
 
-
+        /*
         fechaAnt.setOnClickListener {
             if(pos-1>=0)
                 loadViaje(-1)
@@ -67,7 +67,7 @@ class HomeFragment : Fragment() {
             else
                Toast.makeText(this.activity,"No hay más viajes!", Toast.LENGTH_SHORT).show()
         }
-
+         */
     }
     private  fun loadViaje(n :Int){
         pos += n
@@ -162,6 +162,7 @@ class HomeFragment : Fragment() {
                 //test
                 //chargeData()
             }
+
         }
     }
     private var root: View? = null

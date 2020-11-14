@@ -88,8 +88,6 @@ class AuthActivity : AppCompatActivity() {
                     result?.let{
                         val token = it.accessToken
                         val credential = FacebookAuthProvider.getCredential(token.token)
-
-
                         FirebaseAuth.getInstance().signInWithCredential(credential).addOnCompleteListener {
                             if(it.isSuccessful){
 

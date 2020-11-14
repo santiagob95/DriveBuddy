@@ -75,7 +75,6 @@ class ConsFragment : Fragment() {
                                 titulo = t,
                                 contenido = c
                             )
-
                         Log.v("GetConsejo", "Añadi: {$t}")
                     }
                 }
