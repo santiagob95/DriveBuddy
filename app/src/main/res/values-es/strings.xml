@@ -26,7 +26,8 @@
     <string name="confirmPassword">Repetir Contraseña</string>
     <string name="haveAnAccount">Ya tenes una cuenta?</string>
     <string name="logInAsAGuest">Ingresar como invitado</string>
-    <string name="generalStats">Estadisticas Generales</string>
+    <string name="generalStats">Estadisticas De Viaje</string>
+    <string name="dateStat">General</string>
     <string name="detectedFatigue">Fatigas detectadas</string>
     <string name="totalTripsTime">Tiempo de viaje total</string>
     <string name="longBlinks">Pestañeos largos</string>
