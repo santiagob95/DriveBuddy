@@ -26,8 +26,7 @@
     <string name="confirmPassword">Confirm Password</string>
     <string name="haveAnAccount">Do you have an account?</string>
     <string name="logInAsAGuest">Log In as a guest</string>
-    <string name="generalStats">Trip Stats</string>
-    <string name="dateStat">General</string>
+    <string name="dateStat">Summary</string>
     <string name="detectedFatigue">Detected fatigue</string>
     <string name="totalTripsTime">Total time on trips</string>
     <string name="longBlinks">Long blinks</string>
