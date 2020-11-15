@@ -54,7 +54,6 @@ class HomeFragment : Fragment() {
         loadUserData()
         loadViajesData()
 
-        /*
         fechaAnt.setOnClickListener {
             if(pos-1>=0)
                 loadViaje(-1)
@@ -62,12 +61,11 @@ class HomeFragment : Fragment() {
                 loadViajesData()
         }
         fechaSig.setOnClickListener {
-            if(pos+1 <cantViajes)
+            if (pos + 1 < cantViajes)
                 loadViaje(1)
             else
-               Toast.makeText(this.activity,"No hay más viajes!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this.activity, "No hay más viajes!", Toast.LENGTH_SHORT).show()
         }
-         */
     }
     private  fun loadViaje(n :Int){
         pos += n
@@ -85,7 +83,7 @@ class HomeFragment : Fragment() {
         val df = DecimalFormat("#.##")
         df.roundingMode = RoundingMode.CEILING
 
-        root!!.estad_title.text = docSnap[pos].data?.getValue("fecha").toString()
+        root!!.dateStat.text = docSnap[pos].data?.getValue("fecha").toString()
         root!!.fatigaTotal.text = viaje.fatiga.toString()
         root!!.tiempoViajeTotal.text =df.format(viaje.tiempoViajeTotal) + " hs"
         root!!.pestLargoTotal.text =  viaje.pestLargo.toString()
@@ -98,7 +96,7 @@ class HomeFragment : Fragment() {
     private fun loadViajesData(){
         pos=-1
         val docRef =  db.collection("/viajes").whereEqualTo("id", auth.currentUser!!.uid)
-        estad_title.text = "General Stats"
+        dateStat.text = "General Stats"
         docRef.get()
             .addOnFailureListener { exception ->
                 fatigaTotal.text = "0"
