@@ -40,6 +40,7 @@ class HomeFragment : Fragment() {
     private lateinit var docSnap: List<DocumentSnapshot>
     private var pos = 0
     private var cantViajes =0
+    var estoyEnGeneral= false
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onStart() {
@@ -58,14 +59,18 @@ class HomeFragment : Fragment() {
         loadViajesData()
 
         posicionAnt.setOnClickListener {
+
             if(pos-1>=0)
                 loadViaje(-1)
-            else
-                loadViajesData()
+            else if (!estoyEnGeneral)
+                    loadViajesData()
+
         }
         posicionSig.setOnClickListener {
-            if (pos + 1 < cantViajes)
+            if (pos + 1 < cantViajes) {
                 loadViaje(1)
+                estoyEnGeneral=false
+            }
             else
                 Toast.makeText(this.activity, "No hay más viajes!", Toast.LENGTH_SHORT).show()
         }
@@ -74,7 +79,6 @@ class HomeFragment : Fragment() {
     private  fun loadViaje(n :Int){
         pos += n
         Log.v("GetDoc","pos: $pos, cantViajes: $cantViajes")
-
 
         val viaje = object {
             var fatiga=docSnap[pos].data?.getValue("Fatiga").toString().toInt()
@@ -109,6 +113,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun loadViajesData(){
+        estoyEnGeneral = true
         pos=-1
         val viajeRef = db.collection("/viajes").whereEqualTo("id", auth.currentUser!!.uid).orderBy("fecha", Query.Direction.DESCENDING)
         dateStat.text = "General Stats"
