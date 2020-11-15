@@ -1,6 +1,7 @@
 package com.example.reconocimientoapp
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -8,17 +9,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.ktx.Firebase
-import com.squareup.okhttp.internal.DiskLruCache
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
 import java.math.RoundingMode
 import java.text.DecimalFormat
+import java.time.LocalDateTime
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -39,6 +41,7 @@ class HomeFragment : Fragment() {
     private var pos = 0
     private var cantViajes =0
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onStart() {
         super.onStart()
         registerback.setOnClickListener{
@@ -54,22 +57,24 @@ class HomeFragment : Fragment() {
         loadUserData()
         loadViajesData()
 
-        fechaSig.setOnClickListener {
+        posicionAnt.setOnClickListener {
             if(pos-1>=0)
                 loadViaje(-1)
             else
                 loadViajesData()
         }
-        fechaAnt.setOnClickListener {
+        posicionSig.setOnClickListener {
             if (pos + 1 < cantViajes)
                 loadViaje(1)
             else
                 Toast.makeText(this.activity, "No hay más viajes!", Toast.LENGTH_SHORT).show()
         }
     }
+    @RequiresApi(Build.VERSION_CODES.O)
     private  fun loadViaje(n :Int){
         pos += n
         Log.v("GetDoc","pos: $pos, cantViajes: $cantViajes")
+
 
         val viaje = object {
             var fatiga=docSnap[pos].data?.getValue("Fatiga").toString().toInt()
@@ -83,13 +88,23 @@ class HomeFragment : Fragment() {
         val df = DecimalFormat("#.##")
         df.roundingMode = RoundingMode.CEILING
 
-        root!!.dateStat.text = docSnap[pos].data?.getValue("fecha").toString()
+        val fecha = docSnap[pos].data?.getValue("fecha").toString()
+        val formatter = LocalDateTime.parse(fecha)
+        var auxText = formatter.dayOfMonth.toString()+"/"+formatter.monthValue.toString()+"/"+formatter.year.toString()
+        root!!.dateStat.text = auxText
         root!!.fatigaTotal.text = viaje.fatiga.toString()
-        root!!.tiempoViajeTotal.text =df.format(viaje.tiempoViajeTotal) + " hs"
+
+        auxText=df.format(viaje.tiempoViajeTotal) + " hs"
+        root!!.tiempoViajeTotal.text =auxText
+
         root!!.pestLargoTotal.text =  viaje.pestLargo.toString()
         root!!.bostezosTotal.text = viaje.bostezo.toString()
-        root!!.velMedia.text = viaje.velMedia.toString() +" km/h"
-        root!!.kmTotales.text = viaje.kmtotales.toString() +" km"
+
+        auxText = viaje.velMedia.toString() +" km/h"
+        root!!.velMedia.text = auxText
+
+        auxText = viaje.kmtotales.toString() +" km"
+        root!!.kmTotales.text = auxText
 
     }
 

@@ -390,19 +390,17 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
     private fun postStats(){
 
         val fatigas = (pestañeos.size/3)
-        val df = DecimalFormat("#.##")
-        df.roundingMode = RoundingMode.CEILING
 
         val stats = hashMapOf(
-            "Fatiga" to fatigas,//fatigas
+            "Fatiga" to fatigas,
             "Bostezo" to bostezos.size,
             "PestaneoLargo" to pestañeos.size, //cantPest
             "kmRecorrido" to rand(90,650),
             "tiempoTotal" to (((rand(4500,36000))/100.0)/60), //entre 45 min y 6 horas
             "velocidadMedia" to rand(20,180),
             "id" to auth.currentUser!!.uid,
-            "fecha" to LocalDateTime.now().dayOfMonth.toString()+"/"+LocalDateTime.now().monthValue.toString()+"/"+LocalDateTime.now().year.toString()
-                    //LocalDateTime.now().toString()
+            "fecha" to LocalDateTime.now().toString()
+
         )
         db.collection("viajes").document()
             .set(stats)
