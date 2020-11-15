@@ -36,7 +36,7 @@ private val db = FirebaseFirestore.getInstance()
 
 class HomeFragment : Fragment() {
 
-    private var viajeRef = db.collection("viajes").whereEqualTo("id", auth.currentUser?.uid).orderBy("fecha", Query.Direction.DESCENDING)
+    //private var viajeRef = db.collection("viajes").whereEqualTo("id", auth.currentUser!!.uid).orderBy("fecha", Query.Direction.DESCENDING)
     private lateinit var docSnap: List<DocumentSnapshot>
     private var pos = 0
     private var cantViajes =0
@@ -110,9 +110,9 @@ class HomeFragment : Fragment() {
 
     private fun loadViajesData(){
         pos=-1
-        val docRef =  db.collection("/viajes").whereEqualTo("id", auth.currentUser!!.uid)
+        val viajeRef = db.collection("/viajes").whereEqualTo("id", auth.currentUser!!.uid).orderBy("fecha", Query.Direction.DESCENDING)
         dateStat.text = "General Stats"
-        docRef.get()
+        viajeRef.get()
             .addOnFailureListener { exception ->
                 fatigaTotal.text = "0"
                 Log.v("GetDoc", "Error getting documents: ", exception)
