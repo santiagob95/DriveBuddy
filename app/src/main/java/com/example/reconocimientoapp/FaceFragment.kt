@@ -68,7 +68,8 @@ private val db = FirebaseFirestore.getInstance()
 class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermissions.RationaleCallbacks, TextToSpeech.OnInitListener {
 
     private val LOCATION_PERM=124
-
+    var segs = 0
+    var km = 0
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var locationRequest: LocationRequest
     private lateinit var locationCallback: LocationCallback
@@ -160,6 +161,8 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
 
 
     private fun calcSpeed(speed:Int){
+        km=km+speed
+        segs=segs+1
         root!!.speeds.text=(speed*4).toString()+"km/h"
         root!!.speeds2.text=(speed*4).toString()+"km/h"
     }
@@ -388,21 +391,41 @@ class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermiss
 
     @RequiresApi(Build.VERSION_CODES.O)//esto es para la fecha
     private fun postStats(){
+        var totalSegundos : Int ?=null
+        if(viajeIniciado){
+            totalSegundos = ((SystemClock.elapsedRealtime()-duracionViaje.base)/1000).toInt()
+        }else{
+            duracionViaje.setBase(duracionViaje.getBase() + SystemClock.elapsedRealtime() - base);
+            totalSegundos = ((SystemClock.elapsedRealtime()-duracionViaje.base)/1000).toInt()
+            pausarViaje.setBackgroundResource(R.drawable.pausav)
+            viajeIniciado=true
+        }
 
+        var minutos=0
+        var horas= totalSegundos/60.0/60.0
+        /*if(totalSegundos>=60){
+            minutos= totalSegundos/60
+            totalSegundos -= (minutos * 60)
+            if(minutos>=60){
+                horas=minutos/60.0
+                minutos -= (horas.toInt() * 60)
+            }
+        }*/
+
+        var velocidadMedia = km/segs
+        var kmRecorridos = velocidadMedia*horas
         val fatigas = (pestañeos.size/3)
-        val df = DecimalFormat("#.##")
-        df.roundingMode = RoundingMode.CEILING
 
         val stats = hashMapOf(
-            "Fatiga" to fatigas,//fatigas
+            "Fatiga" to fatigas,
             "Bostezo" to bostezos.size,
             "PestaneoLargo" to pestañeos.size, //cantPest
-            "kmRecorrido" to rand(90,650),
-            "tiempoTotal" to (((rand(4500,36000))/100.0)/60), //entre 45 min y 6 horas
-            "velocidadMedia" to rand(20,180),
+            "kmRecorrido" to kmRecorridos.toInt(),
+            "tiempoTotal" to horas, //(((rand(4500,36000))/100.0)/60) entre 45 min y 6 horas
+            "velocidadMedia" to velocidadMedia,//rand(20,180)
             "id" to auth.currentUser!!.uid,
-            "fecha" to LocalDateTime.now().dayOfMonth.toString()+"/"+LocalDateTime.now().monthValue.toString()+"/"+LocalDateTime.now().year.toString()
-                    //LocalDateTime.now().toString()
+            "fecha" to LocalDateTime.now().toString()
+
         )
         db.collection("viajes").document()
             .set(stats)
