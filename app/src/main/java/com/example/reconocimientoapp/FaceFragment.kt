@@ -68,7 +68,7 @@ private val db = FirebaseFirestore.getInstance()
 class FaceFragment : Fragment() ,EasyPermissions.PermissionCallbacks,EasyPermissions.RationaleCallbacks, TextToSpeech.OnInitListener {
 
     private val LOCATION_PERM=124
-    var segs = 0
+    var segs = 1
     var km = 0
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var locationRequest: LocationRequest
