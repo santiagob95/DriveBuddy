@@ -54,13 +54,13 @@ class HomeFragment : Fragment() {
         loadUserData()
         loadViajesData()
 
-        fechaAnt.setOnClickListener {
+        fechaSig.setOnClickListener {
             if(pos-1>=0)
                 loadViaje(-1)
             else
                 loadViajesData()
         }
-        fechaSig.setOnClickListener {
+        fechaAnt.setOnClickListener {
             if (pos + 1 < cantViajes)
                 loadViaje(1)
             else
