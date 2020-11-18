@@ -58,7 +58,7 @@ class HomeFragment : Fragment() {
         loadUserData()
         loadViajesData()
 
-        posicionAnt.setOnClickListener {
+        posicionSig.setOnClickListener {
 
             if(pos-1>=0) {
                 loadViaje(-1)
@@ -66,7 +66,7 @@ class HomeFragment : Fragment() {
             else if (!estoyEnGeneral)
                     loadViajesData()
         }
-        posicionSig.setOnClickListener {
+        posicionAnt.setOnClickListener {
             if (pos + 1 < cantViajes) {
                 loadViaje(1)
                 estoyEnGeneral=false
@@ -110,7 +110,7 @@ class HomeFragment : Fragment() {
         auxText = viaje.kmtotales.toString() +" km"
         root!!.kmTotales.text = auxText
 
-        posicionAnt.visibility = View.VISIBLE
+        posicionSig.visibility = View.VISIBLE
 
     }
 
@@ -163,7 +163,7 @@ class HomeFragment : Fragment() {
                 root!!.kmTotales.text = if(contDoc == 0) "0" else total.kmtotales.toString() +" km"
 
             }
-        posicionAnt.visibility = View.INVISIBLE
+        posicionSig.visibility = View.INVISIBLE
     }
     private fun loadUserData() {
         val userRef = db.collection("users").document(auth.currentUser!!.uid)
