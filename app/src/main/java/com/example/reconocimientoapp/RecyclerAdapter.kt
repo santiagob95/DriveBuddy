@@ -1,6 +1,7 @@
 package com.example.reconocimientoapp
 
 import android.speech.tts.TextToSpeech
+import android.speech.tts.UtteranceProgressListener
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -38,6 +39,13 @@ RecyclerView.Adapter<RecyclerAdapter.ViewHolder>(){
             if(status == TextToSpeech.SUCCESS){
                 val locSpanish = Locale("spa", "MEX")
                 val result = tts!!.setLanguage(locSpanish)
+                tts!!.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
+                    override fun onDone(utteranceId: String) {
+                        itemImagen.visibility = View.INVISIBLE
+                    }
+                    override fun onError(utteranceId: String) {}
+                    override fun onStart(utteranceId: String) {}
+                })
                 if(result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED ){
                     Log.e("TTS", "¡No se puede reproducir el lenguaje especificado!")
                 }else {
@@ -52,7 +60,12 @@ RecyclerView.Adapter<RecyclerAdapter.ViewHolder>(){
             val position: Int = adapterPosition
             val text = contenidos[position]
             tts!!.speak(text, TextToSpeech.QUEUE_FLUSH, null, "")
-            Toast.makeText(itemView.context, "Reproduciendo el consejo # ${position + 1}", Toast.LENGTH_LONG).show()
+            Toast.makeText(
+                itemView.context,
+                "Reproduciendo el consejo # ${position + 1}",
+                Toast.LENGTH_LONG
+            ).show()
+            itemImagen.visibility = View.VISIBLE
         }
 
     }
@@ -71,6 +84,5 @@ RecyclerView.Adapter<RecyclerAdapter.ViewHolder>(){
     override fun getItemCount(): Int {
         return titulos.size
     }
-
 
 }
