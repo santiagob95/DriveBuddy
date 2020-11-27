@@ -34,6 +34,7 @@
     <string name="avgSpeed">Average speed</string>
     <string name="kmTraveled">Kilometers traveled</string>
     <string name="tipsBeforeYouStart">Check out this tips for your trip!</string>
+    <string name="tipsCons">Click on any tip to listen!</string>
     <string name="loremIpsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
     <string name="tripFinished">Well done!</string>
     <string name="trippingTime">Tripping time</string>
