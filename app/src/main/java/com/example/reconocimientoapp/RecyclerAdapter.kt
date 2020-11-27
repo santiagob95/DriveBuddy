@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import java.util.*
 
@@ -51,6 +52,7 @@ RecyclerView.Adapter<RecyclerAdapter.ViewHolder>(){
             val position: Int = adapterPosition
             val text = contenidos[position]
             tts!!.speak(text, TextToSpeech.QUEUE_FLUSH, null, "")
+            Toast.makeText(itemView.context, "Reproduciendo el consejo # ${position + 1}", Toast.LENGTH_LONG).show()
         }
 
     }
