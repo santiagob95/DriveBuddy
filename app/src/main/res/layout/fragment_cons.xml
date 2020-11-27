@@ -10,31 +10,33 @@
 
     <TextView
         android:id="@+id/consTitle"
-        android:gravity="center"
-        android:layout_width="0dp"
-        android:layout_height="51dp"
+        android:layout_width="411dp"
+        android:layout_height="40dp"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="4dp"
         android:fontFamily="@font/montserrat_bold"
+        android:gravity="center"
         android:text="@string/tipsCons"
         android:textColor="#FFFFFF"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/rv_recyclerView"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline45"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.545" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline45"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" />
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.09" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_recyclerView"
-        android:layout_width="409dp"
-        android:layout_height="655dp"
+        android:layout_width="411dp"
+        android:layout_height="628dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
@@ -43,10 +45,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline45"
         tools:itemCount="10"
         tools:listitem="@layout/item_layout" />
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
