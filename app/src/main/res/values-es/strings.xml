@@ -34,6 +34,7 @@
     <string name="avgSpeed">Velocidad media</string>
     <string name="kmTraveled">Kilometros recorridos</string>
     <string name="tipsBeforeYouStart">¡Hace esto antes de manejar!</string>
+    <string name="tipsCons">¡Hacé click en cualquier consejo para escuchar!</string>
     <string name="loremIpsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
     <string name="tripFinished">¡Terminaste tu viaje!</string>
     <string name="trippingTime">Duración del viaje</string>
