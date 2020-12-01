@@ -76,8 +76,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline4"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.907" />
-
+        app:layout_constraintVertical_bias="0.805" />
 
     <TextView
         android:id="@+id/estad_title2"
@@ -91,7 +90,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline4"
         app:layout_constraintTop_toTopOf="@+id/guideline3"
-        app:layout_constraintVertical_bias="0.266" />
+        app:layout_constraintVertical_bias="0.346" />
 
     <TextView
         android:id="@+id/dateStat"
@@ -147,13 +146,6 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.51" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.27" />
-
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"
@@ -163,18 +155,11 @@
         app:layout_constraintGuide_percent="0.13406293" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.48" />
-
-    <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.5" />
+        app:layout_constraintGuide_percent="0.51" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline4"
@@ -207,25 +192,22 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline8"
         app:layout_constraintTop_toTopOf="@+id/guideline2"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="1.0"
         tools:ignore="DuplicateIds,MissingConstraints" />
 
-    <TextView
-        android:id="@+id/titleTiempoTotal"
-        android:layout_width="154dp"
-        android:layout_height="40dp"
-        android:fontFamily="@font/montserrat_bold"
-        android:text="@string/totalTripsTime"
-        android:textAlignment="center"
-        android:textColor="#FFFFFF"
-        android:textSize="12sp"
-        android:translationZ="20dp"
-        app:layout_constraintBottom_toBottomOf="@+id/view0"
-        app:layout_constraintEnd_toEndOf="@+id/view0"
-        app:layout_constraintHorizontal_bias="0.584"
-        app:layout_constraintStart_toStartOf="@+id/view0"
-        app:layout_constraintTop_toTopOf="@+id/view0"
-        app:layout_constraintVertical_bias="0.173" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.28" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
 
     <TextView
         android:id="@+id/tiempoViajeTotal"
@@ -239,10 +221,10 @@
         android:translationZ="20dp"
         app:layout_constraintBottom_toBottomOf="@+id/view0"
         app:layout_constraintEnd_toEndOf="@+id/view0"
-        app:layout_constraintHorizontal_bias="0.554"
+        app:layout_constraintHorizontal_bias="0.538"
         app:layout_constraintStart_toStartOf="@+id/view0"
         app:layout_constraintTop_toBottomOf="@+id/titleTiempoTotal"
-        app:layout_constraintVertical_bias="0.361" />
+        app:layout_constraintVertical_bias="0.309" />
 
     <View
         android:id="@+id/view1"
@@ -256,7 +238,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline4"
         app:layout_constraintTop_toTopOf="@+id/guideline2"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/titleFatiga"
@@ -270,10 +252,10 @@
         android:translationZ="20dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline7"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
-        app:layout_constraintHorizontal_bias="0.557"
+        app:layout_constraintHorizontal_bias="0.551"
         app:layout_constraintStart_toStartOf="@+id/guideline4"
         app:layout_constraintTop_toTopOf="@+id/guideline2"
-        app:layout_constraintVertical_bias="0.166" />
+        app:layout_constraintVertical_bias="0.18" />
 
     <TextView
         android:id="@+id/fatigaTotal"
@@ -287,10 +269,27 @@
         android:translationZ="20dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline7"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
-        app:layout_constraintHorizontal_bias="0.58"
+        app:layout_constraintHorizontal_bias="0.548"
         app:layout_constraintStart_toStartOf="@+id/guideline4"
         app:layout_constraintTop_toBottomOf="@+id/titleFatiga"
-        app:layout_constraintVertical_bias="0.355" />
+        app:layout_constraintVertical_bias="0.326" />
+
+    <TextView
+        android:id="@+id/titleTiempoTotal"
+        android:layout_width="154dp"
+        android:layout_height="40dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:text="@string/totalTripsTime"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp"
+        android:translationZ="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/view0"
+        app:layout_constraintEnd_toEndOf="@+id/view0"
+        app:layout_constraintHorizontal_bias="0.607"
+        app:layout_constraintStart_toStartOf="@+id/view0"
+        app:layout_constraintTop_toTopOf="@+id/view0"
+        app:layout_constraintVertical_bias="0.19" />
 
     <View
         android:id="@+id/view2"
