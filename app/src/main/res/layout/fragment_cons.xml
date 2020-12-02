@@ -10,7 +10,7 @@
 
     <TextView
         android:id="@+id/consTitle"
-        android:layout_width="411dp"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="4dp"
